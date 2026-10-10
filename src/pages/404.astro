@@ -1,0 +1,11 @@
+---
+import Base from '../layouts/Base.astro';
+import { href } from '../lib/url';
+---
+<Base title="Not found" back={{ href: href(), label: 'Cities' }}>
+  <div class="home">
+    <h1 class="home-title">Hmm, not here.</h1>
+    <p class="home-tagline">This place may have moved or been removed.</p>
+    <a class="btn btn-primary" href={href()}>See all cities</a>
+  </div>
+</Base>

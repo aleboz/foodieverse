@@ -1,0 +1,142 @@
+---
+import Base from '../../layouts/Base.astro';
+import Hearts from '../../components/Hearts.astro';
+import { cities, activePois, citySlug, category, categories, imagesFor, searchText } from '../../lib/data';
+import { href, poiHref, asset } from '../../lib/url';
+
+export function getStaticPaths() {
+  return cities.map((c) => ({ params: { city: c.slug }, props: { city: c } }));
+}
+
+const { city } = Astro.props;
+const pois = activePois.filter((p) => citySlug(p) === city.slug);
+
+const catCounts = categories
+  .map((c) => ({ ...c, count: pois.filter((p) => p.category === c.id).length }))
+  .filter((c) => c.count > 0);
+const tagCounts = [...pois.flatMap((p) => p.tags ?? []).reduce((m, t) => m.set(t, (m.get(t) ?? 0) + 1), new Map<string, number>())]
+  .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+
+const mapData = pois.map((p) => ({
+  id: p.id,
+  name: p.name,
+  lat: p.location.latitude,
+  lng: p.location.longitude,
+  icon: category(p.category).icon,
+  category: category(p.category).label,
+  rating: p.rating ?? null,
+  url: poiHref(city.slug, p.slug),
+}));
+
+const excerpt = (s: string) => (s.length > 220 ? s.slice(0, 217).replace(/\s+\S*$/, '') + '…' : s);
+---
+<Base
+  title={city.name}
+  description={`${city.count} places Irina recommends in ${city.name}.`}
+  back={{ href: href(), label: 'Cities' }}
+>
+  <div class="city" id="city" data-view="list" data-city={city.slug} data-city-name={city.name}>
+    <div class="city-panel">
+      <div class="city-controls" id="controls">
+        <h1 class="city-title">{city.name}</h1>
+        <p class="city-sub">{city.count} {city.count === 1 ? 'place' : 'places'}{city.country ? ` · ${city.country}` : ''}</p>
+
+        <form class="search" role="search" onsubmit="return false">
+          <label for="q" class="visually-hidden">Search {city.name}</label>
+          <svg class="icon" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="q" name="q" type="search" placeholder={`Search ${city.name}…`} autocomplete="off" enterkeyhint="search" />
+          <button type="button" class="clear" id="clear-q" aria-label="Clear search" hidden>✕</button>
+        </form>
+
+        <div class="chips" role="group" aria-label="Category">
+          <button type="button" class="chip" data-cat="" aria-pressed="true">All <span class="count">{pois.length}</span></button>
+          {catCounts.map((c) => (
+            <button type="button" class="chip" data-cat={c.id} aria-pressed="false">
+              <span aria-hidden="true">{c.icon}</span>{c.label} <span class="count">{c.count}</span>
+            </button>
+          ))}
+        </div>
+
+        <details class="more-filters" id="more-filters">
+          <summary>More filters <span id="active-filter-count"></span></summary>
+          <div class="filter-group">
+            <h2 id="hearts-label">Hearts</h2>
+            <div class="wrap-chips" role="group" aria-labelledby="hearts-label">
+              <button type="button" class="chip chip-sm" data-min="" aria-pressed="true">Any</button>
+              <button type="button" class="chip chip-sm" data-min="2" aria-pressed="false"><span class="hearts" aria-hidden="true">♥♥</span> and up</button>
+              <button type="button" class="chip chip-sm" data-min="3" aria-pressed="false"><span class="hearts" aria-hidden="true">♥♥♥</span> only</button>
+            </div>
+          </div>
+          {tagCounts.length > 0 && (
+            <div class="filter-group">
+              <h2 id="tags-label">Tags</h2>
+              <div class="wrap-chips" role="group" aria-labelledby="tags-label">
+                {tagCounts.map(([t, n]) => (
+                  <button type="button" class="chip chip-sm" data-tag={t} aria-pressed="false">#{t} <span class="count">{n}</span></button>
+                ))}
+              </div>
+            </div>
+          )}
+        </details>
+      </div>
+
+      <div class="result-bar">
+        <p class="result-count" id="result-count" aria-live="polite">{pois.length} places</p>
+        <span>
+          <button type="button" class="link-btn" id="reset" hidden>Reset</button>
+          <button type="button" class="link-btn" id="near-me"><span aria-hidden="true">◎</span> Near me</button>
+        </span>
+      </div>
+
+      <ul class="cards" id="cards">
+        {pois.map((p) => {
+          const img = imagesFor(p)[0];
+          const c = category(p.category);
+          return (
+            <li
+              class="card"
+              data-id={p.id}
+              data-cat={p.category}
+              data-rating={p.rating ?? 0}
+              data-tags={(p.tags ?? []).join(' ')}
+              data-search={searchText(p)}
+              data-lat={p.location.latitude}
+              data-lng={p.location.longitude}
+            >
+              <div>
+                <h3><a href={poiHref(city.slug, p.slug)}>{p.name}</a></h3>
+                <div class="line">
+                  <Hearts rating={p.rating} />
+                  <span class="meta"><span aria-hidden="true">{c.icon}</span> {c.label}</span>
+                  <span class="meta distance" data-distance hidden></span>
+                </div>
+                <p class="excerpt">{excerpt(p.recommendation)}</p>
+                {p.tags && p.tags.length > 0 && (
+                  <ul class="tags" aria-label="Tags">{p.tags.slice(0, 4).map((t) => <li>{t}</li>)}</ul>
+                )}
+              </div>
+              {img && (
+                <img class="thumb" src={asset(img.variants[0].path)} alt="" width="84" height="84" loading="lazy" decoding="async" />
+              )}
+            </li>
+          );
+        })}
+      </ul>
+      <p class="no-results" id="no-results" hidden>Nothing matches. <button type="button" class="link-btn" data-reset>Clear filters</button></p>
+    </div>
+
+    <div class="map-wrap" id="map-wrap">
+      <div class="map" id="map" role="region" aria-label={`Map of recommendations in ${city.name}`}></div>
+    </div>
+
+    <button type="button" class="btn btn-primary view-toggle" id="view-toggle" aria-controls="map-wrap">
+      <span aria-hidden="true">🗺️</span> Map
+    </button>
+  </div>
+  <script type="application/json" id="map-data" set:html={JSON.stringify(mapData).replace(/</g, "\\u003c")} />
+</Base>
+
+<script>
+  import { initCity } from '../../scripts/city';
+  initCity();
+</script>

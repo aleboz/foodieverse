@@ -1,0 +1,54 @@
+---
+import '../styles/global.css';
+import { href } from '../lib/url';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  back?: { href: string; label: string };
+  bodyClass?: string;
+}
+const { title, description = 'Places I think are worth your time.', image, back, bodyClass } = Astro.props;
+const siteName = "Irina's Foodieverse";
+const fullTitle = title === siteName ? title : `${title} · ${siteName}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = image ? new URL(image, canonical).toString() : undefined;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href={href('favicon.svg')} type="image/svg+xml" />
+    <meta name="theme-color" content="#faf6f0" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1b1714" media="(prefers-color-scheme: dark)" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content="website" />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+    <slot name="head" />
+  </head>
+  <body class={bodyClass}>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      {back && (
+        <a class="back" href={back.href}>
+          <span aria-hidden="true">←</span> {back.label}
+        </a>
+      )}
+      <span class="spacer"></span>
+      <a class="brand" href={href()}>{siteName}</a>
+    </header>
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+  </body>
+</html>

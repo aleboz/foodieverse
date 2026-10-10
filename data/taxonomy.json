@@ -1,0 +1,18 @@
+{
+  "categories": [
+    { "id": "eat", "label": "Eat", "icon": "🍽️", "description": "Restaurants, bakeries, street food, food venues" },
+    { "id": "drink", "label": "Drink", "icon": "🍷", "description": "Bars, wine bars, breweries, cocktail bars" },
+    { "id": "coffee", "label": "Coffee", "icon": "☕", "description": "Cafés and coffee shops" },
+    { "id": "shop", "label": "Shop", "icon": "🛍️", "description": "Food shops, markets, delicatessens and interesting retail" },
+    { "id": "stay", "label": "Stay", "icon": "🛏️", "description": "Hotels, B&Bs and accommodation" },
+    { "id": "see", "label": "See", "icon": "🏛️", "description": "Museums, architecture, galleries and cultural places" },
+    { "id": "explore", "label": "Explore", "icon": "🌳", "description": "Parks, walks, neighbourhoods and viewpoints" },
+    { "id": "other", "label": "Other", "icon": "✨", "description": "Places that do not fit another category" }
+  ],
+  "statuses": ["active", "temporarily-closed", "closed", "archived"],
+  "ratings": {
+    "1": "Recommended",
+    "2": "Strong recommendation",
+    "3": "Don't miss — personal favourite"
+  }
+}

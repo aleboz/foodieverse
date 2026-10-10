@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aleboz.github.io/foodieverse/poi.schema.json",
+  "title": "Foodieverse POI",
+  "description": "One recommended place. Stored at data/pois/<city-slug>/<slug>.json. Images live in data/images/<city-slug>/<slug>/ and are listed here by file name only.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "slug", "name", "city", "location", "category", "recommendation", "status", "createdAt", "updatedAt"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "<slug>-<city-slug>" },
+    "slug": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "Unique within the city; equals the file name" },
+    "name": { "type": "string", "minLength": 1 },
+    "city": { "type": "string", "minLength": 1, "description": "Display name, e.g. Copenhagen. Its slug equals the folder name." },
+    "country": { "type": ["string", "null"] },
+    "location": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["latitude", "longitude"],
+      "properties": {
+        "latitude": { "type": "number", "minimum": -90, "maximum": 90 },
+        "longitude": { "type": "number", "minimum": -180, "maximum": 180 }
+      }
+    },
+    "category": { "enum": ["eat", "drink", "coffee", "shop", "stay", "see", "explore", "other"] },
+    "tags": { "type": "array", "items": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" }, "uniqueItems": true },
+    "recommendation": { "type": "string", "minLength": 1, "description": "The author's own words, lightly edited" },
+    "rating": { "type": ["integer", "null"], "minimum": 1, "maximum": 3 },
+    "googleMapsUrl": { "type": ["string", "null"], "format": "uri" },
+    "address": { "type": ["string", "null"] },
+    "images": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[A-Za-z0-9._-]+\\.(jpe?g|png|webp|avif|tiff?)$" },
+      "description": "File names inside data/images/<city-slug>/<slug>/, in display order"
+    },
+    "imageAlt": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Optional alt text, same order as images"
+    },
+    "status": { "enum": ["active", "temporarily-closed", "closed", "archived"] },
+    "createdAt": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "updatedAt": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" }
+  }
+}
