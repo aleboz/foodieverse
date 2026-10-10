@@ -8,8 +8,8 @@ import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { spawnSync } from 'node:child_process';
 import { loadPois, slugify, taxonomy, poiPaths, ROOT, findDuplicates } from './lib/poi.mjs';
-import { resolvePlace } from './lib/resolve.mjs';
-import { aiEnabled, suggestNewPlace, interpretChange } from './lib/ai.mjs';
+import { resolvePlace, geocode } from './lib/resolve.mjs';
+import { aiEnabled, suggestNewPlace, interpretChange, verifyPlace } from './lib/ai.mjs';
 
 const { GITHUB_TOKEN, GITHUB_REPOSITORY, GITHUB_EVENT_PATH, GITHUB_EVENT_NAME } = process.env;
 const event = JSON.parse(readFileSync(GITHUB_EVENT_PATH, 'utf8'));
@@ -313,6 +313,50 @@ async function startFromIssue() {
   );
 }
 
+/**
+ * Web check (AI + web search): confirm the OpenStreetMap match, use the place's
+ * proper name and address, and re-locate it when the address was wrong.
+ * Mutates `place`, adds a line to `notes`. Returns true when a verdict was made.
+ */
+async function checkPlace(place, url, recommendation, notes) {
+  let v;
+  try {
+    v = await verifyPlace({ mapsUrl: url, resolved: place, recommendation });
+  } catch (e) {
+    notes.push(`Couldn't double-check the place on the web this time (${e.message}).`);
+    return false;
+  }
+  if (!v) return false;
+  const source = v.source ? ` ([source](${v.source}))` : '';
+  const changes = [];
+  if (v.name && v.name.trim() && v.name.trim() !== place.name) {
+    changes.push(`name "${place.name}" → "${v.name.trim()}"`);
+    place.name = v.name.trim();
+  }
+  const norm = (a) => (a ?? '').toLowerCase().replace(/[^\p{L}\p{N}]/gu, '');
+  const addressChanged = v.address && norm(v.address) !== norm(place.address);
+  if (!v.same_place && v.address) {
+    const found = await geocode(v.address).catch(() => null) ?? (await geocode(`${place.name}, ${v.city ?? place.city}`).catch(() => null));
+    if (found) {
+      changes.push(`location moved to ${v.address}`);
+      place.location = found.location;
+      place.city = v.city || found.city || place.city;
+      place.country = v.country || found.country || place.country;
+      place.address = v.address;
+    } else {
+      notes.push(`⚠️ The web check says this is ${place.name}, ${v.address}, but I couldn't find that address on the map. Check the map link below before saying yes.${source}`);
+      return true;
+    }
+  } else if (addressChanged) {
+    changes.push(`address → ${v.address}`);
+    place.address = v.address;
+  }
+  if (v.city && v.city !== place.city && !v.same_place) place.city = v.city;
+  const prefix = v.confidence === 'low' ? '⚠️ Web check not conclusive' : changes.length ? '✏️ Web check corrected' : '✓ Web check confirmed';
+  notes.push(`${prefix}${changes.length ? `: ${changes.join('; ')}` : ''}. ${v.note}${source}`);
+  return true;
+}
+
 async function startNewPlace(input) {
   const { url, recommendation } = input;
   if (!url || !recommendation) return comment('I need both a Google Maps link and your recommendation — please edit the issue.');
@@ -328,7 +372,8 @@ async function startNewPlace(input) {
     );
   }
   const notes = [...place.warnings];
-  if (place.candidates.length > 1) notes.push(`Matched "${place.candidates[0].displayName}". If that's wrong, put the place name and city in the issue title.`);
+  const verified = await checkPlace(place, url, recommendation, notes);
+  if (!verified && place.candidates.length > 1) notes.push(`Matched "${place.candidates[0].displayName}". If that's wrong, put the place name and city in the issue title.`);
 
   const { hearts, category, tags: userTags, keepText } = input;
 

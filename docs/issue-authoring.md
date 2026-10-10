@@ -69,11 +69,17 @@ issue there.
 Without an API key everything still works: category, hearts and tags come
 from what you wrote, and the text is published as written.
 
-To enable AI suggestions (category, hearts, tags, light spelling and grammar
-fixes in your own voice, corrections in plain words):
+With the key, the bot also **double-checks every new place on the web**: it
+searches for the place, uses its proper name and address, and moves the pin if
+OpenStreetMap matched the wrong place. The preview says what was confirmed or
+corrected, with a source link.
+
+To enable AI suggestions (place check, category, hearts, tags, light spelling
+and grammar fixes in your own voice, corrections in plain words):
 
 1. Create an API key at <https://console.anthropic.com> (Settings → API keys)
-   and add a little credit. Each place costs well under one cent.
+   and add a little credit. Each new place costs roughly 2–5 cents (mostly the
+   web check); updates cost well under one cent.
 2. In the repository: **Settings → Secrets and variables → Actions → New
    repository secret**, name `ANTHROPIC_API_KEY`, paste the key.
 
