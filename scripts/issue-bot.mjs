@@ -7,7 +7,7 @@ import { readFileSync, writeFileSync, mkdtempSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { spawnSync } from 'node:child_process';
-import { loadPois, slugify, taxonomy, poiPaths, ROOT, findDuplicates } from './lib/poi.mjs';
+import { loadPois, slugify, taxonomy, poiPaths, ROOT, findDuplicates, distanceMeters } from './lib/poi.mjs';
 import { resolvePlace, geocode } from './lib/resolve.mjs';
 import { aiEnabled, suggestNewPlace, interpretChange, verifyPlace } from './lib/ai.mjs';
 
@@ -348,7 +348,16 @@ async function checkPlace(place, url, recommendation, notes) {
       return true;
     }
   } else if (addressChanged) {
-    changes.push(`address → ${v.address}`);
+    // Keep pin and address consistent: re-locate when the verified address is elsewhere.
+    const found = await geocode(v.address).catch(() => null);
+    if (found && distanceMeters(found.location, place.location) > 200) {
+      changes.push(`location moved to ${v.address}`);
+      place.location = found.location;
+      place.city = v.city || found.city || place.city;
+      place.country = v.country || found.country || place.country;
+    } else {
+      changes.push(`address → ${v.address}`);
+    }
     place.address = v.address;
   }
   if (v.city && v.city !== place.city && !v.same_place) place.city = v.city;
@@ -365,6 +374,27 @@ async function startNewPlace(input) {
   if ((!place.name || !place.location || !place.city) && !input.nameHint && issue.title && !GENERIC_TITLE_RE.test(issue.title) && !issue.title.includes(url)) {
     place = await resolvePlace(url, { name: issue.title.trim() });
   }
+  if ((!place.location || !place.city) && place.name && aiEnabled()) {
+    // Last resort: let the web check find the address, then put it on the map.
+    try {
+      const v = await verifyPlace({ mapsUrl: url, resolved: place, recommendation });
+      const found = v?.address ? await geocode(v.address) : null;
+      if (found) {
+        Object.assign(place, {
+          name: v.name?.trim() || place.name,
+          location: found.location,
+          city: v.city || found.city,
+          country: v.country || found.country,
+          address: v.address,
+          warnings: [],
+          candidates: [],
+        });
+        place.foundByWebCheck = `✏️ Found via web check: ${place.name}, ${v.address}. ${v.note}${v.source ? ` ([source](${v.source}))` : ''}`;
+      }
+    } catch {
+      /* fall through to the message below */
+    }
+  }
   if (!place.name || !place.location || !place.city) {
     return comment(
       `I couldn't work out which place this link points to${place.warnings.length ? ` (${place.warnings.join(' ')})` : ''}.\n\n` +
@@ -372,7 +402,7 @@ async function startNewPlace(input) {
     );
   }
   const notes = [...place.warnings];
-  const verified = await checkPlace(place, url, recommendation, notes);
+  const verified = place.foundByWebCheck ? (notes.push(place.foundByWebCheck), true) : await checkPlace(place, url, recommendation, notes);
   if (!verified && place.candidates.length > 1) notes.push(`Matched "${place.candidates[0].displayName}". If that's wrong, put the place name and city in the issue title.`);
 
   const { hearts, category, tags: userTags, keepText } = input;
