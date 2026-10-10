@@ -1,0 +1,60 @@
+name: Issue authoring
+
+# Add or update places from the GitHub mobile app or website, no AI chat needed:
+# open a "New place" / "Update a place" issue, get a preview comment, reply
+# "yes" to publish. Only the repository owner, members and collaborators can
+# trigger it; everyone else's issues and comments are ignored.
+#
+# Optional: add an ANTHROPIC_API_KEY repository secret for AI suggestions
+# (category, hearts, tags, light text editing, corrections in plain words).
+
+on:
+  issues:
+    types: [opened, edited]
+  issue_comment:
+    types: [created]
+
+concurrency:
+  group: issue-authoring-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  author:
+    if: >-
+      !github.event.issue.pull_request &&
+      github.event.issue.state == 'open' &&
+      (contains(github.event.issue.body, '### Google Maps link') || contains(github.event.issue.body, '### Which place?')) &&
+      (
+        (github.event_name == 'issues' &&
+          contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.issue.author_association) &&
+          (github.event.action == 'opened' || github.event.changes.body != null)) ||
+        (github.event_name == 'issue_comment' &&
+          github.event.comment.user.type != 'Bot' &&
+          contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association))
+      )
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+      issues: write
+      actions: write
+      pages: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Handle issue
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          FOODIEVERSE_MODEL: ${{ vars.FOODIEVERSE_MODEL }}
+        run: node scripts/issue-bot.mjs

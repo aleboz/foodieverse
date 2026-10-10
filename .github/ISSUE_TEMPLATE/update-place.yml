@@ -1,0 +1,26 @@
+name: Update a place
+description: Change, close or add photos to an existing recommendation
+title: "Update place"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Say which place and what should change, in plain words. You'll get a preview as a comment; reply **yes** to publish.
+  - type: input
+    id: place
+    attributes:
+      label: Which place?
+      description: Its name (and city), or the link to its page on the website.
+      placeholder: Bar Vivant, Copenhagen
+    validations:
+      required: true
+  - type: textarea
+    id: change
+    attributes:
+      label: What should change?
+      placeholder: "Reduce it to one heart and say it's mainly worth it for the wine. / It has closed."
+  - type: textarea
+    id: photos
+    attributes:
+      label: Photos to add
+      description: Optional. Drag or paste your own photos here.

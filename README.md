@@ -17,6 +17,7 @@ Irina ──chat──► AI agent ──commit──► GitHub ──Actions: v
 - `scripts/`: validation, image optimisation and authoring helpers for the AI agent
 - [`AGENTS.md`](AGENTS.md): the authoring playbook every AI agent follows
 - [`docs/chat-authoring.md`](docs/chat-authoring.md): instructions for chat assistants that can't run scripts
+- [`docs/issue-authoring.md`](docs/issue-authoring.md): adding places through GitHub issues, no AI chat needed
 
 ## Adding a recommendation
 
@@ -28,6 +29,13 @@ claude.ai/code) and write something like:
 
 Claude shows a preview. Reply **yes** and it publishes. Edits ("make it three
 hearts", "Bar Vivant has closed") work the same way.
+
+### From the GitHub app, without an AI chat
+
+Open a **New place** issue in this repository (GitHub mobile app or website),
+paste the Maps link and your text, and reply **yes** to the preview comment.
+See [docs/issue-authoring.md](docs/issue-authoring.md). AI suggestions there
+need an `ANTHROPIC_API_KEY` repository secret.
 
 ## One-time GitHub setup
 
