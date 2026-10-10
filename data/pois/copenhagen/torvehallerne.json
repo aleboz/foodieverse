@@ -1,0 +1,31 @@
+{
+  "id": "torvehallerne-copenhagen",
+  "slug": "torvehallerne",
+  "name": "Torvehallerne",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.6838669,
+    "longitude": 12.5695512
+  },
+  "category": "shop",
+  "tags": [
+    "sample",
+    "market",
+    "quick-lunch",
+    "seafood"
+  ],
+  "recommendation": "Sample entry. Two glass halls full of good food. Graze your way through: smørrebrød, coffee, and something sweet to finish.",
+  "rating": 3,
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Torvehallerne",
+  "address": "Frederiksborggade 21, 1360 Copenhagen",
+  "images": [
+    "01.jpg"
+  ],
+  "imageAlt": [
+    "Sample placeholder image"
+  ],
+  "status": "active",
+  "createdAt": "2026-10-10",
+  "updatedAt": "2026-10-10"
+}

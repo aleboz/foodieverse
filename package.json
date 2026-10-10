@@ -1,0 +1,25 @@
+{
+  "name": "foodieverse",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Irina's Foodieverse — a personal collection of recommended places",
+  "scripts": {
+    "dev": "npm run images && astro dev",
+    "build": "npm run validate && npm run images && astro build",
+    "preview": "astro preview",
+    "validate": "node scripts/validate.mjs",
+    "images": "node scripts/images.mjs",
+    "tags": "node scripts/tags.mjs",
+    "poi": "node scripts/poi.mjs",
+    "resolve": "node scripts/resolve-gmaps.mjs"
+  },
+  "engines": {
+    "node": ">=22.12"
+  },
+  "dependencies": {
+    "astro": "^7.3.8",
+    "leaflet": "^1.9.4",
+    "sharp": "^0.35.5"
+  }
+}

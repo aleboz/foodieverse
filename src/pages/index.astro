@@ -1,0 +1,69 @@
+---
+import Base from '../layouts/Base.astro';
+import { cities, recentPois, citySlug } from '../lib/data';
+import { cityHref, poiHref } from '../lib/url';
+---
+<Base title="Irina's Foodieverse">
+  <div class="home">
+    <h1 class="home-title">Irina's Foodieverse</h1>
+    <p class="home-tagline">Places I think are worth your time.</p>
+
+    <a class="continue" id="continue" href="#" hidden>
+      <span>Continue with <span data-city-name></span></span>
+      <span aria-hidden="true">→</span>
+    </a>
+
+    {cities.length ? (
+      <nav aria-label="Cities">
+        <ul class="city-list">
+          {cities.map((c) => (
+            <li>
+              <a class="city-link" href={cityHref(c.slug)} data-city={c.slug}>
+                <span class="name">{c.name}</span>
+                <span class="sub">{c.count} {c.count === 1 ? 'place' : 'places'}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    ) : (
+      <p class="empty">No recommendations yet — check back soon.</p>
+    )}
+
+    {recentPois.length > 0 && (
+      <section aria-labelledby="recent-title">
+        <h2 class="section-title" id="recent-title">Recently added</h2>
+        <ul class="recent">
+          {recentPois.map((p) => (
+            <li>
+              <a href={poiHref(citySlug(p), p.slug)}>
+                <span>{p.name}</span>
+                <span class="where">{p.city}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <footer class="site-footer">
+      <p>Personal recommendations from Irina to her friends — not reviews, not ads.</p>
+    </footer>
+  </div>
+</Base>
+
+<script>
+  // Offer the last city viewed (stored only in this browser).
+  try {
+    const last = JSON.parse(localStorage.getItem('foodieverse:lastCity') ?? 'null');
+    const link = document.querySelector<HTMLAnchorElement>(`.city-link[data-city="${CSS.escape(last?.slug ?? '')}"]`);
+    const cont = document.getElementById('continue') as HTMLAnchorElement | null;
+    if (last && link && cont) {
+      cont.href = link.href;
+      cont.querySelector('[data-city-name]')!.textContent = last.name;
+      cont.hidden = false;
+    }
+  } catch {
+    /* storage unavailable */
+  }
+</script>

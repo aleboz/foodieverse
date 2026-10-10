@@ -1,0 +1,124 @@
+name: Validate & publish
+
+# - Every push and PR: validate data and build the site.
+# - Push to main: deploy to GitHub Pages (only if validation and build pass,
+#   so a broken commit never replaces the live site).
+# - Push to a claude/** branch that only touches data/: merge it into main and
+#   deploy. This lets AI authoring sessions publish without a manual merge.
+#   Branches that change code are left for a normal pull request.
+
+on:
+  push:
+    branches: [main, 'claude/**']
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      data_only: ${{ steps.scope.outputs.data_only }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Validate POI data
+        run: npm run validate
+
+      - name: Restore optimised images
+        uses: actions/cache@v4
+        with:
+          path: public/img
+          key: img-${{ hashFiles('data/images/**') }}
+          restore-keys: img-
+
+      - name: Build site
+        run: npm run images && npx astro build
+
+      - name: Upload Pages artifact
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - name: Check whether this branch only changes data/
+        id: scope
+        if: startsWith(github.ref, 'refs/heads/claude/')
+        run: |
+          git fetch origin main
+          changed=$(git diff --name-only origin/main...HEAD)
+          echo "Changed files:"; echo "$changed"
+          if [ -n "$changed" ] && ! echo "$changed" | grep -qv '^data/'; then
+            echo "data_only=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "data_only=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
+  promote:
+    # Content-only authoring branch: merge into main, then trigger the main
+    # deployment (pushes made with GITHUB_TOKEN do not start workflows on
+    # their own, but workflow_dispatch does).
+    if: startsWith(github.ref, 'refs/heads/claude/') && needs.build.outputs.data_only == 'true'
+    needs: build
+    runs-on: ubuntu-latest
+    concurrency:
+      group: promote-to-main
+      cancel-in-progress: false
+    permissions:
+      contents: write
+      actions: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Merge branch into main
+        run: |
+          git config user.name "foodieverse-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin "${GITHUB_REF_NAME}"
+          git merge --no-edit "origin/${GITHUB_REF_NAME}" -m "Publish ${GITHUB_REF_NAME}"
+
+      - name: Re-validate merged data
+        run: npm ci && npm run validate
+
+      - name: Push and deploy
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git push origin HEAD:main
+          gh workflow run publish.yml --ref main
