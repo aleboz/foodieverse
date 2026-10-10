@@ -122,3 +122,17 @@ export async function resolvePlace(input, { name: nameHint, city: cityHint } = {
   }
   return out;
 }
+
+/** Look up an address or "name, city" in OpenStreetMap. Returns null when nothing matches. */
+export async function geocode(query) {
+  const hits = await nominatim('search', { q: query, limit: 1 });
+  if (!hits.length) return null;
+  const h = hits[0];
+  return {
+    location: { latitude: +h.lat, longitude: +h.lon },
+    city: cityOf(h.address),
+    country: h.address?.country ?? null,
+    address: addressOf(h.address),
+    displayName: h.display_name,
+  };
+}

@@ -116,3 +116,68 @@ Return only the fields that must change; use null for everything else. "tags" is
     },
   );
 }
+
+const VERIFY_TOOL = {
+  name: 'report_place',
+  description: 'Report the verified identity of the place. Call this exactly once, at the end.',
+  strict: true,
+  input_schema: {
+    type: 'object',
+    additionalProperties: false,
+    required: ['same_place', 'confidence', 'name', 'address', 'city', 'country', 'note', 'source'],
+    properties: {
+      same_place: { type: 'boolean', description: 'Whether the OpenStreetMap match is the place the author means.' },
+      confidence: { type: 'string', enum: ['high', 'medium', 'low'] },
+      name: { type: 'string', description: "The place's own name as the business/venue uses it, without the city appended." },
+      address: nullable({ type: 'string', description: 'Street and number, postcode, city — as precise as the sources allow.' }),
+      city: nullable({ type: 'string', description: 'City in English (e.g. Copenhagen, not København).' }),
+      country: nullable({ type: 'string', description: 'Country in English.' }),
+      note: { type: 'string', description: 'One short sentence for the author: what was confirmed or corrected, and why.' },
+      source: nullable({ type: 'string', description: 'URL of the most useful source (official website preferred).' }),
+    },
+  },
+};
+
+/**
+ * Check with web search whether the place found via OpenStreetMap is the one
+ * the author's Google Maps link points to, and return its proper name and
+ * address. Returns null when AI is off or no verdict was reported.
+ */
+export async function verifyPlace({ mapsUrl, resolved, recommendation }) {
+  if (!aiEnabled()) return null;
+  const prompt = `Irina wants to recommend a place. Verify which place it is.
+
+Google Maps link she shared: ${mapsUrl}
+(Google Maps pages can't be read directly, but the link often contains the place name or a search query.)
+
+Our automatic match from OpenStreetMap:
+${JSON.stringify({ name: resolved.name, address: resolved.address, city: resolved.city, country: resolved.country, coordinates: resolved.location, otherCandidates: resolved.candidates?.slice(1, 4).map((c) => c.displayName) }, null, 2)}
+
+<author_text>
+${recommendation}
+</author_text>
+
+Search the web to confirm the place: its proper name, its street address, and whether the OpenStreetMap match is the same place (not, for example, a different branch or a building with a similar name). Use her text as a hint for what kind of place it is. Then call report_place once. If you can't confirm anything, report same_place true with confidence "low" and say so in the note.`;
+
+  const tools = [{ type: 'web_search_20260209', name: 'web_search', max_uses: 4 }, VERIFY_TOOL];
+  const messages = [{ role: 'user', content: prompt }];
+  for (let turn = 0; turn < 4; turn++) {
+    const response = await client().beta.messages.create({
+      model: MODEL,
+      max_tokens: 16000,
+      betas: ['server-side-fallback-2026-07-01'],
+      fallbacks: 'default',
+      system: SYSTEM,
+      output_config: { effort: 'medium' },
+      tools,
+      messages,
+    });
+    const report = response.content.find((b) => b.type === 'tool_use' && b.name === 'report_place');
+    if (report) return report.input;
+    if (response.stop_reason === 'refusal') throw new Error('The AI declined to check this place.');
+    if (response.stop_reason !== 'pause_turn' && response.stop_reason !== 'end_turn') break;
+    messages.push({ role: 'assistant', content: response.content });
+    if (response.stop_reason === 'end_turn') messages.push({ role: 'user', content: 'Please call report_place now with your findings.' });
+  }
+  return null;
+}
