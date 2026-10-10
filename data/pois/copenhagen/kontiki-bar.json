@@ -1,0 +1,28 @@
+{
+  "id": "kontiki-bar-copenhagen",
+  "slug": "kontiki-bar",
+  "name": "Kontiki Bar",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.6827904,
+    "longitude": 12.6034021
+  },
+  "category": "eat",
+  "tags": [
+    "cute",
+    "burgers",
+    "sunny-day",
+    "summer"
+  ],
+  "recommendation": "It's a cute burger place in a nice location. Good in the summer, but not recommended in winter.",
+  "rating": 1,
+  "googleMapsUrl": "https://maps.app.goo.gl/SH8H26aViLxLbT1y7",
+  "address": "Takkelloftvej 31, 1437 Copenhagen",
+  "images": [
+    "01.jpg"
+  ],
+  "status": "active",
+  "createdAt": "2026-10-10",
+  "updatedAt": "2026-10-10"
+}
