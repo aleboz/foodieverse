@@ -1,0 +1,70 @@
+name: New place
+description: Add a recommendation to Foodieverse
+title: "New place"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Paste the Google Maps link and write your recommendation. Everything else is optional — leave it on "Let the AI suggest".
+        You'll get a preview as a comment. Reply **yes** to publish, or reply with corrections ("make it three hearts", "remove expensive").
+  - type: input
+    id: maps
+    attributes:
+      label: Google Maps link
+      placeholder: https://maps.app.goo.gl/...
+    validations:
+      required: true
+  - type: textarea
+    id: recommendation
+    attributes:
+      label: Your recommendation
+      description: In your own words.
+    validations:
+      required: true
+  - type: dropdown
+    id: hearts
+    attributes:
+      label: Hearts
+      options:
+        - Let the AI suggest
+        - ♥ Recommended
+        - ♥♥ Strong recommendation
+        - ♥♥♥ Don't miss
+      default: 0
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - Let the AI suggest
+        - Eat
+        - Drink
+        - Coffee
+        - Shop
+        - Stay
+        - See
+        - Explore
+        - Other
+      default: 0
+  - type: input
+    id: tags
+    attributes:
+      label: Tags
+      description: Optional, comma-separated. Leave empty to let the AI choose.
+      placeholder: natural-wine, date-night
+  - type: textarea
+    id: photos
+    attributes:
+      label: Photos
+      description: Optional. Drag or paste your own photos here (JPEG or PNG).
+  - type: input
+    id: hint
+    attributes:
+      label: Place name and city
+      description: Only needed if the link isn't recognised, e.g. "Bar Vivant, Copenhagen".
+  - type: checkboxes
+    id: options
+    attributes:
+      label: Text
+      options:
+        - label: Publish my text exactly as written (no AI edits)
