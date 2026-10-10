@@ -1,0 +1,25 @@
+{
+  "id": "seks-copenhagen",
+  "slug": "seks",
+  "name": "Seks",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.681234,
+    "longitude": 12.574448
+  },
+  "category": "other",
+  "tags": [
+    "with-kids"
+  ],
+  "recommendation": "Super cool place, cool as hell. Amazing. Recommended for kids and psychopaths.",
+  "rating": 2,
+  "googleMapsUrl": "https://maps.app.goo.gl/4bA6g8gpZUn5dWK36?g_st=ic",
+  "address": "Krystalgade 6, 1172 København K",
+  "images": [
+    "01.jpg"
+  ],
+  "status": "active",
+  "createdAt": "2026-10-10",
+  "updatedAt": "2026-10-10"
+}
