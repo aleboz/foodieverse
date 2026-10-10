@@ -71,6 +71,16 @@ function imageUrls(text = '') {
   return [...urls];
 }
 
+/** The reply without quoted lines and without a trailing signature (after "---" or "-- "). */
+function replyText(text = '') {
+  const lines = [];
+  for (const line of text.split('\n')) {
+    if (/^\s*(---+|___+|\*\*\*+|-- )\s*$/.test(line)) break;
+    if (!/^\s*>/.test(line)) lines.push(line);
+  }
+  return stripImages(lines.join('\n'));
+}
+
 const stripImages = (text = '') =>
   text.replace(/!\[[^\]]*\]\([^)]*\)/g, '').replace(/<img[^>]*>/g, '').trim();
 
@@ -368,10 +378,10 @@ try {
     const text = event.comment.body ?? '';
     const state = await latestState();
     if (!state) await startFromIssue();
-    else if (YES_RE.test(stripImages(text))) await publish(state);
     else {
       state.images = [...state.images, ...imageUrls(text)];
-      await applyChangeRequest(state, stripImages(text));
+      if (YES_RE.test(replyText(text))) await publish(state);
+      else await applyChangeRequest(state, replyText(text));
     }
   }
 } catch (e) {
