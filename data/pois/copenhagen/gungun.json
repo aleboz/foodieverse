@@ -1,0 +1,26 @@
+{
+  "id": "gungun-copenhagen",
+  "slug": "gungun",
+  "name": "GUNGUN",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.6768173,
+    "longitude": 12.5749584
+  },
+  "category": "shop",
+  "tags": [
+    "cozy",
+    "handmade",
+    "gifts",
+    "cute"
+  ],
+  "recommendation": "Amazing cozy shop with some amazing handmade prints and jewelry. Very cute. Recommended for a good gift.",
+  "rating": 2,
+  "googleMapsUrl": "https://maps.app.goo.gl/o5bhKc5M5FjyqHEc6",
+  "address": "Kompagnistræde 25, 1208 Copenhagen",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-10",
+  "updatedAt": "2026-10-10"
+}
