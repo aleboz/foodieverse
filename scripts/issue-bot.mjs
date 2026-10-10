@@ -76,6 +76,7 @@ function replyText(text = '') {
   const lines = [];
   for (const line of text.split('\n')) {
     if (/^\s*(---+|___+|\*\*\*+|-- )\s*$/.test(line)) break;
+    if (/^\s*(sent from my|get outlook for|sent with)\b/i.test(line)) break;
     if (!/^\s*>/.test(line)) lines.push(line);
   }
   return stripImages(lines.join('\n'));
@@ -83,6 +84,86 @@ function replyText(text = '') {
 
 const stripImages = (text = '') =>
   text.replace(/!\[[^\]]*\]\([^)]*\)/g, '').replace(/<img[^>]*>/g, '').trim();
+
+const MAPS_URL_RE = /https?:\/\/(?:maps\.app\.goo\.gl|goo\.gl\/maps|(?:www\.)?google\.[a-z.]+\/maps|maps\.google\.[a-z.]+)\S*/i;
+const GENERIC_TITLE_RE = /^\s*(new place|new|place|untitled|issue)?\s*$/i;
+const NUMBER_WORDS = { one: 1, two: 2, three: 3 };
+
+const HEART_RE = /♥|❤️?|<3/g;
+const COUNT_RE = /\b([1-3]|one|two|three)\s*hearts?\b/gi;
+const TAG_RE = /(^|\s)#([\p{L}\p{N}][\p{L}\p{N}-]*)/gu;
+const leftover = (t) => t.replace(/[\s,;:·.!-]/g, '');
+
+/**
+ * Reads hearts, category and #tags from plain text, e.g. "♥♥ drink #natural-wine"
+ * or "3 hearts". Strict mode (new places) only reads lines made up entirely of
+ * such tokens and removes them from the text, so "I ❤️ this place" stays text.
+ * Loose mode (correction replies) reads them anywhere, plus status words
+ * ("it has closed", "reopened").
+ */
+function parseSimple(text = '', { loose = false } = {}) {
+  const found = {};
+  const keep = [];
+  for (const line of text.split('\n')) {
+    const hearts = (line.match(HEART_RE) ?? []).length;
+    const count = [...line.matchAll(COUNT_RE)].at(-1);
+    const tags = [...line.matchAll(TAG_RE)].map((m) => m[2]);
+    let rest = line.replace(HEART_RE, ' ').replace(COUNT_RE, ' ').replace(TAG_RE, ' ');
+    let category = null;
+    for (const c of taxonomy.categories) {
+      const re = new RegExp(`(^|[^\\p{L}])(category:?\\s*)?${c.label}(?![\\p{L}])`, 'iu');
+      if (re.test(rest) && (loose || !leftover(rest.replace(re, ' ')))) {
+        category = c.id;
+        rest = rest.replace(re, ' ');
+        break;
+      }
+    }
+    const isMeta = (hearts || count || tags.length || category) && !leftover(rest);
+    if (isMeta || loose) {
+      if (count) found.rating = NUMBER_WORDS[count[1].toLowerCase()] ?? Number(count[1]);
+      else if (hearts) found.rating = Math.min(3, hearts);
+      if (tags.length) found.tags = [...(found.tags ?? []), ...tags];
+      if (category) found.category = category;
+    }
+    if (loose) {
+      if (/\btemporar(il)?y closed\b/i.test(line)) found.status = 'temporarily-closed';
+      else if (/\b(re-?opened|open again)\b/i.test(line)) found.status = 'active';
+      else if (/\b(closed|shut down)\b/i.test(line)) found.status = 'closed';
+      else if (/\b(archive|hide it)\b/i.test(line)) found.status = 'archived';
+    }
+    if (!isMeta) keep.push(line);
+  }
+  return { ...found, text: keep.join('\n').replace(/\n{3,}/g, '\n\n').trim() };
+}
+
+/** A plain issue: Maps link + text (+ optional hearts/category/#tags line), or "Update …". */
+function parsePlainIssue(title = '', body = '') {
+  const titleText = GENERIC_TITLE_RE.test(title) ? '' : title.trim();
+  const all = stripImages(`${titleText}\n${body ?? ''}`).trim();
+  if (/^update\b/i.test(all)) {
+    const [first, ...more] = all.replace(/^update\s*:?\s*/i, '').split('\n');
+    const split = first.match(/^(.*?)(?::|\s[-–—]\s)(.*)$/);
+    const place = (split ? split[1] : first).trim();
+    const change = [split ? split[2] : '', ...more].join('\n').trim();
+    return { kind: 'update', place, change, images: imageUrls(body) };
+  }
+  const url = all.match(MAPS_URL_RE)?.[0];
+  if (!url) return null;
+  const textBody = stripImages(body ?? '').replace(url, '').trim();
+  const parsed = parseSimple(textBody);
+  return {
+    kind: 'add',
+    url,
+    recommendation: parsed.text,
+    hearts: parsed.rating ?? null,
+    category: parsed.category ?? null,
+    tags: cleanTags(parsed.tags),
+    keepText: false,
+    nameHint: '', // the title is only used as a fallback if the link can't be resolved
+    cityHint: '',
+    images: imageUrls(body),
+  };
+}
 
 async function downloadImages(urls) {
   const files = [];
@@ -159,7 +240,13 @@ function previewMarkdown(p, { photos = 0, notes = [], diff = null } = {}) {
   ];
   if (diff) lines.push('', '<details><summary>Changes</summary>', '', '```diff', diff, '```', '</details>');
   for (const n of notes.filter(Boolean)) lines.push('', `> [!NOTE]\n> ${n}`);
-  lines.push('', '---', 'Reply **yes** to publish, or reply with corrections in plain words (e.g. "make it three hearts", "remove expensive", "keep my original text").');
+  lines.push(
+    '',
+    '---',
+    aiEnabled()
+      ? 'Reply **yes** to publish, or reply with corrections in plain words (e.g. "make it three hearts", "remove expensive", "keep my original text").'
+      : 'Reply **yes** to publish, or reply with corrections such as "3 hearts", "Drink", "#terrace" or "remove #expensive".',
+  );
   return lines.join('\n');
 }
 
@@ -200,31 +287,50 @@ async function postPreview(state, poiForPreview, { notes = [], diff = null } = {
 // ---------- Flows ----------
 async function startFromIssue() {
   const form = parseForm(issue.body);
-  if ('Google Maps link' in form) return startNewPlace(form);
-  if ('Which place?' in form) return startUpdate(form);
-  await comment('Please use the **New place** or **Update a place** form to open issues here.');
+  if ('Google Maps link' in form) {
+    const [nameHint, cityHint] = (form['Place name and city'] || '').split(',').map((v) => v.trim());
+    return startNewPlace({
+      url: form['Google Maps link'].match(/https?:\/\/\S+/)?.[0],
+      recommendation: stripImages(form['Your recommendation']),
+      hearts: { '♥ Recommended': 1, '♥♥ Strong recommendation': 2, "♥♥♥ Don't miss": 3 }[form.Hearts] ?? null,
+      category: taxonomy.categories.find((c) => c.label === form.Category)?.id ?? null,
+      tags: cleanTags((form.Tags || '').split(',')),
+      keepText: /\[x\]/i.test(form.Text || ''),
+      nameHint: nameHint || '',
+      cityHint: cityHint || '',
+      images: imageUrls(form.Photos),
+    });
+  }
+  if ('Which place?' in form) {
+    return startUpdate({ place: form['Which place?'], change: stripImages(form['What should change?'] || ''), images: imageUrls(form['Photos to add']) });
+  }
+  const plain = parsePlainIssue(issue.title, issue.body);
+  if (plain?.kind === 'add') return startNewPlace(plain);
+  if (plain?.kind === 'update') return startUpdate(plain);
+  await comment(
+    'To add a place, write the Google Maps link and your recommendation, optionally with a line like `♥♥ drink #natural-wine`.\n' +
+      'To change one, start with `Update`, e.g. `Update Bar Vivant, Copenhagen: one heart`.',
+  );
 }
 
-async function startNewPlace(form) {
-  const url = form['Google Maps link'].match(/https?:\/\/\S+/)?.[0];
-  const recommendation = stripImages(form['Your recommendation']);
+async function startNewPlace(input) {
+  const { url, recommendation } = input;
   if (!url || !recommendation) return comment('I need both a Google Maps link and your recommendation — please edit the issue.');
 
-  const [hintName, hintCity] = (form['Place name and city'] || '').split(',').map((s) => s.trim());
-  const place = await resolvePlace(url, { name: hintName || undefined, city: hintCity || undefined });
+  let place = await resolvePlace(url, { name: input.nameHint || undefined, city: input.cityHint || undefined });
+  if ((!place.name || !place.location || !place.city) && !input.nameHint && issue.title && !GENERIC_TITLE_RE.test(issue.title) && !issue.title.includes(url)) {
+    place = await resolvePlace(url, { name: issue.title.trim() });
+  }
   if (!place.name || !place.location || !place.city) {
     return comment(
       `I couldn't work out which place this link points to${place.warnings.length ? ` (${place.warnings.join(' ')})` : ''}.\n\n` +
-        'Please edit the issue and fill in **Place name and city** (e.g. "Bar Vivant, Copenhagen"), or paste the full link from the Google Maps "Share" button.',
+        'Please paste the link from the Google Maps **Share** button, or put the place name and city in the issue title (e.g. "Bar Vivant, Copenhagen").',
     );
   }
   const notes = [...place.warnings];
-  if (place.candidates.length > 1) notes.push(`Matched "${place.candidates[0].displayName}". If that's wrong, fill in **Place name and city** in the issue.`);
+  if (place.candidates.length > 1) notes.push(`Matched "${place.candidates[0].displayName}". If that's wrong, put the place name and city in the issue title.`);
 
-  const hearts = { '♥ Recommended': 1, '♥♥ Strong recommendation': 2, "♥♥♥ Don't miss": 3 }[form.Hearts] ?? null;
-  const category = taxonomy.categories.find((c) => c.label === form.Category)?.id ?? null;
-  const userTags = cleanTags((form.Tags || '').split(','));
-  const keepText = /\[x\]/i.test(form.Text || '');
+  const { hearts, category, tags: userTags, keepText } = input;
 
   let ai = null;
   try {
@@ -232,7 +338,7 @@ async function startNewPlace(form) {
   } catch (e) {
     notes.push(`AI suggestions unavailable this time (${e.message}).`);
   }
-  if (!ai && !aiEnabled()) notes.push('AI suggestions are off (no API key configured), so category, hearts and tags come only from the form.');
+  if (!ai && !aiEnabled()) notes.push('AI suggestions are off (no API key configured), so category, hearts and tags come only from what you wrote.');
   if (ai?.notes) notes.push(ai.notes);
 
   const draft = {
@@ -248,22 +354,25 @@ async function startNewPlace(form) {
     address: place.address,
   };
   const dupes = findDuplicates({ ...draft, id: '' }, allPois());
-  for (const d of dupes) notes.push(`"${d.name}" in ${d.city} already exists (${d.status}). Use the **Update a place** form if you meant to change it.`);
+  for (const d of dupes) notes.push(`"${d.name}" in ${d.city} already exists (${d.status}). To change it instead, open an issue starting with \`Update\`.`);
 
-  const state = { kind: 'add', draft, original: recommendation, images: imageUrls(form.Photos) };
+  const state = { kind: 'add', draft, original: recommendation, images: input.images };
   await postPreview(state, draft, { notes });
 }
 
-async function startUpdate(form) {
-  const query = form['Which place?'];
-  const hits = findPlace(query);
+async function startUpdate({ place: query, change, images }) {
+  const hits = query ? findPlace(query) : [];
   if (hits.length !== 1) {
     const list = hits.slice(0, 8).map((p) => `- ${p.name}, ${p.city}`).join('\n');
-    return comment(hits.length ? `Several places match "${query}":\n\n${list}\n\nPlease edit the issue with the exact name and city.` : `I couldn't find "${query}". Please edit the issue with the exact name and city, or the link to its page.`);
+    return comment(
+      hits.length
+        ? `Several places match "${query}":\n\n${list}\n\nPlease edit the issue with the exact name and city.`
+        : `I couldn't find "${query}". Please edit the issue with the exact name and city (e.g. \`Update Bar Vivant, Copenhagen: one heart\`), or the link to its page.`,
+    );
   }
   const poi = hits[0];
   const ref = `${slugify(poi.city)}/${poi.slug}`;
-  await applyChangeRequest({ kind: 'update', ref, patch: {}, images: imageUrls(form['Photos to add']) }, stripImages(form['What should change?'] || ''));
+  await applyChangeRequest({ kind: 'update', ref, patch: {}, images }, change);
 }
 
 /** Apply a plain-words change request to the current state and post a new preview. */
@@ -276,7 +385,22 @@ async function applyChangeRequest(state, request) {
 
   if (request) {
     if (!aiEnabled()) {
-      notes.push("Changes in plain words need the AI, which isn't configured. Edit the issue form instead.");
+      const simple = parseSimple(request, { loose: true });
+      const understood = [];
+      if (simple.rating) { current.rating = simple.rating; understood.push(`${'♥'.repeat(simple.rating)}`); }
+      if (simple.category) { current.category = simple.category; understood.push(categoryLabel(simple.category)); }
+      if (simple.status) { current.status = simple.status; understood.push(simple.status); }
+      if (simple.tags?.length) {
+        const remove = /\b(remove|delete|drop|without)\b/i.test(request);
+        const tags = cleanTags(simple.tags);
+        current.tags = remove ? (current.tags ?? []).filter((t) => !tags.includes(t)) : cleanTags([...(current.tags ?? []), ...tags]);
+        understood.push(`${remove ? 'removed' : 'added'} ${tags.map((t) => `#${t}`).join(' ')}`);
+      }
+      notes.push(
+        understood.length
+          ? `Changed: ${understood.join(', ')}.`
+          : 'Without the AI I only understand hearts (`♥♥`, "3 hearts"), a category word, `#tags` (add, or "remove #tag") and "closed" / "reopened". Edit the issue to change anything else.',
+      );
     } else {
       let change = null;
       try {

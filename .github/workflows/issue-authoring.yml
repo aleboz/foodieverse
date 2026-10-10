@@ -1,8 +1,9 @@
 name: Issue authoring
 
 # Add or update places from the GitHub mobile app or website, no AI chat needed:
-# open a "New place" / "Update a place" issue, get a preview comment, reply
-# "yes" to publish. Only the repository owner, members and collaborators can
+# open an issue with a Google Maps link and your text (or one starting with
+# "Update …", or use the issue forms on the website), get a preview comment,
+# reply "yes" to publish. Only the repository owner, members and collaborators can
 # trigger it; everyone else's issues and comments are ignored.
 #
 # Optional: add an ANTHROPIC_API_KEY repository secret for AI suggestions
@@ -23,11 +24,14 @@ jobs:
     if: >-
       !github.event.issue.pull_request &&
       github.event.issue.state == 'open' &&
-      (contains(github.event.issue.body, '### Google Maps link') || contains(github.event.issue.body, '### Which place?')) &&
+      (contains(github.event.issue.body, 'goo.gl') || contains(github.event.issue.body, 'google.') ||
+       contains(github.event.issue.title, 'goo.gl') || contains(github.event.issue.title, 'google.') ||
+       startsWith(github.event.issue.title, 'update') || startsWith(github.event.issue.body, 'update') ||
+       contains(github.event.issue.body, '### Which place?')) &&
       (
         (github.event_name == 'issues' &&
           contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.issue.author_association) &&
-          (github.event.action == 'opened' || github.event.changes.body != null)) ||
+          (github.event.action == 'opened' || github.event.changes.body != null || github.event.changes.title != null)) ||
         (github.event_name == 'issue_comment' &&
           github.event.comment.user.type != 'Bot' &&
           contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association))

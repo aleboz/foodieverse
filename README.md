@@ -32,8 +32,8 @@ hearts", "Bar Vivant has closed") work the same way.
 
 ### From the GitHub app, without an AI chat
 
-Open a **New place** issue in this repository (GitHub mobile app or website),
-paste the Maps link and your text, and reply **yes** to the preview comment.
+Open an issue in this repository (GitHub mobile app or website) with the
+Google Maps link and your text, and reply **yes** to the preview comment.
 See [docs/issue-authoring.md](docs/issue-authoring.md). AI suggestions there
 need an `ANTHROPIC_API_KEY` repository secret.
 
