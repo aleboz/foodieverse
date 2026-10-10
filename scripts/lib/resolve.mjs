@@ -84,22 +84,39 @@ export async function resolvePlace(input, { name: nameHint, city: cityHint } = {
       if (t && !/^Google Maps$/i.test(t[1])) out.name = t[1].split(' · ')[0].trim();
     }
 
+    // Share links from the Google Maps app look like ?q=Name, Street 1, 1234 City, Country:
+    // the name plus the full address, but no coordinates. Split them.
+    let addressPart = null;
+    if (out.name && !nameHint && out.name.includes(',')) {
+      const [first, ...rest] = out.name.split(',').map((x) => x.trim());
+      if (rest.length && /\d/.test(rest.join(' '))) {
+        out.name = first;
+        addressPart = rest.join(', ');
+      }
+    }
+
     if (!out.location && out.name) {
-      const q = [out.name, cityHint].filter(Boolean).join(', ');
-      const hits = await nominatim('search', { q, limit: 5 });
-      out.candidates = hits.map((h) => ({
-        name: h.name || h.display_name.split(',')[0],
-        displayName: h.display_name,
-        location: { latitude: +h.lat, longitude: +h.lon },
-        type: `${h.category}/${h.type}`,
-      }));
-      if (hits.length) {
+      const cityGuess = cityHint || addressPart?.split(',').map((x) => x.replace(/\d+/g, '').trim()).filter(Boolean).at(-2);
+      const queries = [
+        addressPart ? `${out.name}, ${addressPart}` : null,
+        addressPart, // the address alone usually finds the building
+        [out.name, cityGuess].filter(Boolean).join(', '),
+      ].filter(Boolean);
+      for (const q of [...new Set(queries)]) {
+        const hits = await nominatim('search', { q, limit: 5 });
+        if (!hits.length) continue;
+        out.candidates = hits.map((h) => ({
+          name: h.name || h.display_name.split(',')[0],
+          displayName: h.display_name,
+          location: { latitude: +h.lat, longitude: +h.lon },
+          type: `${h.category}/${h.type}`,
+        }));
         out.location = out.candidates[0].location;
         out.source.push(`coordinates from OpenStreetMap search for "${q}"`);
-        if (hits.length > 1) out.warnings.push(`${hits.length} OpenStreetMap matches — confirm the right one (see candidates).`);
-      } else {
-        out.warnings.push(`No OpenStreetMap match for "${q}" — use web search to find the address/coordinates.`);
+        if (hits.length > 1 && q !== addressPart) out.warnings.push(`${hits.length} OpenStreetMap matches — confirm the right one (see candidates).`);
+        break;
       }
+      if (!out.location) out.warnings.push(`No OpenStreetMap match for "${queries[0]}" — use web search to find the address/coordinates.`);
     }
 
     if (out.location) {
