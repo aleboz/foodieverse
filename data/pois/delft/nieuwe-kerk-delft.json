@@ -1,0 +1,23 @@
+{
+  "id": "nieuwe-kerk-delft-delft",
+  "slug": "nieuwe-kerk-delft",
+  "name": "Nieuwe Kerk Delft",
+  "city": "Delft",
+  "country": "Netherlands",
+  "location": {
+    "latitude": 52.0122877,
+    "longitude": 4.3607206
+  },
+  "category": "see",
+  "tags": [
+    "e2e-test"
+  ],
+  "recommendation": "Test entry, will be removed.",
+  "rating": 2,
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Nieuwe+Kerk+Delft",
+  "address": "Markt 80, 2611 GW, Delft",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-10",
+  "updatedAt": "2026-10-10"
+}
