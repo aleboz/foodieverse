@@ -32,7 +32,7 @@ read the header row first instead of relying on letters.
 | Check on map | OpenStreetMap link to the pin; for Irina only. |
 | Google Maps link | → `googleMapsUrl`. A Google Maps search for the name and address, unless Irina replaced it with her own share link. |
 | Vibe | `No-frills` / `Hipster` / `Casual` / `Fancy` → `vibe` (lowercase). |
-| Breakfast / brunch … Beer / Wine | Checkboxes → `serves`: `breakfast-brunch`, `coffee`, `lunch`, `dinner`, `cocktails`, `beer-wine`. |
+| Breakfast / brunch … Beer / Wine | Checkboxes → `serves`: `breakfast-brunch`, `coffee`, `ice-cream`, `lunch`, `dinner`, `cocktails`, `beer-wine`. |
 | Tags | Comma-separated → `tags`. Already includes the area tag. |
 | Text for the site | → `recommendation`. Already lightly edited; publish it as it stands in the sheet. |
 | Your original text… | Her text before the light edit, only where something changed. Not published. |
@@ -44,7 +44,7 @@ read the header row first instead of relying on letters.
 ### Tab "Name only (33)": Vesterbro places with only a name
 
 Same idea, with fewer columns: Import?, On the site, Area, Name, Google Maps
-link (a search by name only, so check it), Vibe, the six when-to-go
+link (a search by name only, so check it), Vibe, the seven when-to-go
 checkboxes, **Your text (needed to import)**, Address (optional), Section in
 your doc. When you find the address, also update the Google Maps link to
 search for name and address. There are no coordinates: for a ready row, find the

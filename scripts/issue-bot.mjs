@@ -102,6 +102,7 @@ const VIBE_WORDS = taxonomy.vibes.map((v) => ({ id: v.id, re: word(v.id.replace(
 const SERVES_WORDS = [
   ['breakfast-brunch', 'breakfast\\s*/\\s*brunch|breakfast|brunch'],
   ['coffee', 'coffee\\s*shop|coffee|café|cafe'],
+  ['ice-cream', 'ice[\\s-]*cream|gelato'],
   ['lunch', 'lunch'],
   ['dinner', 'dinner'],
   ['cocktails', 'cocktails?'],

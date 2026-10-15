@@ -19,8 +19,8 @@ and attach your own photos if you like.
   anywhere, in the title or the text.
 - **Everything else is your recommendation.**
 - **Vibe and when to go** are needed for every place: a line with the vibe
-  (no-frills, hipster, casual or fancy) and when to go (breakfast / brunch, coffee, lunch,
-  dinner, cocktails, beer / wine), optionally with `#tags`. If you leave them
+  (no-frills, hipster, casual or fancy) and when to go (breakfast / brunch, coffee, ice cream,
+  lunch, dinner, cocktails, beer / wine), optionally with `#tags`. If you leave them
   out, the preview asks you, and you answer in plain words ("casual, lunch and
   dinner"). Tags are optional; with AI suggestions on, they are suggested for
   you.

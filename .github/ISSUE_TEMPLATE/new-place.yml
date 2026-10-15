@@ -47,6 +47,7 @@ body:
       options:
         - label: Breakfast / brunch
         - label: Coffee shop
+        - label: Ice cream
         - label: Lunch
         - label: Dinner
         - label: Cocktails

@@ -8,6 +8,7 @@
   "serves": [
     { "id": "breakfast-brunch", "label": "Breakfast / brunch" },
     { "id": "coffee", "label": "Coffee shop" },
+    { "id": "ice-cream", "label": "Ice cream" },
     { "id": "lunch", "label": "Lunch" },
     { "id": "dinner", "label": "Dinner" },
     { "id": "cocktails", "label": "Cocktails" },
