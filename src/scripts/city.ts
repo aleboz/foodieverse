@@ -1,4 +1,4 @@
-// City page behaviour: search, filters, list/map switching and "near me".
+// City page behaviour: search, filters, sorting, list/map switching and "near me".
 // Filter state lives in the URL query so reloads, shared links and the back
 // button all behave predictably.
 import type { MapPoi, PoiMap } from './map';
@@ -8,6 +8,7 @@ interface State {
   when: string;
   vibe: string;
   tags: string[];
+  sort: '' | 'new';
   view: 'list' | 'map';
 }
 
@@ -21,6 +22,7 @@ function readState(): State {
     when: p.get('when') ?? '',
     vibe: p.get('vibe') ?? '',
     tags: (p.get('tag') ?? '').split(',').filter(Boolean),
+    sort: p.get('sort') === 'new' ? 'new' : '',
     view: p.get('view') === 'map' ? 'map' : 'list',
   };
 }
@@ -31,6 +33,7 @@ function stateUrl(s: State): string {
   if (s.when) p.set('when', s.when);
   if (s.vibe) p.set('vibe', s.vibe);
   if (s.tags.length) p.set('tag', s.tags.join(','));
+  if (s.sort) p.set('sort', s.sort);
   if (s.view === 'map') p.set('view', 'map');
   const qs = p.toString();
   return location.pathname + (qs ? `?${qs}` : '');
@@ -119,12 +122,31 @@ export function initCity() {
     if (more && state.tags.length) more.open = true;
 
     poiMap?.setVisible(visibleIds);
+    applyOrder();
     applyView();
     try {
       sessionStorage.setItem(`foodieverse:cityUrl:${cityKey}`, stateUrl({ ...state, view: 'list' }));
     } catch {
       /* storage unavailable */
     }
+  }
+
+  // A–Z is the page's own order; Newest sorts by last change (stable, so
+  // places changed on the same day stay alphabetical). Near me wins while on.
+  function applyOrder() {
+    document.querySelectorAll<HTMLButtonElement>('[data-sort]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.sort === state.sort)));
+    cards.forEach((c) => (c.querySelector<HTMLElement>('[data-changed]')!.hidden = state.sort !== 'new' || !!me));
+    if (me) return;
+    const ordered = state.sort === 'new'
+      ? [...originalOrder].sort((a, b) => (b.dataset.updated ?? '').localeCompare(a.dataset.updated ?? ''))
+      : originalOrder;
+    ordered.forEach((c) => list.appendChild(c));
+  }
+
+  function clearNearMe() {
+    me = null;
+    cards.forEach((c) => (c.querySelector<HTMLElement>('[data-distance]')!.hidden = true));
+    nearBtn.innerHTML = '<span aria-hidden="true">◎</span> Near me';
   }
 
   function applyView() {
@@ -164,6 +186,10 @@ export function initCity() {
     if (!b) return;
     if (b.dataset.when !== undefined) update({ when: b.dataset.when });
     else if (b.dataset.vibe !== undefined) update({ vibe: b.dataset.vibe });
+    else if (b.dataset.sort !== undefined) {
+      if (me) clearNearMe();
+      update({ sort: b.dataset.sort === 'new' ? 'new' : '' });
+    }
     else if (b.dataset.tag !== undefined) {
       const tag = b.dataset.tag;
       update({ tags: state.tags.includes(tag) ? state.tags.filter((x) => x !== tag) : [...state.tags, tag] });
@@ -205,10 +231,7 @@ export function initCity() {
   if (!('geolocation' in navigator)) nearBtn.hidden = true;
   nearBtn.addEventListener('click', () => {
     if (me) {
-      me = null;
-      originalOrder.forEach((c) => list.appendChild(c));
-      cards.forEach((c) => (c.querySelector<HTMLElement>('[data-distance]')!.hidden = true));
-      nearBtn.innerHTML = '<span aria-hidden="true">◎</span> Near me';
+      clearNearMe();
       apply();
       return;
     }
@@ -224,6 +247,7 @@ export function initCity() {
           const el = c.querySelector<HTMLElement>('[data-distance]')!;
           el.textContent = formatDistance(dist(c));
           el.hidden = false;
+          c.querySelector<HTMLElement>('[data-changed]')!.hidden = true;
         });
         nearBtn.disabled = false;
         nearBtn.innerHTML = '<span aria-hidden="true">✕</span> Nearest first';
