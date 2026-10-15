@@ -28,6 +28,10 @@ const mapData = pois.map((p) => ({
   url: poiHref(city.slug, p.slug),
 }));
 
+// "Added 15 Oct" / "Updated 15 Oct", shown on cards when sorting by newest.
+const fmtDate = (d: string) => new Date(d + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+const changedLabel = (p: (typeof pois)[number]) => `${p.updatedAt > p.createdAt ? 'Updated' : 'Added'} ${fmtDate(p.updatedAt)}`;
+
 const excerpt = (s: string) => (s.length > 220 ? s.slice(0, 217).replace(/\s+\S*$/, '') + '…' : s);
 ---
 <Base
@@ -77,7 +81,11 @@ const excerpt = (s: string) => (s.length > 220 ? s.slice(0, 217).replace(/\s+\S*
 
       <div class="result-bar">
         <p class="result-count" id="result-count" aria-live="polite">{pois.length} places</p>
-        <span>
+        <span class="result-actions">
+          <span class="sort" role="group" aria-label="Sort">
+            <button type="button" class="sort-btn" data-sort="" aria-pressed="true">A–Z</button>
+            <button type="button" class="sort-btn" data-sort="new" aria-pressed="false">Newest</button>
+          </span>
           <button type="button" class="link-btn" id="reset" hidden>Reset</button>
           <button type="button" class="link-btn" id="near-me"><span aria-hidden="true">◎</span> Near me</button>
         </span>
@@ -96,6 +104,7 @@ const excerpt = (s: string) => (s.length > 220 ? s.slice(0, 217).replace(/\s+\S*
               data-search={searchText(p)}
               data-lat={p.location.latitude}
               data-lng={p.location.longitude}
+              data-updated={p.updatedAt}
             >
               <div>
                 <h3><a href={poiHref(city.slug, p.slug)}>{p.name}</a></h3>
@@ -103,6 +112,7 @@ const excerpt = (s: string) => (s.length > 220 ? s.slice(0, 217).replace(/\s+\S*
                   <span class="vibe">{vibeLabel(p.vibe)}</span>
                   <span class="meta">{servesLabels(p).join(' · ')}</span>
                   <span class="meta distance" data-distance hidden></span>
+                  <span class="meta changed" data-changed hidden>{changedLabel(p)}</span>
                 </div>
                 <p class="excerpt">{excerpt(p.recommendation)}</p>
                 {p.tags && p.tags.length > 0 && (
