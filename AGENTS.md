@@ -99,6 +99,12 @@ Irina sends a Google Maps link, her text and maybe photos.
 - Add photos to an existing place with `poi update <ref> --image …`.
 - Every change needs the same light confirmation: request → preview → yes.
 
+## Importing from the review sheet
+
+Irina is preparing the places from her Copenhagen guide in a Google Sheet. When
+she asks to "publish what's ready" (or similar), follow
+`docs/sheet-import.md`.
+
 ## Editing policy (her voice is the product)
 
 - Fix obvious spelling, grammar and punctuation. Make very small readability
