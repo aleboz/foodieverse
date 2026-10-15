@@ -1,0 +1,27 @@
+{
+  "id": "lille-fugl-copenhagen",
+  "slug": "lille-fugl",
+  "name": "Lille Fugl",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.677557,
+    "longitude": 12.577641
+  },
+  "vibe": "cheap",
+  "serves": [
+    "coffee",
+    "lunch"
+  ],
+  "tags": [
+    "favourite"
+  ],
+  "recommendation": "This is a coffeehouse where the food is so good you will remember it for a while. I am still dreaming of that chanterelle frittata I had there the first time 😀. Probably your best option for lunch among very many options just on that block.",
+  "googleMapsUrl": "https://maps.app.goo.gl/nYCp5gkKZSWxvcxQ8?g_st=ac",
+  "website": null,
+  "address": "Gammel Strand 48, 1202 København K",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}
