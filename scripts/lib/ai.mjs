@@ -5,17 +5,18 @@ import Anthropic from '@anthropic-ai/sdk';
 import { taxonomy } from './poi.mjs';
 
 const MODEL = process.env.FOODIEVERSE_MODEL || 'claude-opus-5-5';
-const CATEGORY_IDS = taxonomy.categories.map((c) => c.id);
+const VIBE_IDS = taxonomy.vibes.map((v) => v.id);
+const SERVES_IDS = taxonomy.serves.map((s) => s.id);
 const STATUSES = taxonomy.statuses;
 
 export const aiEnabled = () => Boolean(process.env.ANTHROPIC_API_KEY);
 
 const SYSTEM = `You help Irina publish personal place recommendations to "Irina's Foodieverse", a small website for her friends.
 
-Categories (exactly one): ${taxonomy.categories.map((c) => `${c.id} (${c.description})`).join('; ')}.
-Pick the category for what the place is mainly recommended for.
-
-Hearts: 1 = recommended / good / worth a visit; 2 = strong ("really good", "love it", "absolutely worth it"); 3 = "one of my favourites", "don't miss", "best in town". If unclear, use 2.
+Every place is about food or drink and has two required categories:
+- Vibe (exactly one): ${taxonomy.vibes.map((v) => `${v.id} (${v.label})`).join(', ')}. It is how the place feels, not what it costs.
+- Serves (one or more): ${taxonomy.serves.map((s) => `${s.id} (${s.label})`).join(', ')}. When the place is worth going to.
+Only fill these in when Irina's words say so or make it plain ("cocktail bar" → cocktails, "our brunch spot" → breakfast-brunch, "super fancy" → fancy). Never guess from what you know about the place: leave them empty so she can be asked.
 
 Tags: lowercase kebab-case, usually 2-5. Reuse existing tags whenever one fits; only invent a new tag when nothing fits. Tags describe what Irina said, never facts she did not mention.
 
@@ -52,7 +53,7 @@ const tagsSchema = { type: 'array', items: { type: 'string' } };
 
 const tagList = (tags) => (Object.keys(tags).length ? Object.entries(tags).map(([t, n]) => `${t} (${n})`).join(', ') : '(none yet)');
 
-/** Suggest category, hearts, tags and a lightly edited text for a new place. */
+/** Suggest vibe, service times, tags and a lightly edited text for a new place. */
 export async function suggestNewPlace({ name, city, recommendation, existingTags }) {
   return ask(
     `New place: ${name}, ${city}.
@@ -63,14 +64,14 @@ Existing tags with usage counts: ${tagList(existingTags)}
 ${recommendation}
 </author_text>
 
-Return the category, hearts, tags and the lightly edited recommendation. In "notes", add one short sentence only if something is uncertain (for example hearts guessed); otherwise an empty string.`,
+Return the vibe (null if her text doesn't say), the service times (empty list if her text doesn't say), tags and the lightly edited recommendation. In "notes", add one short sentence only if something is uncertain; otherwise an empty string.`,
     {
       type: 'object',
       additionalProperties: false,
-      required: ['category', 'rating', 'tags', 'recommendation', 'notes'],
+      required: ['vibe', 'serves', 'tags', 'recommendation', 'notes'],
       properties: {
-        category: { type: 'string', enum: CATEGORY_IDS },
-        rating: { type: 'integer', enum: [1, 2, 3] },
+        vibe: nullable({ type: 'string', enum: VIBE_IDS }),
+        serves: { type: 'array', items: { type: 'string', enum: SERVES_IDS } },
         tags: tagsSchema,
         recommendation: { type: 'string' },
         notes: { type: 'string' },
@@ -80,14 +81,14 @@ Return the category, hearts, tags and the lightly edited recommendation. In "not
 }
 
 /**
- * Turn a free-text request ("make it three hearts", "remove expensive", "it has
+ * Turn a free-text request ("make it fancy", "remove expensive", "it has
  * closed") into changes to a place. Fields left null are unchanged.
  */
 export async function interpretChange({ poi, request, existingTags }) {
   return ask(
     `Current place:
 ${JSON.stringify(
-  { name: poi.name, city: poi.city, category: poi.category, rating: poi.rating, tags: poi.tags, status: poi.status, address: poi.address, recommendation: poi.recommendation },
+  { name: poi.name, city: poi.city, vibe: poi.vibe, serves: poi.serves, tags: poi.tags, status: poi.status, address: poi.address, recommendation: poi.recommendation },
   null,
   2,
 )}
@@ -98,15 +99,15 @@ Existing tags with usage counts: ${tagList(existingTags)}
 ${request}
 </request>
 
-Return only the fields that must change; use null for everything else. "tags" is the complete new tag list when tags change. If she supplies new recommendation text, apply the editing policy to it; if she asks to keep her text exactly, copy it verbatim. If she asks to rewrite only part, change only that part. Status values: ${STATUSES.join(', ')} ("closed" for places that closed, "archived" to hide). In "reply", write one short sentence summarising what you changed, or what you could not do.`,
+Return only the fields that must change; use null for everything else. "tags" and "serves" are the complete new lists when they change. If she supplies new recommendation text, apply the editing policy to it; if she asks to keep her text exactly, copy it verbatim. If she asks to rewrite only part, change only that part. Status values: ${STATUSES.join(', ')} ("closed" for places that closed, "archived" to hide). In "reply", write one short sentence summarising what you changed, or what you could not do.`,
     {
       type: 'object',
       additionalProperties: false,
-      required: ['name', 'category', 'rating', 'tags', 'recommendation', 'status', 'address', 'reply'],
+      required: ['name', 'vibe', 'serves', 'tags', 'recommendation', 'status', 'address', 'reply'],
       properties: {
         name: nullable({ type: 'string' }),
-        category: nullable({ type: 'string', enum: CATEGORY_IDS }),
-        rating: nullable({ type: 'integer', enum: [1, 2, 3] }),
+        vibe: nullable({ type: 'string', enum: VIBE_IDS }),
+        serves: nullable({ type: 'array', items: { type: 'string', enum: SERVES_IDS } }),
         tags: nullable(tagsSchema),
         recommendation: nullable({ type: 'string' }),
         status: nullable({ type: 'string', enum: STATUSES }),

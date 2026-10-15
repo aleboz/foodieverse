@@ -8,14 +8,17 @@
     "latitude": 55.671197,
     "longitude": 12.593346
   },
-  "category": "eat",
+  "vibe": "cheap",
+  "serves": [
+    "lunch",
+    "dinner"
+  ],
   "tags": [
     "kebab",
     "late-night",
     "takeaway"
   ],
   "recommendation": "Excellent, very local kebab place. Great food, and you can have proper Turkish tea while you wait for your takeaway or dine in. Open very late.",
-  "rating": 2,
   "googleMapsUrl": "https://maps.app.goo.gl/pTjp3ysfCpHqV9A56?g_st=ac",
   "address": "Torvegade 64, 1400 Copenhagen K",
   "images": [],

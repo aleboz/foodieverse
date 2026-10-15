@@ -7,7 +7,8 @@ name: Issue authoring
 # trigger it; everyone else's issues and comments are ignored.
 #
 # Optional: add an ANTHROPIC_API_KEY repository secret for AI suggestions
-# (category, hearts, tags, light text editing, corrections in plain words).
+# (vibe and when to go from your words, tags, light text editing, corrections
+# in plain words). Without it the bot still asks for vibe and when to go.
 
 on:
   issues:

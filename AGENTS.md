@@ -13,7 +13,7 @@ names, commits or deployment. Don't mention them unless something fails.
 - One file per place: `data/pois/<city-slug>/<slug>.json` (schema: `data/poi.schema.json`).
 - Photos: original files in `data/images/<city-slug>/<slug>/`, listed by file
   name in the POI's `images` array. The build makes resized WebP versions.
-- Categories, statuses and heart meanings: `data/taxonomy.json`.
+- Vibes, service times ("when to go") and statuses: `data/taxonomy.json`.
 - Cities are derived from the POIs. A new city needs no setup.
 
 ## Tools (when you have a shell)
@@ -50,25 +50,30 @@ Irina sends a Google Maps link, her text and maybe photos.
      stable. Check `ls data/pois` for how existing cities are spelled.
 2. **Check for duplicates.** Run `npm run poi -- find <name>`. If the place
    exists, treat the message as an edit, or ask.
-3. **Infer category.** Pick exactly one of: eat, drink, coffee, shop, stay,
-   see, explore, other. Use what the place is mainly recommended *for*.
+3. **Vibe and when to go.** Every place is about food or drink and needs both:
+   - **Vibe**, exactly one: `cheap`, `casual` or `fancy`. It is how the place
+     feels, not what it costs.
+   - **When to go** (`serves`), one or more of: `breakfast-brunch`
+     (Breakfast / brunch), `coffee` (Coffee shop), `lunch`, `dinner`,
+     `cocktails`, `beer-wine` (Beer / Wine).
+
+   Fill them in only from what Irina said or made plain ("our brunch spot",
+   "cocktail bar", "super fancy"). Never guess from what you know about the
+   place. If either is missing, ask her in one short question before the
+   preview, e.g. "Is it cheap, casual or fancy? And when should people go:
+   breakfast / brunch, coffee, lunch, dinner, cocktails, beer / wine?"
 4. **Infer tags.** Run `npm run tags` and **reuse existing tags whenever one
    fits**. Only add a new tag when nothing fits. Tags are lowercase
    kebab-case, usually 2–5 per place. They describe what Irina said
    (`natural-wine`, `late-afternoon`, `expensive`, `hidden-gem`,
    `date-night`…), not facts she didn't mention.
-5. **Infer hearts** from her wording:
-   - 1 ♥ recommended / good / worth a visit
-   - 2 ♥♥ strong: "really good", "love it", "absolutely worth it"
-   - 3 ♥♥♥ "one of my favourites", "don't miss", "best in town"
-   - If unclear, use 2 and point it out in the preview.
-6. **Lightly edit the recommendation** (see *Editing policy*).
-7. **Dry run** with `poi add … --dry-run` and show Irina the preview, e.g.:
+5. **Lightly edit the recommendation** (see *Editing policy*).
+6. **Dry run** with `poi add … --dry-run` and show Irina the preview, e.g.:
 
    ```
    Bar Vivant · Copenhagen
-   ♥♥
-   Drink
+   Casual
+   Beer / Wine
    natural-wine · late-afternoon · expensive · friendly
 
    Wonderful little wine bar. Amazing natural wines and a very friendly
@@ -77,10 +82,10 @@ Irina sends a Google Maps link, her text and maybe photos.
    📍 Copenhagen · 2 photos
    Ready to publish?
    ```
-8. **Corrections** ("make it three hearts", "remove expensive", "don't
+7. **Corrections** ("make it fancy", "add cocktails", "remove expensive", "don't
    rewrite the last sentence"): update the draft and show the preview again.
    Don't start over.
-9. **On "yes"**: run `poi add` without `--dry-run`, then `npm run validate`,
+8. **On "yes"**: run `poi add` without `--dry-run`, then `npm run validate`,
    then commit and push (see *Publishing*).
 
 ## Editing, archiving, closing
@@ -107,7 +112,7 @@ Irina sends a Google Maps link, her text and maybe photos.
 ## Publishing
 
 - Commit only the POI JSON and image files for this change. Use a message
-  like `Add Bar Vivant (Copenhagen)`, `Update Bar Vivant: one heart`, or
+  like `Add Bar Vivant (Copenhagen)`, `Update Bar Vivant: fancy`, or
   `Close Bar Vivant`.
 - Push to the branch your environment tells you to use:
   - Pushing to `main` deploys directly.

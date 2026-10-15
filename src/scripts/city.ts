@@ -5,9 +5,9 @@ import type { MapPoi, PoiMap } from './map';
 
 interface State {
   q: string;
-  cat: string;
+  when: string;
+  vibe: string;
   tags: string[];
-  min: number;
   view: 'list' | 'map';
 }
 
@@ -18,9 +18,9 @@ function readState(): State {
   const p = new URLSearchParams(location.search);
   return {
     q: p.get('q') ?? '',
-    cat: p.get('cat') ?? '',
+    when: p.get('when') ?? '',
+    vibe: p.get('vibe') ?? '',
     tags: (p.get('tag') ?? '').split(',').filter(Boolean),
-    min: Number(p.get('min')) || 0,
     view: p.get('view') === 'map' ? 'map' : 'list',
   };
 }
@@ -28,9 +28,9 @@ function readState(): State {
 function stateUrl(s: State): string {
   const p = new URLSearchParams();
   if (s.q) p.set('q', s.q);
-  if (s.cat) p.set('cat', s.cat);
+  if (s.when) p.set('when', s.when);
+  if (s.vibe) p.set('vibe', s.vibe);
   if (s.tags.length) p.set('tag', s.tags.join(','));
-  if (s.min) p.set('min', String(s.min));
   if (s.view === 'map') p.set('view', 'map');
   const qs = p.toString();
   return location.pathname + (qs ? `?${qs}` : '');
@@ -96,8 +96,8 @@ export function initCity() {
       const d = card.dataset;
       const tags = (d.tags ?? '').split(' ');
       const show =
-        (!state.cat || d.cat === state.cat) &&
-        Number(d.rating) >= state.min &&
+        (!state.when || (d.serves ?? '').split(' ').includes(state.when)) &&
+        (!state.vibe || d.vibe === state.vibe) &&
         state.tags.every((t) => tags.includes(t)) &&
         terms.every((t) => d.search!.includes(t));
       card.hidden = !show;
@@ -106,17 +106,17 @@ export function initCity() {
     const n = visibleIds.size;
     count.textContent = n === cards.length ? `${n} ${n === 1 ? 'place' : 'places'}` : `Showing ${n} of ${cards.length}`;
     noResults.hidden = n > 0;
-    const filtered = !!(state.q || state.cat || state.tags.length || state.min);
+    const filtered = !!(state.q || state.when || state.vibe || state.tags.length);
     resetBtn.hidden = !filtered;
-    const extra = state.tags.length + (state.min ? 1 : 0);
-    moreCount.textContent = extra ? `(${extra})` : '';
+    if (moreCount) moreCount.textContent = state.tags.length ? `(${state.tags.length})` : '';
 
     if (input.value !== state.q) input.value = state.q;
     clearQ.hidden = !state.q;
-    document.querySelectorAll<HTMLButtonElement>('[data-cat]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.cat === state.cat)));
-    document.querySelectorAll<HTMLButtonElement>('[data-min]').forEach((b) => b.setAttribute('aria-pressed', String((Number(b.dataset.min) || 0) === state.min)));
+    document.querySelectorAll<HTMLButtonElement>('[data-when]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.when === state.when)));
+    document.querySelectorAll<HTMLButtonElement>('[data-vibe]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.vibe === state.vibe)));
     document.querySelectorAll<HTMLButtonElement>('[data-tag]').forEach((b) => b.setAttribute('aria-pressed', String(state.tags.includes(b.dataset.tag!))));
-    if (state.tags.length || state.min) (document.getElementById('more-filters') as HTMLDetailsElement).open = true;
+    const more = document.getElementById('more-filters') as HTMLDetailsElement | null;
+    if (more && state.tags.length) more.open = true;
 
     poiMap?.setVisible(visibleIds);
     applyView();
@@ -130,7 +130,7 @@ export function initCity() {
   function applyView() {
     root.dataset.view = state.view;
     const toMap = state.view !== 'map';
-    toggle.innerHTML = toMap ? '<span aria-hidden="true">🗺️</span> Map' : '<span aria-hidden="true">☰</span> List';
+    toggle.textContent = toMap ? 'Map' : 'List';
     toggle.setAttribute('aria-label', toMap ? 'Show map' : 'Show list');
     if (state.view === 'map' || desktop.matches) {
       if (!desktop.matches) root.style.setProperty('--map-top', `${controls.getBoundingClientRect().bottom + 8}px`);
@@ -162,12 +162,12 @@ export function initCity() {
   root.addEventListener('click', (e) => {
     const b = (e.target as HTMLElement).closest('button');
     if (!b) return;
-    if (b.dataset.cat !== undefined) update({ cat: b.dataset.cat });
-    else if (b.dataset.min !== undefined) update({ min: Number(b.dataset.min) || 0 });
+    if (b.dataset.when !== undefined) update({ when: b.dataset.when });
+    else if (b.dataset.vibe !== undefined) update({ vibe: b.dataset.vibe });
     else if (b.dataset.tag !== undefined) {
       const tag = b.dataset.tag;
       update({ tags: state.tags.includes(tag) ? state.tags.filter((x) => x !== tag) : [...state.tags, tag] });
-    } else if (b.hasAttribute('data-reset') || b === resetBtn) update({ q: '', cat: '', tags: [], min: 0 });
+    } else if (b.hasAttribute('data-reset') || b === resetBtn) update({ q: '', when: '', vibe: '', tags: [] });
   });
   toggle.addEventListener('click', () => {
     if (state.view === 'map') {

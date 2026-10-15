@@ -5,8 +5,8 @@ body:
   - type: markdown
     attributes:
       value: |
-        Paste the Google Maps link and write your recommendation. Everything else is optional — leave it on "Let the AI suggest".
-        You'll get a preview as a comment. Reply **yes** to publish, or reply with corrections ("make it three hearts", "remove expensive").
+        Paste the Google Maps link and write your recommendation, then pick the vibe and when to go.
+        You'll get a preview as a comment. Reply **yes** to publish, or reply with corrections ("make it fancy", "remove expensive").
   - type: input
     id: maps
     attributes:
@@ -22,30 +22,28 @@ body:
     validations:
       required: true
   - type: dropdown
-    id: hearts
+    id: vibe
     attributes:
-      label: Hearts
+      label: Vibe
+      description: How the place feels. If you leave it on "Ask me", the preview will ask.
       options:
-        - Let the AI suggest
-        - ♥ Recommended
-        - ♥♥ Strong recommendation
-        - ♥♥♥ Don't miss
+        - Ask me
+        - Cheap
+        - Casual
+        - Fancy
       default: 0
-  - type: dropdown
-    id: category
+  - type: checkboxes
+    id: serves
     attributes:
-      label: Category
+      label: When to go
+      description: Pick one or more. If you pick none, the preview will ask.
       options:
-        - Let the AI suggest
-        - Eat
-        - Drink
-        - Coffee
-        - Shop
-        - Stay
-        - See
-        - Explore
-        - Other
-      default: 0
+        - label: Breakfast / brunch
+        - label: Coffee shop
+        - label: Lunch
+        - label: Dinner
+        - label: Cocktails
+        - label: Beer / Wine
   - type: input
     id: tags
     attributes:

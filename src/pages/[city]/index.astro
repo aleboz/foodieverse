@@ -1,7 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import Hearts from '../../components/Hearts.astro';
-import { cities, activePois, citySlug, category, categories, imagesFor, searchText } from '../../lib/data';
+import { cities, activePois, citySlug, vibes, serves, vibeLabel, servesLabels, imagesFor, searchText } from '../../lib/data';
 import { href, poiHref, asset } from '../../lib/url';
 
 export function getStaticPaths() {
@@ -11,9 +10,12 @@ export function getStaticPaths() {
 const { city } = Astro.props;
 const pois = activePois.filter((p) => citySlug(p) === city.slug);
 
-const catCounts = categories
-  .map((c) => ({ ...c, count: pois.filter((p) => p.category === c.id).length }))
-  .filter((c) => c.count > 0);
+const servesCounts = serves
+  .map((s) => ({ ...s, count: pois.filter((p) => p.serves.includes(s.id)).length }))
+  .filter((s) => s.count > 0);
+const vibeCounts = vibes
+  .map((v) => ({ ...v, count: pois.filter((p) => p.vibe === v.id).length }))
+  .filter((v) => v.count > 0);
 const tagCounts = [...pois.flatMap((p) => p.tags ?? []).reduce((m, t) => m.set(t, (m.get(t) ?? 0) + 1), new Map<string, number>())]
   .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
 
@@ -22,9 +24,7 @@ const mapData = pois.map((p) => ({
   name: p.name,
   lat: p.location.latitude,
   lng: p.location.longitude,
-  icon: category(p.category).icon,
-  category: category(p.category).label,
-  rating: p.rating ?? null,
+  meta: [vibeLabel(p.vibe), ...servesLabels(p)].join(' · '),
   url: poiHref(city.slug, p.slug),
 }));
 
@@ -38,7 +38,7 @@ const excerpt = (s: string) => (s.length > 220 ? s.slice(0, 217).replace(/\s+\S*
   <div class="city" id="city" data-view="list" data-city={city.slug} data-city-name={city.name}>
     <div class="city-panel">
       <div class="city-controls" id="controls">
-        <h1 class="city-title">{city.name}</h1>
+        <h1 class="city-title"><span>{city.name}</span></h1>
         <p class="city-sub">{city.count} {city.count === 1 ? 'place' : 'places'}{city.country ? ` · ${city.country}` : ''}</p>
 
         <form class="search" role="search" onsubmit="return false">
@@ -48,36 +48,31 @@ const excerpt = (s: string) => (s.length > 220 ? s.slice(0, 217).replace(/\s+\S*
           <button type="button" class="clear" id="clear-q" aria-label="Clear search" hidden>✕</button>
         </form>
 
-        <div class="chips" role="group" aria-label="Category">
-          <button type="button" class="chip" data-cat="" aria-pressed="true">All <span class="count">{pois.length}</span></button>
-          {catCounts.map((c) => (
-            <button type="button" class="chip" data-cat={c.id} aria-pressed="false">
-              <span aria-hidden="true">{c.icon}</span>{c.label} <span class="count">{c.count}</span>
-            </button>
+        <div class="chips" role="group" aria-label="When to go">
+          <button type="button" class="chip" data-when="" aria-pressed="true">Any time</button>
+          {servesCounts.map((s) => (
+            <button type="button" class="chip" data-when={s.id} aria-pressed="false">{s.label} <span class="count">{s.count}</span></button>
+          ))}
+        </div>
+        <div class="chips" role="group" aria-label="Vibe">
+          <button type="button" class="chip chip-sm" data-vibe="" aria-pressed="true">Any vibe</button>
+          {vibeCounts.map((v) => (
+            <button type="button" class="chip chip-sm" data-vibe={v.id} aria-pressed="false">{v.label} <span class="count">{v.count}</span></button>
           ))}
         </div>
 
-        <details class="more-filters" id="more-filters">
-          <summary>More filters <span id="active-filter-count"></span></summary>
-          <div class="filter-group">
-            <h2 id="hearts-label">Hearts</h2>
-            <div class="wrap-chips" role="group" aria-labelledby="hearts-label">
-              <button type="button" class="chip chip-sm" data-min="" aria-pressed="true">Any</button>
-              <button type="button" class="chip chip-sm" data-min="2" aria-pressed="false"><span class="hearts" aria-hidden="true">♥♥</span> and up</button>
-              <button type="button" class="chip chip-sm" data-min="3" aria-pressed="false"><span class="hearts" aria-hidden="true">♥♥♥</span> only</button>
-            </div>
-          </div>
-          {tagCounts.length > 0 && (
+        {tagCounts.length > 0 && (
+          <details class="more-filters" id="more-filters">
+            <summary>Tags <span id="active-filter-count"></span></summary>
             <div class="filter-group">
-              <h2 id="tags-label">Tags</h2>
-              <div class="wrap-chips" role="group" aria-labelledby="tags-label">
+              <div class="wrap-chips" role="group" aria-label="Tags">
                 {tagCounts.map(([t, n]) => (
                   <button type="button" class="chip chip-sm" data-tag={t} aria-pressed="false">#{t} <span class="count">{n}</span></button>
                 ))}
               </div>
             </div>
-          )}
-        </details>
+          </details>
+        )}
       </div>
 
       <div class="result-bar">
@@ -91,13 +86,12 @@ const excerpt = (s: string) => (s.length > 220 ? s.slice(0, 217).replace(/\s+\S*
       <ul class="cards" id="cards">
         {pois.map((p) => {
           const img = imagesFor(p)[0];
-          const c = category(p.category);
           return (
             <li
               class="card"
               data-id={p.id}
-              data-cat={p.category}
-              data-rating={p.rating ?? 0}
+              data-vibe={p.vibe}
+              data-serves={p.serves.join(' ')}
               data-tags={(p.tags ?? []).join(' ')}
               data-search={searchText(p)}
               data-lat={p.location.latitude}
@@ -106,8 +100,8 @@ const excerpt = (s: string) => (s.length > 220 ? s.slice(0, 217).replace(/\s+\S*
               <div>
                 <h3><a href={poiHref(city.slug, p.slug)}>{p.name}</a></h3>
                 <div class="line">
-                  <Hearts rating={p.rating} />
-                  <span class="meta"><span aria-hidden="true">{c.icon}</span> {c.label}</span>
+                  <span class="vibe">{vibeLabel(p.vibe)}</span>
+                  <span class="meta">{servesLabels(p).join(' · ')}</span>
                   <span class="meta distance" data-distance hidden></span>
                 </div>
                 <p class="excerpt">{excerpt(p.recommendation)}</p>
@@ -130,7 +124,7 @@ const excerpt = (s: string) => (s.length > 220 ? s.slice(0, 217).replace(/\s+\S*
     </div>
 
     <button type="button" class="btn btn-primary view-toggle" id="view-toggle" aria-controls="map-wrap">
-      <span aria-hidden="true">🗺️</span> Map
+      Map
     </button>
   </div>
   <script type="application/json" id="map-data" set:html={JSON.stringify(mapData).replace(/</g, "\\u003c")} />
