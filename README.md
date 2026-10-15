@@ -18,6 +18,7 @@ Irina ──chat──► AI agent ──commit──► GitHub ──Actions: v
 - [`AGENTS.md`](AGENTS.md): the authoring playbook every AI agent follows
 - [`docs/chat-authoring.md`](docs/chat-authoring.md): instructions for chat assistants that can't run scripts
 - [`docs/issue-authoring.md`](docs/issue-authoring.md): adding places through GitHub issues, no AI chat needed
+- [`docs/sheet-import.md`](docs/sheet-import.md): publishing places from the Copenhagen guide review sheet, a few at a time
 
 ## Adding a recommendation
 
