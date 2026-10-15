@@ -254,6 +254,7 @@ function previewMarkdown(p, { photos = 0, notes = [], diff = null, questions = [
     `📍 ${p.address ?? `${p.location.latitude.toFixed(5)}, ${p.location.longitude.toFixed(5)}`}` +
       ` · [check on map](https://www.openstreetmap.org/?mlat=${p.location.latitude}&mlon=${p.location.longitude}#map=17/${p.location.latitude}/${p.location.longitude})` +
       (photos ? ` · 🖼 ${photos} photo${photos > 1 ? 's' : ''}` : ''),
+    ...(p.website ? [`🌐 ${p.website}`] : []),
   ];
   if (diff) lines.push('', '<details><summary>Changes</summary>', '', '```diff', diff, '```', '</details>');
   for (const n of notes.filter(Boolean)) lines.push('', `> [!NOTE]\n> ${n}`);
@@ -280,7 +281,7 @@ function previewMarkdown(p, { photos = 0, notes = [], diff = null, questions = [
 }
 
 function textDiff(before, after) {
-  const keys = ['name', 'vibe', 'serves', 'tags', 'status', 'address', 'recommendation'];
+  const keys = ['name', 'vibe', 'serves', 'tags', 'status', 'address', 'website', 'recommendation'];
   const out = [];
   for (const k of keys) {
     const a = JSON.stringify(before[k] ?? null);
@@ -328,6 +329,7 @@ async function startFromIssue() {
     return startNewPlace({
       url: form['Google Maps link'].match(/https?:\/\/\S+/)?.[0],
       recommendation: stripImages(form['Your recommendation']),
+      website: (form.Website || '').match(/https?:\/\/\S+/)?.[0] ?? null,
       vibe: taxonomy.vibes.find((v) => v.label === form.Vibe)?.id ?? null,
       serves: checkedServes(form['When to go']),
       tags: cleanTags((form.Tags || '').split(',')),
@@ -462,6 +464,7 @@ async function startNewPlace(input) {
     tags: userTags.length ? userTags : cleanTags(ai?.tags),
     recommendation: keepText || !ai ? recommendation : ai.recommendation.trim() || recommendation,
     googleMapsUrl: url,
+    website: input.website ?? null,
     address: place.address,
   };
   const dupes = findDuplicates({ ...draft, id: '' }, allPois());
@@ -528,7 +531,7 @@ async function applyChangeRequest(state, request) {
       }
       if (change) {
         if (/original text|my text|exactly as (i )?wrote/i.test(request) && state.original) change.recommendation = state.original;
-        for (const k of ['name', 'vibe', 'recommendation', 'status', 'address']) {
+        for (const k of ['name', 'vibe', 'recommendation', 'status', 'address', 'website']) {
           if (change[k] !== null && change[k] !== undefined) current[k] = change[k];
         }
         if (change.serves) current.serves = cleanServes(change.serves);
@@ -550,7 +553,7 @@ async function applyChangeRequest(state, request) {
   }
   const original = JSON.parse(readFileSync(poiPaths(...state.ref.split('/')).json, 'utf8'));
   state.patch = {};
-  for (const k of ['name', 'vibe', 'serves', 'tags', 'recommendation', 'status', 'address']) {
+  for (const k of ['name', 'vibe', 'serves', 'tags', 'recommendation', 'status', 'address', 'website']) {
     if (JSON.stringify(current[k] ?? null) !== JSON.stringify(original[k] ?? null)) state.patch[k] = current[k];
   }
   if (!Object.keys(state.patch).length && !state.images.length) notes.push('Nothing to change yet — reply with what should change.');

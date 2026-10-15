@@ -67,8 +67,10 @@ Irina sends a Google Maps link, her text and maybe photos.
    kebab-case, usually 2–5 per place. They describe what Irina said
    (`natural-wine`, `late-afternoon`, `expensive`, `hidden-gem`,
    `date-night`…), not facts she didn't mention.
-5. **Lightly edit the recommendation** (see *Editing policy*).
-6. **Dry run** with `poi add … --dry-run` and show Irina the preview, e.g.:
+5. **Website (optional).** If Irina gives the place's own website, put it in
+   `website`. Don't look one up unless she asks.
+6. **Lightly edit the recommendation** (see *Editing policy*).
+7. **Dry run** with `poi add … --dry-run` and show Irina the preview, e.g.:
 
    ```
    Bar Vivant · Copenhagen
@@ -82,10 +84,10 @@ Irina sends a Google Maps link, her text and maybe photos.
    📍 Copenhagen · 2 photos
    Ready to publish?
    ```
-7. **Corrections** ("make it fancy", "add cocktails", "remove expensive", "don't
+8. **Corrections** ("make it fancy", "add cocktails", "remove expensive", "don't
    rewrite the last sentence"): update the draft and show the preview again.
    Don't start over.
-8. **On "yes"**: run `poi add` without `--dry-run`, then `npm run validate`,
+9. **On "yes"**: run `poi add` without `--dry-run`, then `npm run validate`,
    then commit and push (see *Publishing*).
 
 ## Editing, archiving, closing

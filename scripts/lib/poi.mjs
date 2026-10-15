@@ -20,7 +20,7 @@ const SLUG_RE = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const KNOWN_FIELDS = new Set([
   'id', 'slug', 'name', 'city', 'country', 'location', 'vibe', 'serves', 'tags', 'recommendation',
-  'googleMapsUrl', 'address', 'images', 'imageAlt', 'status', 'createdAt', 'updatedAt',
+  'googleMapsUrl', 'website', 'address', 'images', 'imageAlt', 'status', 'createdAt', 'updatedAt',
 ]);
 
 export function today() {
@@ -110,6 +110,13 @@ export function validatePoi(poi, { citySlug, fileSlug } = {}) {
       }
     } catch {
       errors.push('"googleMapsUrl" is not a valid URL');
+    }
+  }
+  if (poi.website !== undefined && poi.website !== null) {
+    try {
+      if (!['http:', 'https:'].includes(new URL(poi.website).protocol)) throw new Error();
+    } catch {
+      errors.push('"website" must be an http(s) URL');
     }
   }
   for (const k of ['country', 'address']) {

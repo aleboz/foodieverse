@@ -88,7 +88,7 @@ export async function interpretChange({ poi, request, existingTags }) {
   return ask(
     `Current place:
 ${JSON.stringify(
-  { name: poi.name, city: poi.city, vibe: poi.vibe, serves: poi.serves, tags: poi.tags, status: poi.status, address: poi.address, recommendation: poi.recommendation },
+  { name: poi.name, city: poi.city, vibe: poi.vibe, serves: poi.serves, tags: poi.tags, status: poi.status, address: poi.address, website: poi.website ?? null, recommendation: poi.recommendation },
   null,
   2,
 )}
@@ -103,7 +103,7 @@ Return only the fields that must change; use null for everything else. "tags" an
     {
       type: 'object',
       additionalProperties: false,
-      required: ['name', 'vibe', 'serves', 'tags', 'recommendation', 'status', 'address', 'reply'],
+      required: ['name', 'vibe', 'serves', 'tags', 'recommendation', 'status', 'address', 'website', 'reply'],
       properties: {
         name: nullable({ type: 'string' }),
         vibe: nullable({ type: 'string', enum: VIBE_IDS }),
@@ -112,6 +112,7 @@ Return only the fields that must change; use null for everything else. "tags" an
         recommendation: nullable({ type: 'string' }),
         status: nullable({ type: 'string', enum: STATUSES }),
         address: nullable({ type: 'string' }),
+        website: nullable({ type: 'string', description: 'The place\'s own website, only when she gives one.' }),
         reply: { type: 'string' },
       },
     },
