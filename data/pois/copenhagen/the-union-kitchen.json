@@ -1,0 +1,30 @@
+{
+  "id": "the-union-kitchen-copenhagen",
+  "slug": "the-union-kitchen",
+  "name": "The Union Kitchen",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.681353,
+    "longitude": 12.589338
+  },
+  "vibe": "casual",
+  "serves": [
+    "breakfast-brunch",
+    "lunch",
+    "dinner"
+  ],
+  "tags": [
+    "brunch",
+    "reservations",
+    "city-center"
+  ],
+  "recommendation": "It’s located in the very heart of super-touristy Copenhagen but their food is excellent and they have very nice brunch on the weekends. Reservations recommended as it gets very crowded. You can head across the road to Nebbiolo for a glass of wine after.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=The%20Union%20Kitchen%2C%20Store%20Strandstr%C3%A6de%2021%2C%20Copenhagen",
+  "website": "https://www.theunionkitchen.dk/city/",
+  "address": "Store Strandstræde 21",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

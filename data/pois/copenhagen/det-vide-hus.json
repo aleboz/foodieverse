@@ -1,0 +1,29 @@
+{
+  "id": "det-vide-hus-copenhagen",
+  "slug": "det-vide-hus",
+  "name": "Det Vide Hus",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.684129,
+    "longitude": 12.574792
+  },
+  "vibe": "cheap",
+  "serves": [
+    "breakfast-brunch",
+    "coffee"
+  ],
+  "tags": [
+    "tea",
+    "work-friendly",
+    "city-center"
+  ],
+  "recommendation": "There is a small house sandwiched in between larger ones across from the old Royal palace and it makes for a lovely coffee shop. It’s a great place to catch up, they have enough space to sit and work and their snacks and lunch are very good. I am told the coffee is excellent and they do have some nice tea. Sometimes the people pouring even know how to treat white and green tea with respect, though that’s a bit inconsistent (at other times they are happy to burn lovely white tea leaves with boiling water).",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Det%20Vide%20Hus%2C%20Gothersgade%20113%2C%20Copenhagen",
+  "website": "https://www.facebook.com/detvidehus/",
+  "address": "Gothersgade 113",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

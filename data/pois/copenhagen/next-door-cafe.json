@@ -1,0 +1,29 @@
+{
+  "id": "next-door-cafe-copenhagen",
+  "slug": "next-door-cafe",
+  "name": "Next Door Cafe",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.678877,
+    "longitude": 12.568799
+  },
+  "vibe": "cheap",
+  "serves": [
+    "breakfast-brunch",
+    "coffee"
+  ],
+  "tags": [
+    "cookies",
+    "work-friendly",
+    "city-center"
+  ],
+  "recommendation": "The decorations inside are as colourful as the owners, who are fantastic and fun. The food (breakfast and lunch) is excellent and their cookies are just evil. Extremely popular with the semester abroad college students and tourists in general, but it is possible to also chill out and work in a basement window there with impunity.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Next%20Door%20Cafe%2C%20Larsbj%C3%B8rnstr%C3%A6de%2023%2C%20Copenhagen",
+  "website": null,
+  "address": "Larsbjørnstræde 23",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

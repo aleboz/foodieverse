@@ -1,0 +1,29 @@
+{
+  "id": "apotek-57-copenhagen",
+  "slug": "apotek-57",
+  "name": "Apotek 57",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.686945,
+    "longitude": 12.585826
+  },
+  "vibe": "casual",
+  "serves": [
+    "breakfast-brunch",
+    "coffee",
+    "lunch"
+  ],
+  "tags": [
+    "vegan-options",
+    "city-center"
+  ],
+  "recommendation": "Another design shop and another cafe concept. This one is housed inside the design shop but pretty much functions on its own. They have excellent food but can be quite crowded during lunch and weekend brunch times. They offer two types of focaccia for lunch along with some other fare. Vegetarian options available, vegan is limited.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Apotek%2057%2C%20Fredericiagade%2057%2C%20Copenhagen",
+  "website": "https://framacph.com/blogs/stores/apotek-57",
+  "address": "Fredericiagade 57",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

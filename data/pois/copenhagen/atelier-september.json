@@ -1,0 +1,28 @@
+{
+  "id": "atelier-september-copenhagen",
+  "slug": "atelier-september",
+  "name": "Atelier September",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.687418,
+    "longitude": 12.584979
+  },
+  "vibe": "casual",
+  "serves": [
+    "breakfast-brunch",
+    "coffee"
+  ],
+  "tags": [
+    "vegan-options",
+    "city-center"
+  ],
+  "recommendation": "Used to be housed as part of a design shop, Atelier September has now moved to a separate location. The food is excellent and they are very popular, making for long lines during lunch and weekend brunch times. They are one block from Apotek 57 so you can game the two and see which one you can snag a seat at, if you arrive at a time where things are crowded. Vegetarian and vegan options available.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Atelier%20September%2C%20Kronprinsessegade%2062%2C%20Copenhagen",
+  "website": "https://cafeatelierseptember.com/",
+  "address": "Kronprinsessegade 62",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

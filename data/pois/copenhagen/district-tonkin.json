@@ -1,0 +1,29 @@
+{
+  "id": "district-tonkin-copenhagen",
+  "slug": "district-tonkin",
+  "name": "District Tonkin",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.685038,
+    "longitude": 12.588142
+  },
+  "vibe": "casual",
+  "serves": [
+    "lunch",
+    "dinner"
+  ],
+  "tags": [
+    "vietnamese",
+    "vegan-options",
+    "city-center"
+  ],
+  "recommendation": "An informal Vietnamese cafe offering delicious food with minimal fuss. Vegetarian and vegan options available.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=District%20Tonkin%2C%20Store%20Kongensgade%2071%2C%20Copenhagen",
+  "website": "https://www.district-tonkin.com/",
+  "address": "Store Kongensgade 71",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

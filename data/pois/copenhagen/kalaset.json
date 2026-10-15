@@ -1,0 +1,29 @@
+{
+  "id": "kalaset-copenhagen",
+  "slug": "kalaset",
+  "name": "Kalaset",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.684638,
+    "longitude": 12.566862
+  },
+  "vibe": "casual",
+  "serves": [
+    "lunch",
+    "dinner",
+    "beer-wine"
+  ],
+  "tags": [
+    "swedish",
+    "city-center"
+  ],
+  "recommendation": "A nice little cafe that has a variety of different kinds of food, but takes its departure from Swedish staples. Relaxed and with a nice vibe. Just down the street from Slurp, if you are tired of waiting in line over there.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Kalaset%2C%20Vendersgade%2016%2C%20Copenhagen",
+  "website": "https://kalaset.dk/",
+  "address": "Vendersgade 16",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

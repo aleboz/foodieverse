@@ -1,0 +1,29 @@
+{
+  "id": "studio-x-kitchen-copenhagen",
+  "slug": "studio-x-kitchen",
+  "name": "Studio X Kitchen",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.684734,
+    "longitude": 12.583652
+  },
+  "vibe": "casual",
+  "serves": [
+    "breakfast-brunch",
+    "coffee",
+    "lunch"
+  ],
+  "tags": [
+    "vegan-options",
+    "city-center"
+  ],
+  "recommendation": "There was a design shop called Studio X and they opened a cafe as a concept place to show off their designs. The shop closed, the cafe stayed because their food is amazing and they know what they are doing. Small and unassuming, with excellent service and delicious food and pastries. Vegan and vegetarian options available.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Studio%20X%20Kitchen%2C%20Dronningens%20Tv%C3%A6rgade%2052%2C%20Copenhagen",
+  "website": "https://www.instagram.com/studioxkitchen/",
+  "address": "Dronningens Tværgade 52",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

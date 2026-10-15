@@ -1,0 +1,30 @@
+{
+  "id": "torvehallerne-copenhagen",
+  "slug": "torvehallerne",
+  "name": "Torvehallerne",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.684319,
+    "longitude": 12.569502
+  },
+  "vibe": "cheap",
+  "serves": [
+    "breakfast-brunch",
+    "coffee",
+    "lunch"
+  ],
+  "tags": [
+    "market",
+    "food-hall",
+    "city-center"
+  ],
+  "recommendation": "Torvehallerne or what I call the Glass Market is a market full of stalls for fish, meat, cheese and veggies, but it is also full of stalls that sell amazing food. You will find a Grød stall here that will sell delicious porridge-like things and the French Ma Poule stall that sells the best duck sandwich in town, as well as stalls for sushi, tapas, empanadas, tacos from Hija de Sanchez and much, much more. Check out Il Matarello’s pasta dishes or visit Kiko Izakaya for delicious Japanese food.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Torvehallerne%2C%20Frederiksborggade%2021%2C%20Copenhagen",
+  "website": "http://torvehallernekbh.dk/",
+  "address": "Frederiksborggade 21",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

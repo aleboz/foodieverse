@@ -1,0 +1,28 @@
+{
+  "id": "barabba-copenhagen",
+  "slug": "barabba",
+  "name": "Barabba",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.682565,
+    "longitude": 12.586448
+  },
+  "vibe": "fancy",
+  "serves": [
+    "dinner"
+  ],
+  "tags": [
+    "italian",
+    "favourite",
+    "city-center"
+  ],
+  "recommendation": "One of my favorite restaurants - they do Italian and they do it with flair.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Barabba%2C%20Store%20Kongensgade%2034%2C%20Copenhagen",
+  "website": "https://www.barabba.dk/",
+  "address": "Store Kongensgade 34",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

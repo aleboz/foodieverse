@@ -1,0 +1,29 @@
+{
+  "id": "democratic-coffee-copenhagen",
+  "slug": "democratic-coffee",
+  "name": "Democratic Coffee",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.680876,
+    "longitude": 12.573653
+  },
+  "vibe": "cheap",
+  "serves": [
+    "breakfast-brunch",
+    "coffee"
+  ],
+  "tags": [
+    "library",
+    "baked-goods",
+    "city-center"
+  ],
+  "recommendation": "If you are a nerd like me and want to hang out or work at the library, this is a really nice coffeeshop in the city library, with excellent baked goods and I am told their coffee is worthwhile by coffee nerds. They have some excellent tea and a lovely matcha latte for the non-coffee people.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Democratic%20Coffee%2C%20Krystalgade%2015%2C%20Copenhagen",
+  "website": "https://www.instagram.com/democraticcoffeebar/?igshid=10j2b8vh0vq1a",
+  "address": "Krystalgade 15",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

@@ -1,0 +1,29 @@
+{
+  "id": "pizzeria-la-fiorita-copenhagen",
+  "slug": "pizzeria-la-fiorita",
+  "name": "Pizzeria La Fiorita",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.683589,
+    "longitude": 12.564771
+  },
+  "vibe": "cheap",
+  "serves": [
+    "lunch",
+    "dinner"
+  ],
+  "tags": [
+    "pizza",
+    "gelato",
+    "city-center"
+  ],
+  "recommendation": "It’s a pizza shop, where pizzas are excellent (though by no means gourmet) and you can get eggplant parmigiana that is delicious. Owned by an Italian family and open for several decades, this place never disappoints. They have a delicious gelato shop open across the road in the summer.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Pizzeria%20La%20Fiorita%2C%20Charlotte%20Amundsens%20Plads%202%2C%20Copenhagen",
+  "website": "https://www.lafiorita.dk/",
+  "address": "Charlotte Amundsens Plads 2",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}
