@@ -31,7 +31,7 @@ read the header row first instead of relying on letters.
 | Name, Address | → `name`, `address`. |
 | Check on map | OpenStreetMap link to the pin; for Irina only. |
 | Google Maps link | → `googleMapsUrl`. A Google Maps search for the name and address, unless Irina replaced it with her own share link. |
-| Vibe | `Cheap` / `Casual` / `Fancy` → `vibe` (lowercase). |
+| Vibe | `No-frills` / `Hipster` / `Casual` / `Fancy` → `vibe` (lowercase). |
 | Breakfast / brunch … Beer / Wine | Checkboxes → `serves`: `breakfast-brunch`, `coffee`, `lunch`, `dinner`, `cocktails`, `beer-wine`. |
 | Tags | Comma-separated → `tags`. Already includes the area tag. |
 | Text for the site | → `recommendation`. Already lightly edited; publish it as it stands in the sheet. |
