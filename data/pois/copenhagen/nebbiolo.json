@@ -1,0 +1,28 @@
+{
+  "id": "nebbiolo-copenhagen",
+  "slug": "nebbiolo",
+  "name": "Nebbiolo",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.68115,
+    "longitude": 12.589286
+  },
+  "vibe": "hipster",
+  "serves": [
+    "beer-wine"
+  ],
+  "tags": [
+    "wine",
+    "italian",
+    "city-center"
+  ],
+  "recommendation": "An Italian-run wine bar, their emphasis is on Italian wine but other fare is available too. It’s a wine bar and deli, so delicious snacks are also available. Really nice vibe for a glass of wine or three.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Nebbiolo%2C%20Store%20Strandstr%C3%A6de%2018%2C%20Copenhagen",
+  "website": "https://nebbiolo-winebar.com/",
+  "address": "Store Strandstræde 18",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

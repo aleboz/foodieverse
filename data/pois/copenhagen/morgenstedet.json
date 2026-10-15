@@ -1,0 +1,30 @@
+{
+  "id": "morgenstedet-copenhagen",
+  "slug": "morgenstedet",
+  "name": "Morgenstedet",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.673738,
+    "longitude": 12.603204
+  },
+  "vibe": "no-frills",
+  "serves": [
+    "breakfast-brunch",
+    "coffee",
+    "lunch"
+  ],
+  "tags": [
+    "vegetarian",
+    "christiania",
+    "christianshavn"
+  ],
+  "recommendation": "For Lunch or Dinner, this cafe is located inside Christiania but away from the main drag. They are fully vegetarian and have excellent vegan options. They make really good food and it’s a nice relaxed vibe. Vegetarian and vegan.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Morgenstedet%2C%20Fabriksomr%C3%A5det%20134%2C%20Copenhagen",
+  "website": "https://morgenstedet.dk/",
+  "address": "Fabriksområdet 134",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

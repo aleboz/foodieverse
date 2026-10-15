@@ -1,0 +1,27 @@
+{
+  "id": "josephine-copenhagen",
+  "slug": "josephine",
+  "name": "Josephine",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.66166,
+    "longitude": 12.607461
+  },
+  "vibe": "no-frills",
+  "serves": [
+    "beer-wine"
+  ],
+  "tags": [
+    "wine",
+    "amager"
+  ],
+  "recommendation": "An excellent wine bar with a great wine selection and friendly bartenders. A very nice, relaxed, and unassuming place, visited by a lot of locals. They have some small snacks to accompany your alcohol (their olives are amazing!).",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Josephine%2C%20Frankrigsgade%2015%2C%20Copenhagen",
+  "website": "https://www.josephine.dk/",
+  "address": "Frankrigsgade 15",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

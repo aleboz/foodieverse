@@ -1,0 +1,31 @@
+{
+  "id": "wulff-and-konstali-copenhagen",
+  "slug": "wulff-and-konstali",
+  "name": "Wulff & Konstali",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.665391,
+    "longitude": 12.57803
+  },
+  "vibe": "hipster",
+  "serves": [
+    "breakfast-brunch",
+    "coffee",
+    "bakery",
+    "lunch"
+  ],
+  "tags": [
+    "bakery",
+    "vegan-options",
+    "amager"
+  ],
+  "recommendation": "A very nice bakery and food shop - they offer small plates and tasty bites for lunch, which I very much recommend, but you can also get a delicious salad, sandwich or quiche to go. Vegetarian and vegan options available.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Wulff%20%26%20Konstali%2C%20Isafjordsgade%2010%2C%20Copenhagen",
+  "website": "https://www.wogk.dk/dk/islands-brygge",
+  "address": "Isafjordsgade 10",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

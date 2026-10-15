@@ -1,0 +1,30 @@
+{
+  "id": "lille-bakery-copenhagen",
+  "slug": "lille-bakery",
+  "name": "Lille Bakery",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.690061,
+    "longitude": 12.613292
+  },
+  "vibe": "no-frills",
+  "serves": [
+    "breakfast-brunch",
+    "coffee",
+    "bakery",
+    "lunch"
+  ],
+  "tags": [
+    "bakery",
+    "christianshavn"
+  ],
+  "recommendation": "Excellent bakery. Closed until January 31st",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Lille%20Bakery%2C%20Refshalevej%20213B%2C%20Copenhagen",
+  "website": "https://www.lillegrocery.com/",
+  "address": "Refshalevej 213B",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

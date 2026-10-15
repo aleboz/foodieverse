@@ -1,0 +1,29 @@
+{
+  "id": "granola-copenhagen",
+  "slug": "granola",
+  "name": "Granola",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.673427,
+    "longitude": 12.549794
+  },
+  "vibe": "casual",
+  "serves": [
+    "breakfast-brunch",
+    "coffee",
+    "lunch"
+  ],
+  "tags": [
+    "classic-cafe",
+    "vesterbro"
+  ],
+  "recommendation": "Granola is a classic breakfast/lunch cafe, with the classic cafe look, excellent food and somewhat stuffy service. Always crowded but with a relatively fast turnover.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Granola%2C%20V%C3%A6rnedamsvej%205%2C%20Copenhagen",
+  "website": "http://www.granola.dk/",
+  "address": "Værnedamsvej 5",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

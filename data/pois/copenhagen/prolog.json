@@ -1,0 +1,28 @@
+{
+  "id": "prolog-copenhagen",
+  "slug": "prolog",
+  "name": "Prolog",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.66829,
+    "longitude": 12.557492
+  },
+  "vibe": "hipster",
+  "serves": [
+    "coffee"
+  ],
+  "tags": [
+    "tea",
+    "tiny",
+    "vesterbro"
+  ],
+  "recommendation": "Their coffee is legendary, so even though they are exceptionally tiny (they have all of six seats) they are worth the visit if you are choosy. They also serve really nice tea and their oolong is worth it. For a lazy afternoon, grab some Kombucha and relax.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Prolog%2C%20H%C3%B8kerboderne%2016%2C%20Copenhagen",
+  "website": "https://www.prologcoffee.com/",
+  "address": "Høkerboderne 16",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

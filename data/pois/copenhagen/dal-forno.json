@@ -1,0 +1,28 @@
+{
+  "id": "dal-forno-copenhagen",
+  "slug": "dal-forno",
+  "name": "Dal Forno",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.673612,
+    "longitude": 12.54977
+  },
+  "vibe": "no-frills",
+  "serves": [
+    "lunch"
+  ],
+  "tags": [
+    "focaccia",
+    "quick-lunch",
+    "vesterbro"
+  ],
+  "recommendation": "Run as a focacceria by the Italians from FAMO, this place will sell you delicious focaccia by the slice. If you are out and about and want quick but delicious lunch, stop by here.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Dal%20Forno%2C%20V%C3%A6rnedamsvej%209%2C%20Copenhagen",
+  "website": "https://www.dalforno.dk/",
+  "address": "Værnedamsvej 9",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

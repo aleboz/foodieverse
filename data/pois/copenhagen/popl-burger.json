@@ -1,0 +1,30 @@
+{
+  "id": "popl-burger-copenhagen",
+  "slug": "popl-burger",
+  "name": "Popl Burger",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.677609,
+    "longitude": 12.597816
+  },
+  "vibe": "casual",
+  "serves": [
+    "dinner",
+    "beer-wine"
+  ],
+  "tags": [
+    "burgers",
+    "vegan-options",
+    "takeaway",
+    "christianshavn"
+  ],
+  "recommendation": "Popl is what happened when chefs from Noma got frustrated with the COVID pandemic and started making burgers. Then they realized that this could be a good idea and opened a burger place. Yep… It’s a Noma Burger and their vegetarian/vegan burger is the best I have ever had (that fermented quinoa patty is something else). Generally only slightly more expensive than other burger places but so amazingly delicious! Take away is slightly cheaper than eating in. Vegetarian and vegan.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Popl%20Burger%2C%20Strandgade%20108%2C%20Copenhagen",
+  "website": "https://poplburger.com/",
+  "address": "Strandgade 108",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

@@ -1,0 +1,28 @@
+{
+  "id": "lille-bla-vinbar-copenhagen",
+  "slug": "lille-bla-vinbar",
+  "name": "Lille Blå Vinbar",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.68747,
+    "longitude": 12.590729
+  },
+  "vibe": "hipster",
+  "serves": [
+    "beer-wine"
+  ],
+  "tags": [
+    "wine",
+    "austrian-wine",
+    "city-center"
+  ],
+  "recommendation": "This is an Austrian wine shop and they run a small wine bar that serves excellent Austrian wines.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Lille%20Bl%C3%A5%20Vinbar%2C%20Esplanaden%203%2C%20Copenhagen",
+  "website": "http://www.osterreich.dk/",
+  "address": "Esplanaden 3",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

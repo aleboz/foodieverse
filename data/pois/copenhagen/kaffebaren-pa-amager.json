@@ -1,0 +1,29 @@
+{
+  "id": "kaffebaren-pa-amager-copenhagen",
+  "slug": "kaffebaren-pa-amager",
+  "name": "Kaffebaren på Amager",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.664968,
+    "longitude": 12.598386
+  },
+  "vibe": "no-frills",
+  "serves": [
+    "coffee",
+    "lunch"
+  ],
+  "tags": [
+    "outdoor-seating",
+    "tiny",
+    "amager"
+  ],
+  "recommendation": "Really lovely local coffeeshop with excellent lunch options. Tiny and works best if the weather is nice and you can sit outside on their nice patio.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Kaffebaren%20p%C3%A5%20Amager%2C%20%C3%86blestien%202%2C%20Copenhagen",
+  "website": "http://www.kaffebarenamager.dk/",
+  "address": "Æblestien 2",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

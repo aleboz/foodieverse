@@ -1,0 +1,28 @@
+{
+  "id": "gensyn-copenhagen",
+  "slug": "gensyn",
+  "name": "Gensyn",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.665691,
+    "longitude": 12.594519
+  },
+  "vibe": "no-frills",
+  "serves": [
+    "cocktails"
+  ],
+  "tags": [
+    "cocktails",
+    "hidden-gem",
+    "amager"
+  ],
+  "recommendation": "They don’t have a website and they look like an old-school bodega on the outside and really on the inside too - the old-style mirrors, wooden bar, etc. They also make fantastic cocktails which are worth the time. It’s sort of a hidden gem for a relaxing drink, just a few blocks from the university.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Gensyn%2C%20Amagerf%C3%A6lledvej%2016%2C%20Copenhagen",
+  "website": null,
+  "address": "Amagerfælledvej 16",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

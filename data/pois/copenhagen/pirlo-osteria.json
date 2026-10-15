@@ -1,0 +1,30 @@
+{
+  "id": "pirlo-osteria-copenhagen",
+  "slug": "pirlo-osteria",
+  "name": "Pirlo Osteria",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.66443,
+    "longitude": 12.621898
+  },
+  "vibe": "casual",
+  "serves": [
+    "dinner",
+    "beer-wine"
+  ],
+  "tags": [
+    "italian",
+    "wine",
+    "reservations",
+    "amager"
+  ],
+  "recommendation": "The second project from the people behind Toto, this is an Italian osteria that offers an excellent selection of wine and very tasty food. Small, so reservations are recommended.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Pirlo%20Osteria%2C%20Strandlodsvej%2042A%2C%20Copenhagen",
+  "website": "https://pirlovinbar.dk/velkommen-til-pirlo/",
+  "address": "Strandlodsvej 42A",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

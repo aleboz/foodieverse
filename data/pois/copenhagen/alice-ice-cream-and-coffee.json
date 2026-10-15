@@ -1,0 +1,31 @@
+{
+  "id": "alice-ice-cream-and-coffee-copenhagen",
+  "slug": "alice-ice-cream-and-coffee",
+  "name": "Alice Ice Cream and Coffee",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.668423,
+    "longitude": 12.597074
+  },
+  "vibe": "hipster",
+  "serves": [
+    "coffee",
+    "ice-cream",
+    "bakery",
+    "lunch"
+  ],
+  "tags": [
+    "croissants",
+    "ice-cream",
+    "amager"
+  ],
+  "recommendation": "Alice started out as an ice cream shop, then a bakery and then a coffee shop. They are excellent at all of this and, arguably, have the best croissants in a town with very high-level croissant game (compare with Il Buco, Andersen’s bakery, Hart bakery and MANY others around town). They also offer delicious lunch options. Definitely worth your time.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Alice%20Ice%20Cream%20and%20Coffee%2C%20Markmandsgade%201%2C%20Copenhagen",
+  "website": "https://www.alicecph.dk/",
+  "address": "Markmandsgade 1",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

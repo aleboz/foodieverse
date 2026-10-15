@@ -1,0 +1,29 @@
+{
+  "id": "risteriet-coffee-copenhagen",
+  "slug": "risteriet-coffee",
+  "name": "Risteriet Coffee",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.671184,
+    "longitude": 12.561814
+  },
+  "vibe": "no-frills",
+  "serves": [
+    "coffee",
+    "lunch"
+  ],
+  "tags": [
+    "tea",
+    "work-friendly",
+    "vesterbro"
+  ],
+  "recommendation": "It’s a tiny place in the basement, they are all about coffee (they are a roastery) but they also used to have some nice loose-leaf tea (stick with the black or herbal variety, they have no idea what to do with white or green tea so they burn it with boiling water). Unfortunately, they serve their tea in glasses, but you can’t have everything. A relaxed place, good for spending time working, nice lunch options.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Risteriet%20Coffee%2C%20Helgolandsgade%2021%2C%20Copenhagen",
+  "website": "https://www.risteriet.dk/risteriet-kaffebaren/",
+  "address": "Helgolandsgade 21",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

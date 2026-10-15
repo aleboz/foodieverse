@@ -1,0 +1,28 @@
+{
+  "id": "ved-stranden-10-copenhagen",
+  "slug": "ved-stranden-10",
+  "name": "Ved Stranden 10",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.677305,
+    "longitude": 12.581595
+  },
+  "vibe": "hipster",
+  "serves": [
+    "beer-wine"
+  ],
+  "tags": [
+    "wine",
+    "outdoor-seating",
+    "city-center"
+  ],
+  "recommendation": "Located around the block from Admiralgade 26, this is the wine bar from the same owners. Cosy interior, amazing wine selection, snacks available. Lovely outside seating in the summer.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Ved%20Stranden%2010%2C%20Ved%20Stranden%2010%2C%20Copenhagen",
+  "website": "https://www.vedstranden10.dk/",
+  "address": "Ved Stranden 10",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

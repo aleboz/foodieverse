@@ -1,0 +1,27 @@
+{
+  "id": "two-socks-copenhagen",
+  "slug": "two-socks",
+  "name": "Two Socks",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.674114,
+    "longitude": 12.591303
+  },
+  "vibe": "hipster",
+  "serves": [
+    "cocktails"
+  ],
+  "tags": [
+    "gin",
+    "christianshavn"
+  ],
+  "recommendation": "It’s a lovely gin bar. They have several locations, but the one in Christianshavn is really cozy. The bartenders know their gin and are willing to work with you. They will try to match whatever flavor you request but often by drowning the gin in flavored tonic. Ask for simple unflavored tonic and enjoy the many flavors their extensive collection of gin has to offer.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Two%20Socks%2C%20Sankt%20Ann%C3%A6%20Gade%205%2C%20Copenhagen",
+  "website": "https://two-socks.com/",
+  "address": "Sankt Annæ Gade 5",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

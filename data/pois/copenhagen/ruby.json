@@ -1,0 +1,28 @@
+{
+  "id": "ruby-copenhagen",
+  "slug": "ruby",
+  "name": "Ruby",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.676735,
+    "longitude": 12.576652
+  },
+  "vibe": "hipster",
+  "serves": [
+    "cocktails"
+  ],
+  "tags": [
+    "cocktails",
+    "reservations",
+    "city-center"
+  ],
+  "recommendation": "It feels like a posh apartment and the entrance is marked with a tiny plate next to the door in the stairwell. Ruby serves excellent cocktails and demands reservations. The owners now have a small empire of bars around town, all going for the soft lighting and plush armchairs sort of look. Opinions differ on whether this is worthwhile but it is hard to argue with the skill of the bartenders here.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Ruby%2C%20Nybrogade%2010%2C%20Copenhagen",
+  "website": "https://rby.dk/",
+  "address": "Nybrogade 10",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

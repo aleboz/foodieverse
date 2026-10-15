@@ -1,0 +1,28 @@
+{
+  "id": "ismageriet-copenhagen",
+  "slug": "ismageriet",
+  "name": "Ismageriet",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.660319,
+    "longitude": 12.591533
+  },
+  "vibe": "no-frills",
+  "serves": [
+    "ice-cream"
+  ],
+  "tags": [
+    "ice-cream",
+    "vegan-options",
+    "amager"
+  ],
+  "recommendation": "Ice cream for breakfast, lunch, snack? In January? Sure, why not! Ismageriet is well known as one of the premier ice cream places and one of the few open in the winter. Opinions vary on whether it is the best, but it has a strong following and delivers many tasty flavors. Vegetarian and vegan available.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Ismageriet%2C%20Rued%20Langgaards%20Vej%206E%2C%20Copenhagen",
+  "website": "https://ismageriet.dk/",
+  "address": "Rued Langgaards Vej 6E",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

@@ -1,0 +1,27 @@
+{
+  "id": "scarpetta-copenhagen",
+  "slug": "scarpetta",
+  "name": "Scarpetta",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.657307,
+    "longitude": 12.566775
+  },
+  "vibe": "casual",
+  "serves": [
+    "dinner"
+  ],
+  "tags": [
+    "italian",
+    "amager"
+  ],
+  "recommendation": "This restaurant is part of a set of restaurants owned by the Copenhagen Food Collective (Cofoco). They have a range of restaurants covering different kinds of cuisine. Some do better than others and opinions differ on Scarpetta as far as Italian fare goes. There are other places in town that I think are better, but this one is a bit larger and easier to get a reservation.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Scarpetta%2C%20Islands%20Brygge%2081F%2C%20Copenhagen",
+  "website": "https://cofoco.dk/en/scarpetta-islands-brygge/",
+  "address": "Islands Brygge 81F",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

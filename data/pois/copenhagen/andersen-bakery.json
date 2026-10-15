@@ -1,0 +1,30 @@
+{
+  "id": "andersen-bakery-copenhagen",
+  "slug": "andersen-bakery",
+  "name": "Andersen Bakery",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.667138,
+    "longitude": 12.578329
+  },
+  "vibe": "hipster",
+  "serves": [
+    "coffee",
+    "bakery",
+    "lunch"
+  ],
+  "tags": [
+    "bakery",
+    "cakes",
+    "amager"
+  ],
+  "recommendation": "Started by a Japanese baker in the ‘50s, this is an amazing bakery. They have great bread and tasty sandwiches, but they are best known for their sweet baked goods and cakes that are as beautiful as they are tasty. Vegetarian available.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Andersen%20Bakery%2C%20Thorshavnsgade%2026%2C%20Copenhagen",
+  "website": "https://andersen-bakery-eu.dk/",
+  "address": "Thorshavnsgade 26",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

@@ -1,0 +1,31 @@
+{
+  "id": "the-packhouse-copenhagen",
+  "slug": "the-packhouse",
+  "name": "The Packhouse",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.672518,
+    "longitude": 12.590286
+  },
+  "vibe": "hipster",
+  "serves": [
+    "breakfast-brunch",
+    "coffee",
+    "bakery",
+    "lunch"
+  ],
+  "tags": [
+    "bakery",
+    "work-friendly",
+    "christianshavn"
+  ],
+  "recommendation": "They call themselves a “microbakery” and they bake delicious bread. They also serve really excellent food for lunch and their space is inviting for a longer stint if you are looking to work and drink your caffeinated beverage in peace. Vegetarian options available.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=The%20Packhouse%2C%20Overgaden%20Neden%20Vandet%2019A%2C%20Copenhagen",
+  "website": "http://thepackhouse.dk/en/",
+  "address": "Overgaden Neden Vandet 19A",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

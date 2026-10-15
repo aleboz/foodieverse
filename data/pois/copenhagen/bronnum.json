@@ -1,0 +1,28 @@
+{
+  "id": "bronnum-copenhagen",
+  "slug": "bronnum",
+  "name": "Brønnum",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.679603,
+    "longitude": 12.586807
+  },
+  "vibe": "hipster",
+  "serves": [
+    "cocktails"
+  ],
+  "tags": [
+    "cocktails",
+    "after-work",
+    "city-center"
+  ],
+  "recommendation": "Another bar from the owners of Ruby, this one is stately and located right across from the old opera house in Kongens Nytorv (King’s square). Lots of people in suits, popular with the after work crowd, but the cocktails are excellent.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Br%C3%B8nnum%2C%20August%20Bournonvilles%20Passage%201%2C%20Copenhagen",
+  "website": "https://bronnumcph.dk/",
+  "address": "August Bournonvilles Passage 1",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

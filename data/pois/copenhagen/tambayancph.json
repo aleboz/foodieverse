@@ -1,0 +1,27 @@
+{
+  "id": "tambayancph-copenhagen",
+  "slug": "tambayancph",
+  "name": "TambayanCPH",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.659283,
+    "longitude": 12.606159
+  },
+  "vibe": "no-frills",
+  "serves": [
+    "dinner"
+  ],
+  "tags": [
+    "filipino",
+    "amager"
+  ],
+  "recommendation": "Fantastic Filipino food for dinner. The place is fairly small, but they are very quick and the food is really worth the time. The staff is friendly and everything is very informal. Great place to grab a bite to eat and relax before heading out for the night.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=TambayanCPH%2C%20Amagerbrogade%20102%2C%20Copenhagen",
+  "website": "https://www.instagram.com/tambayancph/?hl=da",
+  "address": "Amagerbrogade 102",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

@@ -1,0 +1,28 @@
+{
+  "id": "sankt-annae-8-copenhagen",
+  "slug": "sankt-annae-8",
+  "name": "Sankt Annæ 8",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.673855,
+    "longitude": 12.591357
+  },
+  "vibe": "casual",
+  "serves": [
+    "dinner"
+  ],
+  "tags": [
+    "organic",
+    "reservations",
+    "christianshavn"
+  ],
+  "recommendation": "A nice very local cafe, small so reservations are recommended. They have one meat or fish and one vegetarian dish per night (take a look online for the menu) plus a variety of appetisers and desserts. The food is organic, excellent quality, very tasty and also quite cheap by Copenhagen standards. The wine selection might surprise you.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Sankt%20Ann%C3%A6%208%2C%20Wildersgade%2052%2C%20Copenhagen",
+  "website": "https://www.sanktannae8.com/",
+  "address": "Wildersgade 52",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

@@ -1,0 +1,30 @@
+{
+  "id": "pate-pate-copenhagen",
+  "slug": "pate-pate",
+  "name": "Paté Paté",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.669181,
+    "longitude": 12.55858
+  },
+  "vibe": "casual",
+  "serves": [
+    "lunch",
+    "dinner"
+  ],
+  "tags": [
+    "tapas",
+    "wine",
+    "reservations",
+    "vesterbro"
+  ],
+  "recommendation": "This group has several restaurants that they run, all of which are delicious and most of which tend towards a Danish version of Spanish tapas with an excellent wine selection. Can get crowded in the evenings so reservations are recommended. Excellent place for lunch as well.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Pat%C3%A9%20Pat%C3%A9%2C%20Slagterboderne%201%2C%20Copenhagen",
+  "website": "https://www.patepate.dk/menu",
+  "address": "Slagterboderne 1",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

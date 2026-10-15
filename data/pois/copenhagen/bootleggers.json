@@ -1,0 +1,27 @@
+{
+  "id": "bootleggers-copenhagen",
+  "slug": "bootleggers",
+  "name": "Bootleggers",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.664599,
+    "longitude": 12.604592
+  },
+  "vibe": "no-frills",
+  "serves": [
+    "beer-wine"
+  ],
+  "tags": [
+    "craft-beer",
+    "amager"
+  ],
+  "recommendation": "Craft beer bar with several locations around town, two near the university, one in center city and two others in Nørrebro and Frederiksberg. All have knowledgeable staff that knows their beer and can recommend what you might like. They typically have a lot of taps as well as a very large selection of bottled beer.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Bootleggers%2C%20Holmbladsgade%2022%2C%20Copenhagen",
+  "website": "https://bootleggers.dk/amager/",
+  "address": "Holmbladsgade 22",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

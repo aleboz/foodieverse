@@ -1,0 +1,30 @@
+{
+  "id": "hija-de-sanchez-copenhagen",
+  "slug": "hija-de-sanchez",
+  "name": "Hija de Sanchez",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.668908,
+    "longitude": 12.558451
+  },
+  "vibe": "hipster",
+  "serves": [
+    "breakfast-brunch",
+    "coffee",
+    "lunch"
+  ],
+  "tags": [
+    "tacos",
+    "mexican",
+    "vesterbro"
+  ],
+  "recommendation": "The story is that a chef of Mexican descent from Chicago was working as a pastry chef at Noma and over the years just couldn’t get over the relative desert that was the Copenhagen food scene when it came to Mexican food. So she opened a taco stand and it started a Mexican food movement in Copenhagen. We now have quite a few very decent Mexican food places, but Hija de Sanchez is by far the best and their Pastor tacos are amazing. Try the 3-taco deal with Hibiscus lemonade, and make sure to get some extra of that delicious jalapeno and/or habanero salsa, depending on how hot you want your tacos of course.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Hija%20de%20Sanchez%2C%20Slagterboderne%208%2C%20Copenhagen",
+  "website": "https://lovesanchez.com/",
+  "address": "Slagterboderne 8",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

@@ -1,0 +1,31 @@
+{
+  "id": "hart-bakery-copenhagen",
+  "slug": "hart-bakery",
+  "name": "Hart Bakery",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.679627,
+    "longitude": 12.601099
+  },
+  "vibe": "hipster",
+  "serves": [
+    "breakfast-brunch",
+    "coffee",
+    "bakery",
+    "lunch"
+  ],
+  "tags": [
+    "bakery",
+    "tea",
+    "christianshavn"
+  ],
+  "recommendation": "The original bakery opened in Frederiksberg some years ago but they have recently really expanded, opening two locations on Christianshavn. Always worth a visit for their amazing baked goods, but they will also pour excellent tea and serve sandwiches for lunch.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Hart%20Bakery%2C%20Galionsvej%2041%2C%20Copenhagen",
+  "website": "https://hartbageri.com/",
+  "address": "Galionsvej 41",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

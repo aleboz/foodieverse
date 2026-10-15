@@ -1,0 +1,28 @@
+{
+  "id": "christiania-bryghus-the-lab-copenhagen",
+  "slug": "christiania-bryghus-the-lab",
+  "name": "Christiania Bryghus The Lab",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.673824,
+    "longitude": 12.600609
+  },
+  "vibe": "no-frills",
+  "serves": [
+    "beer-wine"
+  ],
+  "tags": [
+    "craft-beer",
+    "christiania",
+    "christianshavn"
+  ],
+  "recommendation": "Hemp beer anyone? Christiania has its many sides, but this one is worth a visit for tasty beer selection and a nice vibe.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Christiania%20Bryghus%20The%20Lab%2C%20M%C3%A6lkevejen%2081A%2C%20Copenhagen",
+  "website": "https://christianiabryghus.dk/christiania-bryghus/",
+  "address": "Mælkevejen 81A",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

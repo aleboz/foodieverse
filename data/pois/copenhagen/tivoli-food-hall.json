@@ -1,0 +1,30 @@
+{
+  "id": "tivoli-food-hall-copenhagen",
+  "slug": "tivoli-food-hall",
+  "name": "Tivoli Food Hall",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.673801,
+    "longitude": 12.565785
+  },
+  "vibe": "no-frills",
+  "serves": [
+    "coffee",
+    "lunch",
+    "dinner",
+    "beer-wine"
+  ],
+  "tags": [
+    "food-hall",
+    "vesterbro"
+  ],
+  "recommendation": "With entrances from the street across from the Central Train Station and from Tivoli, this food hall is a great place to go to explore some of the smaller chains and single food proprietors in Copenhagen. Excellent food and lots of options. Available for an early-ish dinner as well.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Tivoli%20Food%20Hall%2C%20Bernstorffsgade%203%2C%20Copenhagen",
+  "website": "https://www.tivoli.dk/da/mad-og-drikke/tivoli-food-hall",
+  "address": "Bernstorffsgade 3",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

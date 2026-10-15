@@ -1,0 +1,28 @@
+{
+  "id": "no-2-copenhagen",
+  "slug": "no-2",
+  "name": "No. 2",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.672475,
+    "longitude": 12.584781
+  },
+  "vibe": "fancy",
+  "serves": [
+    "dinner"
+  ],
+  "tags": [
+    "harbour-view",
+    "wine",
+    "christianshavn"
+  ],
+  "recommendation": "A nice bistro with a lovely view of the harbor. Michelin-starred restaurant AoC opened this bistro some years ago and it has done extremely well. Excellent food, fantastic wine selection and a view that is designed to impress visitors. It’s casual bordering on fancy, but with a reasonable price tag.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=No.%202%2C%20Nicolai%20Eigtvedsgade%2032%2C%20Copenhagen",
+  "website": "https://www.nummer2.dk/",
+  "address": "Nicolai Eigtvedsgade 32",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

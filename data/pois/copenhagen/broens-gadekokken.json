@@ -1,0 +1,30 @@
+{
+  "id": "broens-gadekokken-copenhagen",
+  "slug": "broens-gadekokken",
+  "name": "Broens Gadekøkken",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.677858,
+    "longitude": 12.596816
+  },
+  "vibe": "no-frills",
+  "serves": [
+    "coffee",
+    "lunch",
+    "beer-wine"
+  ],
+  "tags": [
+    "food-hall",
+    "outdoor-seating",
+    "christianshavn"
+  ],
+  "recommendation": "This is an open-air space, but there are heaters installed around tables under a roof. There is also currently a small skating rink there. The food there mostly represents some of the small but very good cafe’s in town - District Tonkin (Vietnamese), Gasoline Grill (burgers), Phago (wraps) - but there are also a few others that are their own small operators. Generally worth the time, but the outside nature of this space can get a bit challenging in the winter.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Broens%20Gadek%C3%B8kken%2C%20Strandgade%2095%2C%20Copenhagen",
+  "website": "https://broensgadekoekken.dk/",
+  "address": "Strandgade 95",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

@@ -1,0 +1,28 @@
+{
+  "id": "k-bar-copenhagen",
+  "slug": "k-bar",
+  "name": "K-Bar",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.67798,
+    "longitude": 12.580761
+  },
+  "vibe": "no-frills",
+  "serves": [
+    "cocktails"
+  ],
+  "tags": [
+    "cocktails",
+    "tiny",
+    "city-center"
+  ],
+  "recommendation": "The place is tiny and tucked away in the corner of the touristy madness in the center of Copenhagen. They have excellent cocktails and really great service.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=K-Bar%2C%20Ved%20Stranden%2020%2C%20Copenhagen",
+  "website": "https://k-bar.dk/",
+  "address": "Ved Stranden 20",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

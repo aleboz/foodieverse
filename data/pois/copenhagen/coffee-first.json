@@ -1,0 +1,28 @@
+{
+  "id": "coffee-first-copenhagen",
+  "slug": "coffee-first",
+  "name": "Coffee First",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.674403,
+    "longitude": 12.560018
+  },
+  "vibe": "no-frills",
+  "serves": [
+    "coffee"
+  ],
+  "tags": [
+    "tea",
+    "work-friendly",
+    "vesterbro"
+  ],
+  "recommendation": "Very nice coffee and nice loose-leaf tea (they will even brew it at the right temperature). They offer lunch in the form of sandwiches and salads from a place down the road and nice baked goods with your brews. Excellent place to chill out and do some work.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Coffee%20First%2C%20Gammel%20Kongevej%201%2C%20Copenhagen",
+  "website": "https://coffeefirst.dk/",
+  "address": "Gammel Kongevej 1",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

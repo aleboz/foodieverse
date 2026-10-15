@@ -1,0 +1,28 @@
+{
+  "id": "blue-raven-copenhagen",
+  "slug": "blue-raven",
+  "name": "Blue Raven",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.658368,
+    "longitude": 12.608441
+  },
+  "vibe": "hipster",
+  "serves": [
+    "beer-wine"
+  ],
+  "tags": [
+    "craft-beer",
+    "gin",
+    "amager"
+  ],
+  "recommendation": "With 18 taps, a large selection of bottled beer, a knowledgeable staff and an eclectic collection of cider, whiskey and gin, this place has a very relaxed atmosphere and drinks for every taste.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Blue%20Raven%2C%20Drogdensgade%2022%2C%20Copenhagen",
+  "website": "https://blueravenbar.dk/",
+  "address": "Drogdensgade 22",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

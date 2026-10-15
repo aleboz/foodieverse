@@ -1,0 +1,28 @@
+{
+  "id": "black-swan-copenhagen",
+  "slug": "black-swan",
+  "name": "Black Swan",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.686465,
+    "longitude": 12.58738
+  },
+  "vibe": "hipster",
+  "serves": [
+    "beer-wine"
+  ],
+  "tags": [
+    "craft-beer",
+    "belgian-beer",
+    "city-center"
+  ],
+  "recommendation": "This beer bar is located on a corner next to an old school bodega and across from another. This one, however, is hipster and features a lot of interesting taps. They also have an excellent selection of Belgian bottled brews and their bartenders know their stuff well. Located just outside the tourist areas so it tends to be less crowded.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Black%20Swan%2C%20Borgergade%2093%2C%20Copenhagen",
+  "website": "https://www.blackswanbar.dk/",
+  "address": "Borgergade 93",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

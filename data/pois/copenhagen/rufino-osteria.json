@@ -1,0 +1,29 @@
+{
+  "id": "rufino-osteria-copenhagen",
+  "slug": "rufino-osteria",
+  "name": "Rufino Osteria",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.673378,
+    "longitude": 12.589016
+  },
+  "vibe": "casual",
+  "serves": [
+    "dinner"
+  ],
+  "tags": [
+    "italian",
+    "favourite",
+    "reservations",
+    "christianshavn"
+  ],
+  "recommendation": "It’s a small (thus reservation recommended) basement on a corner just after the bridge onto Christianshavn and it’s one of my absolute favorite Italian places. They have a few small tables and one large communal table in the middle. The service is slow but thorough, the Italian food is fantastic, though a bit pricey, their wine selection isn’t large but very high quality. They will pour you rare grappa that will always impress. Do not skip dessert, it is always worthwhile here.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Rufino%20Osteria%2C%20Strandgade%2014%2C%20Copenhagen",
+  "website": "https://www.rufino.dk/",
+  "address": "Strandgade 14",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

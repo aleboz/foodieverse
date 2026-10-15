@@ -1,0 +1,32 @@
+{
+  "id": "la-banchina-copenhagen",
+  "slug": "la-banchina",
+  "name": "La Banchina",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.689272,
+    "longitude": 12.610966
+  },
+  "vibe": "hipster",
+  "serves": [
+    "breakfast-brunch",
+    "coffee",
+    "lunch",
+    "dinner"
+  ],
+  "tags": [
+    "sauna",
+    "wine",
+    "tiny",
+    "christianshavn"
+  ],
+  "recommendation": "From their website: “La Banchina is a 14-seat walk-in restaurant and wine bar with an on-site sauna.” yep… I don’t think there is a better description - you can have your meal and a sauna. It’s all nice and relaxed in the summer with lots of outside seating, but requires booking in the winter because - 14 seats, yes it is TINY. Yes, the website says that you can not reserve seats at the restaurant, COVID changed everything, so now you can. Their food is delicious, and they have a small but funky and excellent wine and beer selection.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=La%20Banchina%2C%20Refshalevej%20141%2C%20Copenhagen",
+  "website": "https://www.labanchina.dk/",
+  "address": "Refshalevej 141",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

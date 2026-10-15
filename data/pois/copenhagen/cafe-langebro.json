@@ -1,0 +1,28 @@
+{
+  "id": "cafe-langebro-copenhagen",
+  "slug": "cafe-langebro",
+  "name": "Cafe Langebro",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.669144,
+    "longitude": 12.580105
+  },
+  "vibe": "no-frills",
+  "serves": [
+    "beer-wine"
+  ],
+  "tags": [
+    "craft-beer",
+    "old-school",
+    "amager"
+  ],
+  "recommendation": "This is an old-style bar with an amazing beer selection, people that know their beer, an incredible diversity of customers from old local drunks to hipster college students and a great atmosphere. Just next to the bridge and it’s lots of fun. If you want to combine with dinner, grab a pizza from around the corner.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Cafe%20Langebro%2C%20Islands%20Brygge%201B%2C%20Copenhagen",
+  "website": "http://cafelangebro.dk/",
+  "address": "Islands Brygge 1B",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

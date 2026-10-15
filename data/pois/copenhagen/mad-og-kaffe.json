@@ -1,0 +1,29 @@
+{
+  "id": "mad-og-kaffe-copenhagen",
+  "slug": "mad-og-kaffe",
+  "name": "Mad og Kaffe",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.659084,
+    "longitude": 12.608411
+  },
+  "vibe": "hipster",
+  "serves": [
+    "breakfast-brunch",
+    "coffee",
+    "lunch"
+  ],
+  "tags": [
+    "small-plates",
+    "amager"
+  ],
+  "recommendation": "A nice and relaxed cafe that offers small plates and a nice variety of tasty treats. There is a really good beer place around the corner (the Blue Raven) and a nice music venue across the road (Amager Bio).",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Mad%20og%20Kaffe%2C%20Tyrolsgade%206%2C%20Copenhagen",
+  "website": "https://madogkaffe.dk/",
+  "address": "Tyrolsgade 6",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

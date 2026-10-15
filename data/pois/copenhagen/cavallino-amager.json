@@ -1,0 +1,29 @@
+{
+  "id": "cavallino-amager-copenhagen",
+  "slug": "cavallino-amager",
+  "name": "Cavallino Amager",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.663334,
+    "longitude": 12.597531
+  },
+  "vibe": "no-frills",
+  "serves": [
+    "lunch",
+    "dinner"
+  ],
+  "tags": [
+    "pizza",
+    "sandwiches",
+    "amager"
+  ],
+  "recommendation": "A tiny pizza and Italian sandwich place about a 10-minute walk from the university, hidden away in a maze of twisty streets. They have excellent pizza and tasty sandwiches that are very reasonably priced. Vegetarian available.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Cavallino%20Amager%2C%20Kongedybet%2028%2C%20Copenhagen",
+  "website": "https://pizzeriacavallino.dk/da/amager-kongedybet-28/",
+  "address": "Kongedybet 28",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

@@ -1,0 +1,28 @@
+{
+  "id": "orsted-olbar-copenhagen",
+  "slug": "orsted-olbar",
+  "name": "Ørsted Ølbar",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.681385,
+    "longitude": 12.564567
+  },
+  "vibe": "no-frills",
+  "serves": [
+    "beer-wine"
+  ],
+  "tags": [
+    "craft-beer",
+    "sports",
+    "city-center"
+  ],
+  "recommendation": "It’s kind of like a sports bar or an old bodega - a spacious basement with mismatched tables and chairs spread around plus a few random TVs that do have sports on. Excellent and extensive selection of micro-brews on tap and bartenders happy to debate the pros and cons of hopped beer.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=%C3%98rsted%20%C3%98lbar%2C%20N%C3%B8rre%20Farimagsgade%2013%2C%20Copenhagen",
+  "website": null,
+  "address": "Nørre Farimagsgade 13",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

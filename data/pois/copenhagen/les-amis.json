@@ -1,0 +1,28 @@
+{
+  "id": "les-amis-copenhagen",
+  "slug": "les-amis",
+  "name": "Les Amis",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.674326,
+    "longitude": 12.591217
+  },
+  "vibe": "no-frills",
+  "serves": [
+    "coffee"
+  ],
+  "tags": [
+    "tea",
+    "baked-goods",
+    "christianshavn"
+  ],
+  "recommendation": "Cute and funky coffee shop and they have plenty of interesting teas. Very small and local and colourful with excellent baked goods. They will also feed you excellent breakfast and lunch if that’s what you are looking for. Nothing too fancy but nice quality and very tasty.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Les%20Amis%2C%20Sankt%20Ann%C3%A6%20Gade%203A%2C%20Copenhagen",
+  "website": "https://lesamis.dk/",
+  "address": "Sankt Annæ Gade 3A",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}
