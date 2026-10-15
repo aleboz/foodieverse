@@ -24,6 +24,7 @@ const mapData = pois.map((p) => ({
   name: p.name,
   lat: p.location.latitude,
   lng: p.location.longitude,
+  vibe: p.vibe,
   meta: [vibeLabel(p.vibe), ...servesLabels(p)].join(' · '),
   url: poiHref(city.slug, p.slug),
 }));
@@ -109,7 +110,7 @@ const excerpt = (s: string) => (s.length > 220 ? s.slice(0, 217).replace(/\s+\S*
               <div>
                 <h3><a href={poiHref(city.slug, p.slug)}>{p.name}</a></h3>
                 <div class="line">
-                  <span class="vibe">{vibeLabel(p.vibe)}</span>
+                  <span class={`vibe vibe-${p.vibe}`}>{vibeLabel(p.vibe)}</span>
                   <span class="meta">{servesLabels(p).join(' · ')}</span>
                   <span class="meta distance" data-distance hidden></span>
                   <span class="meta changed" data-changed hidden>{changedLabel(p)}</span>

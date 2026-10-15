@@ -22,7 +22,7 @@ const nearby = activePois
 const srcset = (img: (typeof images)[number]) => img.variants.map((v) => `${asset(v.path)} ${v.w}w`).join(', ');
 const pick = (img: (typeof images)[number], w: number) => (img.variants.find((v) => v.w >= w) ?? img.variants.at(-1)!).path;
 const ogImage = images[0] ? asset(pick(images[0], 960)) : undefined;
-const mapData = { lat: poi.location.latitude, lng: poi.location.longitude, name: poi.name };
+const mapData = { lat: poi.location.latitude, lng: poi.location.longitude, name: poi.name, vibe: poi.vibe };
 const added = new Date(poi.createdAt + 'T00:00:00Z').toLocaleDateString('en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' });
 ---
 <Base
@@ -34,7 +34,7 @@ const added = new Date(poi.createdAt + 'T00:00:00Z').toLocaleDateString('en-GB',
   <article class="poi" data-city={cSlug}>
     <h1 class="poi-name"><span>{poi.name}</span></h1>
     <div class="poi-meta">
-      <span class="vibe">{vibeLabel(poi.vibe)}</span>
+      <span class={`vibe vibe-${poi.vibe}`}>{vibeLabel(poi.vibe)}</span>
       <span class="meta">{servesLabels(poi).join(' · ')}</span>
       <span class="meta">{poi.city}{poi.country ? `, ${poi.country}` : ''}</span>
     </div>
@@ -126,7 +126,7 @@ const added = new Date(poi.createdAt + 'T00:00:00Z').toLocaleDateString('en-GB',
       if (!entries.some((e) => e.isIntersecting)) return;
       io.disconnect();
       const { createMap } = await import('../../scripts/map');
-      await createMap(el, [{ id: 'poi', name: data.name, lat: data.lat, lng: data.lng, meta: '', url: '' }], {
+      await createMap(el, [{ id: 'poi', name: data.name, lat: data.lat, lng: data.lng, vibe: data.vibe, meta: '', url: '' }], {
         zoom: 15,
         interactive: false,
       });
