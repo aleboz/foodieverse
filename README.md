@@ -13,7 +13,7 @@ Irina ──chat──► AI agent ──commit──► GitHub ──Actions: v
 
 - `data/pois/<city>/<slug>.json`: one file per place ([schema](data/poi.schema.json), [taxonomy](data/taxonomy.json))
 - `data/images/<city>/<slug>/`: original photos; resized WebP is generated at build time
-- `src/`: Astro static site (a pre-rendered page per city and per place, Leaflet + OpenStreetMap map, client-side search and filters)
+- `src/`: Astro static site (a pre-rendered page per city and per place, Leaflet map with gray, OpenStreetMap and satellite views, client-side search, filters and sorting)
 - `scripts/`: validation, image optimisation and authoring helpers for the AI agent
 - [`AGENTS.md`](AGENTS.md): the authoring playbook every AI agent follows
 - [`docs/chat-authoring.md`](docs/chat-authoring.md): instructions for chat assistants that can't run scripts
