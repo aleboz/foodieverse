@@ -24,7 +24,7 @@
     "vibe": { "enum": ["no-frills", "hipster", "casual", "fancy"], "description": "Exactly one: how the place feels (not what it costs)" },
     "serves": {
       "type": "array",
-      "items": { "enum": ["breakfast-brunch", "coffee", "lunch", "dinner", "cocktails", "beer-wine"] },
+      "items": { "enum": ["breakfast-brunch", "coffee", "ice-cream", "lunch", "dinner", "cocktails", "beer-wine"] },
       "minItems": 1,
       "uniqueItems": true,
       "description": "When to go: one or more service moments"
