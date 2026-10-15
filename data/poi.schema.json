@@ -32,6 +32,7 @@
     "tags": { "type": "array", "items": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" }, "uniqueItems": true },
     "recommendation": { "type": "string", "minLength": 1, "description": "The author's own words, lightly edited" },
     "googleMapsUrl": { "type": ["string", "null"], "format": "uri" },
+    "website": { "type": ["string", "null"], "format": "uri", "description": "The place's own website (http or https)" },
     "address": { "type": ["string", "null"] },
     "images": {
       "type": "array",

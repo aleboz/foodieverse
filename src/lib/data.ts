@@ -18,6 +18,7 @@ export interface Poi {
   tags?: string[];
   recommendation: string;
   googleMapsUrl?: string | null;
+  website?: string | null;
   address?: string | null;
   images?: string[];
   imageAlt?: string[];
@@ -76,8 +77,11 @@ export const imagesFor = (p: Poi): PoiImage[] => imageManifest[p.id] ?? [];
 
 export const recentPois = [...activePois].sort((a, b) => b.createdAt.localeCompare(a.createdAt)).slice(0, 4);
 
+/** The author's Google Maps link, or a search for the place by name and address (which opens the place itself, not a dropped pin). */
 export function googleMapsHref(p: Poi): string {
-  return p.googleMapsUrl || `https://www.google.com/maps/search/?api=1&query=${p.location.latitude},${p.location.longitude}`;
+  if (p.googleMapsUrl) return p.googleMapsUrl;
+  const query = [p.name, p.address || `${p.location.latitude},${p.location.longitude}`, p.address ? p.city : null].filter(Boolean).join(', ');
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
 }
 
 /** Text used by client-side search: name, city, vibe, when to go, tags, recommendation. */

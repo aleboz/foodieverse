@@ -76,6 +76,9 @@ const added = new Date(poi.createdAt + 'T00:00:00Z').toLocaleDateString('en-GB',
       <a class="btn btn-primary" href={googleMapsHref(poi)} target="_blank" rel="noopener">
         Open in Google Maps <span aria-hidden="true">↗</span>
       </a>
+      {poi.website && (
+        <a class="btn" href={poi.website} target="_blank" rel="noopener">Website <span aria-hidden="true">↗</span></a>
+      )}
       <button type="button" class="btn" id="share" hidden>Share</button>
     </div>
 

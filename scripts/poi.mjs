@@ -8,7 +8,7 @@
 //   npm run poi -- find <text>
 //
 // A draft is a partial POI: name, city, country, location, vibe, serves, tags,
-// recommendation, googleMapsUrl, address, imageAlt. id, slug, dates,
+// recommendation, googleMapsUrl, website, address, imageAlt. id, slug, dates,
 // status and image file names are filled in here. --dry-run prints the
 // preview and validation result without writing anything.
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, rmSync } from 'node:fs';
@@ -40,7 +40,7 @@ const slugOverride = multi('--slug')[0];
 
 const FIELD_ORDER = [
   'id', 'slug', 'name', 'city', 'country', 'location', 'vibe', 'serves', 'tags', 'recommendation',
-  'googleMapsUrl', 'address', 'images', 'imageAlt', 'status', 'createdAt', 'updatedAt',
+  'googleMapsUrl', 'website', 'address', 'images', 'imageAlt', 'status', 'createdAt', 'updatedAt',
 ];
 const ordered = (poi) => Object.fromEntries(FIELD_ORDER.filter((k) => poi[k] !== undefined).map((k) => [k, poi[k]]));
 const readJson = (p) => JSON.parse(readFileSync(p, 'utf8'));
@@ -66,6 +66,7 @@ function preview(poi, { duplicates = [], nearby = [], images = [] } = {}) {
   const nImg = images.length || poi.images?.length || 0;
   if (nImg) lines.push(`🖼  ${nImg} photo${nImg > 1 ? 's' : ''}`);
   if (poi.googleMapsUrl) lines.push(`🔗 ${poi.googleMapsUrl}`);
+  if (poi.website) lines.push(`🌐 ${poi.website}`);
   for (const d of duplicates) lines.push('', `⚠️  Possible duplicate of existing "${d.name}" (${d.city}, status ${d.status})`);
   for (const n of nearby) lines.push('', `⚠️  Very close to existing "${n.name}" — same place?`);
   return lines.join('\n');
@@ -148,6 +149,7 @@ switch (cmd) {
       tags: draft.tags ?? [],
       country: draft.country ?? null,
       googleMapsUrl: draft.googleMapsUrl ?? null,
+      website: draft.website ?? null,
       address: draft.address ?? null,
       images: imageNames,
       status: draft.status ?? 'active',

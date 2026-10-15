@@ -14,6 +14,12 @@ body:
       placeholder: https://maps.app.goo.gl/...
     validations:
       required: true
+  - type: input
+    id: website
+    attributes:
+      label: Website
+      description: Optional. The place's own website.
+      placeholder: https://...
   - type: textarea
     id: recommendation
     attributes:

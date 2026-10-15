@@ -51,6 +51,7 @@ run scripts, so instead:
   "tags": ["natural-wine", "late-afternoon", "expensive"],
   "recommendation": "Wonderful little wine bar. …",
   "googleMapsUrl": "https://maps.app.goo.gl/…",
+  "website": null,
   "address": null,
   "images": [],
   "status": "active",
