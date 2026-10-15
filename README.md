@@ -1,7 +1,7 @@
 # Irina's Foodieverse
 
 Places I think are worth your time. This is a personal, mobile-first guide to
-places recommended to friends, at **https://aleboz.github.io/foodieverse/**.
+places recommended to friends, at **https://quillis.github.io/foodieverse/**.
 
 **Git is the database. The AI conversation is the CMS. The website is the guide.**
 

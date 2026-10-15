@@ -120,7 +120,7 @@ Irina sends a Google Maps link, her text and maybe photos.
   succeeded before saying it's live. If it failed, or you could not push,
   say publishing failed and why in one line. Never claim the site was
   updated when it wasn't.
-- Live URLs: `https://aleboz.github.io/foodieverse/<city-slug>/<slug>/`.
+- Live URLs: `https://quillis.github.io/foodieverse/<city-slug>/<slug>/`.
   Include the link in your confirmation.
 
 ## Things to never do
