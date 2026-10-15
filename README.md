@@ -28,7 +28,7 @@ claude.ai/code) and write something like:
 > amazing natural wines… *(+ photos)*
 
 Claude shows a preview. Reply **yes** and it publishes. Edits ("make it three
-hearts", "Bar Vivant has closed") work the same way.
+fancy", "Bar Vivant has closed") work the same way.
 
 ### From the GitHub app, without an AI chat
 

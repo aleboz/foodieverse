@@ -64,6 +64,12 @@ function parseForm(body = '') {
   return out;
 }
 
+/** Ticked boxes of an issue-form checkbox list ("- [x] Lunch"), as service ids. */
+function checkedServes(text = '') {
+  const ticked = [...text.matchAll(/^\s*-\s*\[x\]\s*(.+?)\s*$/gim)].map((m) => m[1]);
+  return cleanServes(taxonomy.serves.filter((s) => ticked.includes(s.label)).map((s) => s.id));
+}
+
 function imageUrls(text = '') {
   const urls = new Set();
   for (const m of text.matchAll(/!\[[^\]]*\]\((https:\/\/[^)\s]+)\)/g)) urls.add(m[1]);
@@ -87,43 +93,42 @@ const stripImages = (text = '') =>
 
 const MAPS_URL_RE = /https?:\/\/(?:maps\.app\.goo\.gl|goo\.gl\/maps|(?:www\.)?google\.[a-z.]+\/maps|maps\.google\.[a-z.]+)\S*/i;
 const GENERIC_TITLE_RE = /^\s*(new place|new|place|untitled|issue)?\s*$/i;
-const NUMBER_WORDS = { one: 1, two: 2, three: 3 };
-
-const HEART_RE = /♥|❤️?|<3/g;
-const COUNT_RE = /\b([1-3]|one|two|three)\s*hearts?\b/gi;
 const TAG_RE = /(^|\s)#([\p{L}\p{N}][\p{L}\p{N}-]*)/gu;
-const leftover = (t) => t.replace(/[\s,;:·.!-]/g, '');
+const LABEL_RE = /\b(vibe|when( to go)?|serves)\s*:/gi;
+const leftover = (t) => t.replace(/\band\b|[\s,;:·.!&+/-]/gi, '');
+const word = (src) => new RegExp(`(^|[^\\p{L}])(?:${src})(?![\\p{L}])`, 'giu');
+const VIBE_WORDS = taxonomy.vibes.map((v) => ({ id: v.id, re: word(v.id) }));
+const SERVES_WORDS = [
+  ['breakfast-brunch', 'breakfast\\s*/\\s*brunch|breakfast|brunch'],
+  ['coffee', 'coffee\\s*shop|coffee|café|cafe'],
+  ['lunch', 'lunch'],
+  ['dinner', 'dinner'],
+  ['cocktails', 'cocktails?'],
+  ['beer-wine', 'beer\\s*/\\s*wine|beer|wine'],
+].map(([id, src]) => ({ id, re: word(src) }));
 
 /**
- * Reads hearts, category and #tags from plain text, e.g. "♥♥ drink #natural-wine"
- * or "3 hearts". Strict mode (new places) only reads lines made up entirely of
- * such tokens and removes them from the text, so "I ❤️ this place" stays text.
- * Loose mode (correction replies) reads them anywhere, plus status words
- * ("it has closed", "reopened").
+ * Reads the vibe (cheap / casual / fancy), when to go ("lunch, dinner") and
+ * #tags from plain text, e.g. "casual · lunch, dinner #natural-wine".
+ * Strict mode (new places) only reads lines made up entirely of such words and
+ * removes them from the text, so "Great brunch." stays text. Loose mode
+ * (correction replies) reads them anywhere, plus status words ("it has
+ * closed", "reopened").
  */
 function parseSimple(text = '', { loose = false } = {}) {
   const found = {};
   const keep = [];
   for (const line of text.split('\n')) {
-    const hearts = (line.match(HEART_RE) ?? []).length;
-    const count = [...line.matchAll(COUNT_RE)].at(-1);
     const tags = [...line.matchAll(TAG_RE)].map((m) => m[2]);
-    let rest = line.replace(HEART_RE, ' ').replace(COUNT_RE, ' ').replace(TAG_RE, ' ');
-    let category = null;
-    for (const c of taxonomy.categories) {
-      const re = new RegExp(`(^|[^\\p{L}])(category:?\\s*)?${c.label}(?![\\p{L}])`, 'iu');
-      if (re.test(rest) && (loose || !leftover(rest.replace(re, ' ')))) {
-        category = c.id;
-        rest = rest.replace(re, ' ');
-        break;
-      }
-    }
-    const isMeta = (hearts || count || tags.length || category) && !leftover(rest);
+    let rest = line.replace(TAG_RE, ' ').replace(LABEL_RE, ' ');
+    const vibes = VIBE_WORDS.filter((v) => v.re.test(rest));
+    const serves = SERVES_WORDS.filter((s) => s.re.test(rest)).map((s) => s.id);
+    for (const w of [...VIBE_WORDS, ...SERVES_WORDS]) rest = rest.replace(w.re, ' ');
+    const isMeta = (vibes.length || serves.length || tags.length) && !leftover(rest);
     if (isMeta || loose) {
-      if (count) found.rating = NUMBER_WORDS[count[1].toLowerCase()] ?? Number(count[1]);
-      else if (hearts) found.rating = Math.min(3, hearts);
       if (tags.length) found.tags = [...(found.tags ?? []), ...tags];
-      if (category) found.category = category;
+      if (vibes.length) found.vibe = vibes.at(-1).id;
+      if (serves.length) found.serves = cleanServes([...(found.serves ?? []), ...serves]);
     }
     if (loose) {
       if (/\btemporar(il)?y closed\b/i.test(line)) found.status = 'temporarily-closed';
@@ -136,7 +141,7 @@ function parseSimple(text = '', { loose = false } = {}) {
   return { ...found, text: keep.join('\n').replace(/\n{3,}/g, '\n\n').trim() };
 }
 
-/** A plain issue: Maps link + text (+ optional hearts/category/#tags line), or "Update …". */
+/** A plain issue: Maps link + text (+ optional vibe / when-to-go / #tags line), or "Update …". */
 function parsePlainIssue(title = '', body = '') {
   const titleText = GENERIC_TITLE_RE.test(title) ? '' : title.trim();
   const all = stripImages(`${titleText}\n${body ?? ''}`).trim();
@@ -155,8 +160,8 @@ function parsePlainIssue(title = '', body = '') {
     kind: 'add',
     url,
     recommendation: parsed.text,
-    hearts: parsed.rating ?? null,
-    category: parsed.category ?? null,
+    vibe: parsed.vibe ?? null,
+    serves: parsed.serves ?? [],
     tags: cleanTags(parsed.tags),
     keepText: false,
     nameHint: '', // the title is only used as a fallback if the link can't be resolved
@@ -200,7 +205,19 @@ function existingTags() {
   return Object.fromEntries(Object.entries(counts).sort((a, b) => b[1] - a[1]));
 }
 const cleanTags = (tags) => [...new Set((tags ?? []).map((t) => slugify(t)).filter(Boolean))];
-const categoryLabel = (id) => taxonomy.categories.find((c) => c.id === id)?.label ?? id;
+const SERVES_IDS = taxonomy.serves.map((s) => s.id);
+/** Known service ids, without duplicates, in taxonomy order. */
+const cleanServes = (list) => SERVES_IDS.filter((id) => (list ?? []).includes(id));
+const vibeLabel = (id) => taxonomy.vibes.find((v) => v.id === id)?.label ?? null;
+const servesLabels = (list) => (list ?? []).map((id) => taxonomy.serves.find((s) => s.id === id)?.label ?? id);
+
+/** The required categories the author hasn't given yet, as questions. */
+function missingQuestions(p) {
+  const out = [];
+  if (!vibeLabel(p.vibe)) out.push(`Is it ${taxonomy.vibes.map((v) => `**${v.label.toLowerCase()}**`).join(', ').replace(/, ([^,]*)$/, ' or $1')}?`);
+  if (!cleanServes(p.serves).length) out.push(`When should people go? One or more of: ${servesLabels(SERVES_IDS).join(', ')}.`);
+  return out;
+}
 
 function runPoi(args) {
   const r = spawnSync(process.execPath, [join(ROOT, 'scripts', 'poi.mjs'), ...args], { cwd: ROOT, encoding: 'utf8' });
@@ -225,11 +242,11 @@ function findPlace(query) {
 }
 
 // ---------- Preview ----------
-function previewMarkdown(p, { photos = 0, notes = [], diff = null } = {}) {
+function previewMarkdown(p, { photos = 0, notes = [], diff = null, questions = [] } = {}) {
   const lines = [
     `**${p.name}** · ${p.city}${p.country ? `, ${p.country}` : ''}`,
     '',
-    `${p.rating ? '♥'.repeat(p.rating) : '(no hearts)'} · ${categoryLabel(p.category)}${p.status && p.status !== 'active' ? ` · **${p.status}**` : ''}`,
+    `${vibeLabel(p.vibe) ?? '❓ vibe'} · ${servesLabels(p.serves).join(' · ') || '❓ when to go'}${p.status && p.status !== 'active' ? ` · **${p.status}**` : ''}`,
     (p.tags ?? []).length ? p.tags.map((t) => `\`${t}\``).join(' ') : '_(no tags)_',
     '',
     ...p.recommendation.split('\n').map((l) => `> ${l}`),
@@ -240,18 +257,30 @@ function previewMarkdown(p, { photos = 0, notes = [], diff = null } = {}) {
   ];
   if (diff) lines.push('', '<details><summary>Changes</summary>', '', '```diff', diff, '```', '</details>');
   for (const n of notes.filter(Boolean)) lines.push('', `> [!NOTE]\n> ${n}`);
+  if (questions.length) {
+    lines.push(
+      '',
+      '---',
+      `**Before I can publish, ${questions.length === 1 ? 'one quick question' : 'two quick questions'}:**`,
+      '',
+      ...questions.map((q) => `- ${q}`),
+      '',
+      'Reply in plain words, e.g. "casual, lunch and dinner".',
+    );
+    return lines.join('\n');
+  }
   lines.push(
     '',
     '---',
     aiEnabled()
-      ? 'Reply **yes** to publish, or reply with corrections in plain words (e.g. "make it three hearts", "remove expensive", "keep my original text").'
-      : 'Reply **yes** to publish, or reply with corrections such as "3 hearts", "Drink", "#terrace" or "remove #expensive".',
+      ? 'Reply **yes** to publish, or reply with corrections in plain words (e.g. "make it fancy", "add lunch", "remove expensive", "keep my original text").'
+      : 'Reply **yes** to publish, or reply with corrections such as "fancy", "lunch, dinner", "#terrace" or "remove #expensive".',
   );
   return lines.join('\n');
 }
 
 function textDiff(before, after) {
-  const keys = ['name', 'category', 'rating', 'tags', 'status', 'address', 'recommendation'];
+  const keys = ['name', 'vibe', 'serves', 'tags', 'status', 'address', 'recommendation'];
   const out = [];
   for (const k of keys) {
     const a = JSON.stringify(before[k] ?? null);
@@ -262,6 +291,13 @@ function textDiff(before, after) {
 }
 
 async function postPreview(state, poiForPreview, { notes = [], diff = null } = {}) {
+  // Vibe and when to go are required: ask for them before validating.
+  const questions = missingQuestions(poiForPreview);
+  if (questions.length) {
+    const photos = (poiForPreview.images?.length ?? 0) + state.images.length;
+    await comment(`${previewMarkdown(poiForPreview, { photos, notes, diff, questions })}\n\n${encodeState(state)}`);
+    return;
+  }
   // Validate through the same CLI the agents use, without writing anything.
   const files = await downloadImages(state.images);
   const imageArgs = files.flatMap((f) => ['--image', f]);
@@ -292,8 +328,8 @@ async function startFromIssue() {
     return startNewPlace({
       url: form['Google Maps link'].match(/https?:\/\/\S+/)?.[0],
       recommendation: stripImages(form['Your recommendation']),
-      hearts: { '♥ Recommended': 1, '♥♥ Strong recommendation': 2, "♥♥♥ Don't miss": 3 }[form.Hearts] ?? null,
-      category: taxonomy.categories.find((c) => c.label === form.Category)?.id ?? null,
+      vibe: taxonomy.vibes.find((v) => v.label === form.Vibe)?.id ?? null,
+      serves: checkedServes(form['When to go']),
       tags: cleanTags((form.Tags || '').split(',')),
       keepText: /\[x\]/i.test(form.Text || ''),
       nameHint: nameHint || '',
@@ -308,8 +344,8 @@ async function startFromIssue() {
   if (plain?.kind === 'add') return startNewPlace(plain);
   if (plain?.kind === 'update') return startUpdate(plain);
   await comment(
-    'To add a place, write the Google Maps link and your recommendation, optionally with a line like `♥♥ drink #natural-wine`.\n' +
-      'To change one, start with `Update`, e.g. `Update Bar Vivant, Copenhagen: one heart`.',
+    'To add a place, write the Google Maps link and your recommendation, optionally with a line like `casual · lunch, dinner #natural-wine`.\n' +
+      'To change one, start with `Update`, e.g. `Update Bar Vivant, Copenhagen: make it fancy`.',
   );
 }
 
@@ -405,7 +441,7 @@ async function startNewPlace(input) {
   const verified = place.foundByWebCheck ? (notes.push(place.foundByWebCheck), true) : await checkPlace(place, url, recommendation, notes);
   if (!verified && place.candidates.length > 1) notes.push(`Matched "${place.candidates[0].displayName}". If that's wrong, put the place name and city in the issue title.`);
 
-  const { hearts, category, tags: userTags, keepText } = input;
+  const { vibe, serves, tags: userTags, keepText } = input;
 
   let ai = null;
   try {
@@ -413,7 +449,7 @@ async function startNewPlace(input) {
   } catch (e) {
     notes.push(`AI suggestions unavailable this time (${e.message}).`);
   }
-  if (!ai && !aiEnabled()) notes.push('AI suggestions are off (no API key configured), so category, hearts and tags come only from what you wrote.');
+  if (!ai && !aiEnabled()) notes.push('AI suggestions are off (no API key configured), so vibe, when to go and tags come only from what you wrote.');
   if (ai?.notes) notes.push(ai.notes);
 
   const draft = {
@@ -421,10 +457,10 @@ async function startNewPlace(input) {
     city: place.city,
     country: place.country,
     location: place.location,
-    category: category ?? ai?.category ?? 'other',
+    vibe: vibe ?? ai?.vibe ?? undefined,
+    serves: serves?.length ? cleanServes(serves) : cleanServes(ai?.serves),
     tags: userTags.length ? userTags : cleanTags(ai?.tags),
     recommendation: keepText || !ai ? recommendation : ai.recommendation.trim() || recommendation,
-    rating: hearts ?? ai?.rating ?? null,
     googleMapsUrl: url,
     address: place.address,
   };
@@ -442,7 +478,7 @@ async function startUpdate({ place: query, change, images }) {
     return comment(
       hits.length
         ? `Several places match "${query}":\n\n${list}\n\nPlease edit the issue with the exact name and city.`
-        : `I couldn't find "${query}". Please edit the issue with the exact name and city (e.g. \`Update Bar Vivant, Copenhagen: one heart\`), or the link to its page.`,
+        : `I couldn't find "${query}". Please edit the issue with the exact name and city (e.g. \`Update Bar Vivant, Copenhagen: make it fancy\`), or the link to its page.`,
     );
   }
   const poi = hits[0];
@@ -462,8 +498,15 @@ async function applyChangeRequest(state, request) {
     if (!aiEnabled()) {
       const simple = parseSimple(request, { loose: true });
       const understood = [];
-      if (simple.rating) { current.rating = simple.rating; understood.push(`${'♥'.repeat(simple.rating)}`); }
-      if (simple.category) { current.category = simple.category; understood.push(categoryLabel(simple.category)); }
+      if (simple.vibe) { current.vibe = simple.vibe; understood.push(vibeLabel(simple.vibe)); }
+      if (simple.serves?.length) {
+        const remove = /\b(remove|delete|drop|without|no longer|not for)\b/i.test(request);
+        const add = /\b(add|also|plus)\b/i.test(request) || !current.serves?.length;
+        current.serves = remove
+          ? (current.serves ?? []).filter((s) => !simple.serves.includes(s))
+          : add ? cleanServes([...(current.serves ?? []), ...simple.serves]) : simple.serves;
+        understood.push(`${remove ? 'removed' : 'when to go:'} ${servesLabels(remove ? simple.serves : current.serves).join(', ')}`);
+      }
       if (simple.status) { current.status = simple.status; understood.push(simple.status); }
       if (simple.tags?.length) {
         const remove = /\b(remove|delete|drop|without)\b/i.test(request);
@@ -474,7 +517,7 @@ async function applyChangeRequest(state, request) {
       notes.push(
         understood.length
           ? `Changed: ${understood.join(', ')}.`
-          : 'Without the AI I only understand hearts (`♥♥`, "3 hearts"), a category word, `#tags` (add, or "remove #tag") and "closed" / "reopened". Edit the issue to change anything else.',
+          : 'Without the AI I only understand cheap / casual / fancy, when to go ("lunch, dinner", "add cocktails"), `#tags` (add, or "remove #tag") and "closed" / "reopened". Edit the issue to change anything else.',
       );
     } else {
       let change = null;
@@ -485,12 +528,17 @@ async function applyChangeRequest(state, request) {
       }
       if (change) {
         if (/original text|my text|exactly as (i )?wrote/i.test(request) && state.original) change.recommendation = state.original;
-        for (const k of ['name', 'category', 'rating', 'recommendation', 'status', 'address']) {
+        for (const k of ['name', 'vibe', 'recommendation', 'status', 'address']) {
           if (change[k] !== null && change[k] !== undefined) current[k] = change[k];
         }
+        if (change.serves) current.serves = cleanServes(change.serves);
         if (change.tags) current.tags = cleanTags(change.tags);
         if (change.reply) notes.unshift(change.reply);
       }
+      // Safety net for a short answer to the vibe / when-to-go question.
+      const simple = parseSimple(request, { loose: true });
+      if (!vibeLabel(current.vibe) && simple.vibe) current.vibe = simple.vibe;
+      if (!cleanServes(current.serves).length && simple.serves?.length) current.serves = simple.serves;
     }
   }
 
@@ -502,7 +550,7 @@ async function applyChangeRequest(state, request) {
   }
   const original = JSON.parse(readFileSync(poiPaths(...state.ref.split('/')).json, 'utf8'));
   state.patch = {};
-  for (const k of ['name', 'category', 'rating', 'tags', 'recommendation', 'status', 'address']) {
+  for (const k of ['name', 'vibe', 'serves', 'tags', 'recommendation', 'status', 'address']) {
     if (JSON.stringify(current[k] ?? null) !== JSON.stringify(original[k] ?? null)) state.patch[k] = current[k];
   }
   if (!Object.keys(state.patch).length && !state.images.length) notes.push('Nothing to change yet — reply with what should change.');
@@ -510,6 +558,9 @@ async function applyChangeRequest(state, request) {
 }
 
 async function publish(state) {
+  if (state.kind === 'add' && missingQuestions(state.draft).length) {
+    return postPreview(state, state.draft, { notes: ["I can't publish this yet: vibe and when to go are needed first."] });
+  }
   const files = await downloadImages(state.images);
   const imageArgs = files.flatMap((f) => ['--image', f]);
   let result;

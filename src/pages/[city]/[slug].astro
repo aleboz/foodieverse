@@ -1,7 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import Hearts from '../../components/Hearts.astro';
-import { allPois, activePois, citySlug, category, imagesFor, googleMapsHref } from '../../lib/data';
+import { allPois, activePois, citySlug, vibeLabel, servesLabels, imagesFor, googleMapsHref } from '../../lib/data';
 import { cityHref, poiHref, asset } from '../../lib/url';
 
 export function getStaticPaths() {
@@ -11,7 +10,6 @@ export function getStaticPaths() {
 
 const { poi } = Astro.props;
 const cSlug = citySlug(poi);
-const cat = category(poi.category);
 const images = imagesFor(poi);
 const paragraphs = poi.recommendation.split(/\n{2,}/);
 const statusNote = {
@@ -24,7 +22,7 @@ const nearby = activePois
 const srcset = (img: (typeof images)[number]) => img.variants.map((v) => `${asset(v.path)} ${v.w}w`).join(', ');
 const pick = (img: (typeof images)[number], w: number) => (img.variants.find((v) => v.w >= w) ?? img.variants.at(-1)!).path;
 const ogImage = images[0] ? asset(pick(images[0], 960)) : undefined;
-const mapData = { lat: poi.location.latitude, lng: poi.location.longitude, name: poi.name, icon: cat.icon };
+const mapData = { lat: poi.location.latitude, lng: poi.location.longitude, name: poi.name };
 const added = new Date(poi.createdAt + 'T00:00:00Z').toLocaleDateString('en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' });
 ---
 <Base
@@ -36,8 +34,8 @@ const added = new Date(poi.createdAt + 'T00:00:00Z').toLocaleDateString('en-GB',
   <article class="poi" data-city={cSlug}>
     <h1 class="poi-name">{poi.name}</h1>
     <div class="poi-meta">
-      <Hearts rating={poi.rating} showEmpty />
-      <span class="meta"><span aria-hidden="true">{cat.icon}</span> {cat.label}</span>
+      <span class="vibe">{vibeLabel(poi.vibe)}</span>
+      <span class="meta">{servesLabels(poi).join(' · ')}</span>
       <span class="meta">{poi.city}{poi.country ? `, ${poi.country}` : ''}</span>
     </div>
     {poi.tags && poi.tags.length > 0 && (
@@ -86,7 +84,7 @@ const added = new Date(poi.createdAt + 'T00:00:00Z').toLocaleDateString('en-GB',
         <h2 class="section-title" id="more-title">More in {poi.city}</h2>
         <ul class="recent">
           {nearby.map((p) => (
-            <li><a href={poiHref(cSlug, p.slug)}><span>{p.name}</span><span class="where">{category(p.category).label}</span></a></li>
+            <li><a href={poiHref(cSlug, p.slug)}><span>{p.name}</span><span class="where">{vibeLabel(p.vibe)}</span></a></li>
           ))}
         </ul>
       </section>
@@ -125,7 +123,7 @@ const added = new Date(poi.createdAt + 'T00:00:00Z').toLocaleDateString('en-GB',
       if (!entries.some((e) => e.isIntersecting)) return;
       io.disconnect();
       const { createMap } = await import('../../scripts/map');
-      await createMap(el, [{ id: 'poi', name: data.name, lat: data.lat, lng: data.lng, icon: data.icon, category: '', rating: null, url: '' }], {
+      await createMap(el, [{ id: 'poi', name: data.name, lat: data.lat, lng: data.lng, meta: '', url: '' }], {
         zoom: 15,
         interactive: false,
       });

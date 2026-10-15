@@ -18,7 +18,7 @@ body:
     id: change
     attributes:
       label: What should change?
-      placeholder: "Reduce it to one heart and say it's mainly worth it for the wine. / It has closed."
+      placeholder: "Make it casual and say it's mainly worth it for the wine. / Add lunch. / It has closed."
   - type: textarea
     id: photos
     attributes:

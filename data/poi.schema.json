@@ -5,7 +5,7 @@
   "description": "One recommended place. Stored at data/pois/<city-slug>/<slug>.json. Images live in data/images/<city-slug>/<slug>/ and are listed here by file name only.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["id", "slug", "name", "city", "location", "category", "recommendation", "status", "createdAt", "updatedAt"],
+  "required": ["id", "slug", "name", "city", "location", "vibe", "serves", "recommendation", "status", "createdAt", "updatedAt"],
   "properties": {
     "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "<slug>-<city-slug>" },
     "slug": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "Unique within the city; equals the file name" },
@@ -21,10 +21,16 @@
         "longitude": { "type": "number", "minimum": -180, "maximum": 180 }
       }
     },
-    "category": { "enum": ["eat", "drink", "coffee", "shop", "stay", "see", "explore", "other"] },
+    "vibe": { "enum": ["cheap", "casual", "fancy"], "description": "Exactly one: how the place feels (not what it costs)" },
+    "serves": {
+      "type": "array",
+      "items": { "enum": ["breakfast-brunch", "coffee", "lunch", "dinner", "cocktails", "beer-wine"] },
+      "minItems": 1,
+      "uniqueItems": true,
+      "description": "When to go: one or more service moments"
+    },
     "tags": { "type": "array", "items": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" }, "uniqueItems": true },
     "recommendation": { "type": "string", "minLength": 1, "description": "The author's own words, lightly edited" },
-    "rating": { "type": ["integer", "null"], "minimum": 1, "maximum": 3 },
     "googleMapsUrl": { "type": ["string", "null"], "format": "uri" },
     "address": { "type": ["string", "null"] },
     "images": {

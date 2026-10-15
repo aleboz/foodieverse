@@ -12,14 +12,15 @@ export const POI_DIR = join(ROOT, 'data', 'pois');
 export const IMAGE_DIR = join(ROOT, 'data', 'images');
 export const taxonomy = JSON.parse(readFileSync(join(ROOT, 'data', 'taxonomy.json'), 'utf8'));
 
-export const CATEGORY_IDS = taxonomy.categories.map((c) => c.id);
+export const VIBE_IDS = taxonomy.vibes.map((v) => v.id);
+export const SERVES_IDS = taxonomy.serves.map((s) => s.id);
 export const STATUSES = taxonomy.statuses;
 export const IMAGE_EXT = /\.(jpe?g|png|webp|avif|tiff?)$/i;
 const SLUG_RE = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const KNOWN_FIELDS = new Set([
-  'id', 'slug', 'name', 'city', 'country', 'location', 'category', 'tags', 'recommendation',
-  'rating', 'googleMapsUrl', 'address', 'images', 'imageAlt', 'status', 'createdAt', 'updatedAt',
+  'id', 'slug', 'name', 'city', 'country', 'location', 'vibe', 'serves', 'tags', 'recommendation',
+  'googleMapsUrl', 'address', 'images', 'imageAlt', 'status', 'createdAt', 'updatedAt',
 ]);
 
 export function today() {
@@ -86,7 +87,12 @@ export function validatePoi(poi, { citySlug, fileSlug } = {}) {
     if (lat === 0 && lon === 0) errors.push('location is 0,0 — coordinates were probably not resolved');
     for (const k of Object.keys(loc)) if (!['latitude', 'longitude'].includes(k)) errors.push(`Unknown location field "${k}"`);
   }
-  if (!CATEGORY_IDS.includes(poi.category)) errors.push(`"category" must be one of: ${CATEGORY_IDS.join(', ')}`);
+  if (!VIBE_IDS.includes(poi.vibe)) errors.push(`"vibe" must be one of: ${VIBE_IDS.join(', ')}`);
+  if (!Array.isArray(poi.serves) || poi.serves.length === 0) errors.push(`"serves" must list at least one of: ${SERVES_IDS.join(', ')}`);
+  else {
+    for (const s of poi.serves) if (!SERVES_IDS.includes(s)) errors.push(`"serves" value "${s}" must be one of: ${SERVES_IDS.join(', ')}`);
+    if (new Set(poi.serves).size !== poi.serves.length) errors.push('"serves" contains duplicates');
+  }
   if (poi.tags !== undefined) {
     if (!Array.isArray(poi.tags)) errors.push('"tags" must be an array');
     else {
@@ -94,7 +100,6 @@ export function validatePoi(poi, { citySlug, fileSlug } = {}) {
       if (new Set(poi.tags).size !== poi.tags.length) errors.push('"tags" contains duplicates');
     }
   }
-  if (poi.rating !== undefined && poi.rating !== null && ![1, 2, 3].includes(poi.rating)) errors.push('"rating" must be 1, 2 or 3');
   if (!STATUSES.includes(poi.status)) errors.push(`"status" must be one of: ${STATUSES.join(', ')}`);
   if (poi.googleMapsUrl !== undefined && poi.googleMapsUrl !== null) {
     try {

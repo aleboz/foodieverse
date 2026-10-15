@@ -6,9 +6,7 @@ export interface MapPoi {
   name: string;
   lat: number;
   lng: number;
-  icon: string;
-  category: string;
-  rating: number | null;
+  meta: string;
   url: string;
 }
 
@@ -58,15 +56,14 @@ export async function createMap(
       riseOnHover: true,
       icon: L.divIcon({
         className: '',
-        html: `<div class="pin" data-id="${p.id}"><span aria-hidden="true">${p.icon}</span></div>`,
-        iconSize: [34, 34],
-        iconAnchor: [4, 34],
-        popupAnchor: [13, -30],
+        html: `<div class="pin" data-id="${p.id}"></div>`,
+        iconSize: [28, 28],
+        iconAnchor: [3, 28],
+        popupAnchor: [11, -25],
       }),
     });
     if (interactive) {
-      const hearts = p.rating ? `<span class="hearts" aria-label="${p.rating} of 3 hearts">${'♥'.repeat(p.rating)}</span>` : '';
-      marker.bindPopup(`<a class="popup-link" href="${p.url}">${escapeHtml(p.name)}</a>${hearts}<br><span class="meta">${escapeHtml(p.category)}</span>`);
+      marker.bindPopup(`<a class="popup-link" href="${p.url}">${escapeHtml(p.name)}</a><br><span class="meta">${escapeHtml(p.meta)}</span>`);
       marker.on('click', () => opts.onSelect?.(p.id));
     }
     marker.addTo(map);

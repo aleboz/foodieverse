@@ -7,8 +7,8 @@
 //   npm run poi -- show <city>/<slug>
 //   npm run poi -- find <text>
 //
-// A draft is a partial POI: name, city, country, location, category, tags,
-// recommendation, rating, googleMapsUrl, address, imageAlt. id, slug, dates,
+// A draft is a partial POI: name, city, country, location, vibe, serves, tags,
+// recommendation, googleMapsUrl, address, imageAlt. id, slug, dates,
 // status and image file names are filled in here. --dry-run prints the
 // preview and validation result without writing anything.
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, rmSync } from 'node:fs';
@@ -39,7 +39,7 @@ const imagesIn = multi('--image');
 const slugOverride = multi('--slug')[0];
 
 const FIELD_ORDER = [
-  'id', 'slug', 'name', 'city', 'country', 'location', 'category', 'tags', 'recommendation', 'rating',
+  'id', 'slug', 'name', 'city', 'country', 'location', 'vibe', 'serves', 'tags', 'recommendation',
   'googleMapsUrl', 'address', 'images', 'imageAlt', 'status', 'createdAt', 'updatedAt',
 ];
 const ordered = (poi) => Object.fromEntries(FIELD_ORDER.filter((k) => poi[k] !== undefined).map((k) => [k, poi[k]]));
@@ -50,12 +50,13 @@ const die = (msg) => {
 };
 
 function preview(poi, { duplicates = [], nearby = [], images = [] } = {}) {
-  const cat = taxonomy.categories.find((c) => c.id === poi.category);
+  const vibe = taxonomy.vibes.find((v) => v.id === poi.vibe);
+  const serves = (poi.serves ?? []).map((id) => taxonomy.serves.find((s) => s.id === id)?.label ?? id);
   const lines = [
     `${poi.name} · ${poi.city}${poi.country ? `, ${poi.country}` : ''}`,
     '',
-    poi.rating ? `${'♥'.repeat(poi.rating)}  (${taxonomy.ratings[poi.rating]})` : '(no hearts)',
-    `${cat ? cat.label : poi.category}${poi.status !== 'active' ? `  ·  status: ${poi.status}` : ''}`,
+    `${vibe ? vibe.label : poi.vibe ?? '(no vibe)'}${poi.status !== 'active' ? `  ·  status: ${poi.status}` : ''}`,
+    serves.join(' · ') || '(no service times)',
     (poi.tags ?? []).join(' · ') || '(no tags)',
     '',
     poi.recommendation,
@@ -145,7 +146,6 @@ switch (cmd) {
       id: `${slug}-${citySlug}`,
       slug,
       tags: draft.tags ?? [],
-      rating: draft.rating ?? null,
       country: draft.country ?? null,
       googleMapsUrl: draft.googleMapsUrl ?? null,
       address: draft.address ?? null,
