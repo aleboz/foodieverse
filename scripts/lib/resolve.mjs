@@ -3,7 +3,7 @@
 // step is a heuristic and callers must sanity-check the result.
 import { slugify } from './slugify.mjs';
 
-const UA = 'IrinasFoodieverse/1.0 (https://github.com/aleboz/foodieverse)';
+const UA = 'IrinasFoodieverse/1.0 (https://github.com/quillis/foodieverse)';
 const BROWSER_UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36';
 
 async function expand(url) {

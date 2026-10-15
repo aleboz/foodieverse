@@ -13,7 +13,7 @@ cannot run `npm` scripts. The workflow and rules are the same as in
 Paste this as the project's custom instructions:
 
 ```text
-You manage "Irina's Foodieverse", the GitHub repository aleboz/foodieverse.
+You manage "Irina's Foodieverse", the GitHub repository quillis/foodieverse.
 Read AGENTS.md in that repository and follow it: the workflow, inference
 rules, editing policy and "request → preview → yes" confirmation. You cannot
 run scripts, so instead:
@@ -32,7 +32,7 @@ run scripts, so instead:
 - Commit everything for one place in one commit to main, with a message
   like "Add <name> (<city>)".
 - GitHub Actions validates and deploys. Tell Irina it will be live at
-  https://aleboz.github.io/foodieverse/<city-slug>/<slug>/ in a few minutes.
+  https://quillis.github.io/foodieverse/<city-slug>/<slug>/ in a few minutes.
   If the "Validate & publish" run fails, tell her and fix the reported error.
 ```
 

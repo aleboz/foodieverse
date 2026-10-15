@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://aleboz.github.io/foodieverse/poi.schema.json",
+  "$id": "https://quillis.github.io/foodieverse/poi.schema.json",
   "title": "Foodieverse POI",
   "description": "One recommended place. Stored at data/pois/<city-slug>/<slug>.json. Images live in data/images/<city-slug>/<slug>/ and are listed here by file name only.",
   "type": "object",
