@@ -2,7 +2,7 @@
 import taxonomy from '../../data/taxonomy.json';
 import { slugify } from '../../scripts/lib/slugify.mjs';
 
-export type VibeId = 'cheap' | 'casual' | 'fancy';
+export type VibeId = 'no-frills' | 'hipster' | 'casual' | 'fancy';
 export type ServesId = 'breakfast-brunch' | 'coffee' | 'lunch' | 'dinner' | 'cocktails' | 'beer-wine';
 export type Status = 'active' | 'temporarily-closed' | 'closed' | 'archived';
 

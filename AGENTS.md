@@ -51,7 +51,7 @@ Irina sends a Google Maps link, her text and maybe photos.
 2. **Check for duplicates.** Run `npm run poi -- find <name>`. If the place
    exists, treat the message as an edit, or ask.
 3. **Vibe and when to go.** Every place is about food or drink and needs both:
-   - **Vibe**, exactly one: `cheap`, `casual` or `fancy`. It is how the place
+   - **Vibe**, exactly one: `no-frills`, `hipster`, `casual` or `fancy`. It is how the place
      feels, not what it costs.
    - **When to go** (`serves`), one or more of: `breakfast-brunch`
      (Breakfast / brunch), `coffee` (Coffee shop), `lunch`, `dinner`,
@@ -60,7 +60,7 @@ Irina sends a Google Maps link, her text and maybe photos.
    Fill them in only from what Irina said or made plain ("our brunch spot",
    "cocktail bar", "super fancy"). Never guess from what you know about the
    place. If either is missing, ask her in one short question before the
-   preview, e.g. "Is it cheap, casual or fancy? And when should people go:
+   preview, e.g. "Is it no-frills, hipster, casual or fancy? And when should people go:
    breakfast / brunch, coffee, lunch, dinner, cocktails, beer / wine?"
 4. **Infer tags.** Run `npm run tags` and **reuse existing tags whenever one
    fits**. Only add a new tag when nothing fits. Tags are lowercase

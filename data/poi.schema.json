@@ -21,7 +21,7 @@
         "longitude": { "type": "number", "minimum": -180, "maximum": 180 }
       }
     },
-    "vibe": { "enum": ["cheap", "casual", "fancy"], "description": "Exactly one: how the place feels (not what it costs)" },
+    "vibe": { "enum": ["no-frills", "hipster", "casual", "fancy"], "description": "Exactly one: how the place feels (not what it costs)" },
     "serves": {
       "type": "array",
       "items": { "enum": ["breakfast-brunch", "coffee", "lunch", "dinner", "cocktails", "beer-wine"] },

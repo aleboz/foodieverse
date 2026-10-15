@@ -34,7 +34,8 @@ body:
       description: How the place feels. If you leave it on "Ask me", the preview will ask.
       options:
         - Ask me
-        - Cheap
+        - No-frills
+        - Hipster
         - Casual
         - Fancy
       default: 0

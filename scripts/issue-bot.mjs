@@ -97,7 +97,8 @@ const TAG_RE = /(^|\s)#([\p{L}\p{N}][\p{L}\p{N}-]*)/gu;
 const LABEL_RE = /\b(vibe|when( to go)?|serves)\s*:/gi;
 const leftover = (t) => t.replace(/\band\b|[\s,;:·.!&+/-]/gi, '');
 const word = (src) => new RegExp(`(^|[^\\p{L}])(?:${src})(?![\\p{L}])`, 'giu');
-const VIBE_WORDS = taxonomy.vibes.map((v) => ({ id: v.id, re: word(v.id) }));
+// "no-frills" also matches "no frills" and "nofrills".
+const VIBE_WORDS = taxonomy.vibes.map((v) => ({ id: v.id, re: word(v.id.replace(/-/g, '[- ]?')) }));
 const SERVES_WORDS = [
   ['breakfast-brunch', 'breakfast\\s*/\\s*brunch|breakfast|brunch'],
   ['coffee', 'coffee\\s*shop|coffee|café|cafe'],
@@ -108,7 +109,7 @@ const SERVES_WORDS = [
 ].map(([id, src]) => ({ id, re: word(src) }));
 
 /**
- * Reads the vibe (cheap / casual / fancy), when to go ("lunch, dinner") and
+ * Reads the vibe (no-frills / hipster / casual / fancy), when to go ("lunch, dinner") and
  * #tags from plain text, e.g. "casual · lunch, dinner #natural-wine".
  * Strict mode (new places) only reads lines made up entirely of such words and
  * removes them from the text, so "Great brunch." stays text. Loose mode
@@ -520,7 +521,7 @@ async function applyChangeRequest(state, request) {
       notes.push(
         understood.length
           ? `Changed: ${understood.join(', ')}.`
-          : 'Without the AI I only understand cheap / casual / fancy, when to go ("lunch, dinner", "add cocktails"), `#tags` (add, or "remove #tag") and "closed" / "reopened". Edit the issue to change anything else.',
+          : 'Without the AI I only understand no-frills / hipster / casual / fancy, when to go ("lunch, dinner", "add cocktails"), `#tags` (add, or "remove #tag") and "closed" / "reopened". Edit the issue to change anything else.',
       );
     } else {
       let change = null;

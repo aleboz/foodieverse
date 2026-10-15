@@ -1,6 +1,7 @@
 {
   "vibes": [
-    { "id": "cheap", "label": "Cheap" },
+    { "id": "no-frills", "label": "No-frills" },
+    { "id": "hipster", "label": "Hipster" },
     { "id": "casual", "label": "Casual" },
     { "id": "fancy", "label": "Fancy" }
   ],
