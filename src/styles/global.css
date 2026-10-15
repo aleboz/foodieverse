@@ -294,6 +294,7 @@ button, input { font: inherit; color: inherit; }
 }
 .map-legend span { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
 .map-legend .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--v); box-shadow: 0 0 0 1px rgb(0 0 0 / 0.2); }
+@media (max-width: 599px) { .map-legend { flex-direction: column; gap: 3px; padding: 6px 8px; } }
 .locate-btn { display: grid !important; place-items: center; font-size: 18px; color: #141414 !important; text-decoration: none; }
 .locate-btn.is-busy span { display: inline-block; animation: locate-spin 1s linear infinite; }
 @keyframes locate-spin { to { transform: rotate(360deg); } }
