@@ -38,7 +38,7 @@ const excerpt = (s: string) => (s.length > 220 ? s.slice(0, 217).replace(/\s+\S*
   <div class="city" id="city" data-view="list" data-city={city.slug} data-city-name={city.name}>
     <div class="city-panel">
       <div class="city-controls" id="controls">
-        <h1 class="city-title">{city.name}</h1>
+        <h1 class="city-title"><span>{city.name}</span></h1>
         <p class="city-sub">{city.count} {city.count === 1 ? 'place' : 'places'}{city.country ? ` · ${city.country}` : ''}</p>
 
         <form class="search" role="search" onsubmit="return false">
@@ -124,7 +124,7 @@ const excerpt = (s: string) => (s.length > 220 ? s.slice(0, 217).replace(/\s+\S*
     </div>
 
     <button type="button" class="btn btn-primary view-toggle" id="view-toggle" aria-controls="map-wrap">
-      <span aria-hidden="true">🗺️</span> Map
+      Map
     </button>
   </div>
   <script type="application/json" id="map-data" set:html={JSON.stringify(mapData).replace(/</g, "\\u003c")} />

@@ -32,7 +32,7 @@ const added = new Date(poi.createdAt + 'T00:00:00Z').toLocaleDateString('en-GB',
   back={{ href: cityHref(cSlug), label: poi.city }}
 >
   <article class="poi" data-city={cSlug}>
-    <h1 class="poi-name">{poi.name}</h1>
+    <h1 class="poi-name"><span>{poi.name}</span></h1>
     <div class="poi-meta">
       <span class="vibe">{vibeLabel(poi.vibe)}</span>
       <span class="meta">{servesLabels(poi).join(' · ')}</span>

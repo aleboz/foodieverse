@@ -130,7 +130,7 @@ export function initCity() {
   function applyView() {
     root.dataset.view = state.view;
     const toMap = state.view !== 'map';
-    toggle.innerHTML = toMap ? '<span aria-hidden="true">🗺️</span> Map' : '<span aria-hidden="true">☰</span> List';
+    toggle.textContent = toMap ? 'Map' : 'List';
     toggle.setAttribute('aria-label', toMap ? 'Show map' : 'Show list');
     if (state.view === 'map' || desktop.matches) {
       if (!desktop.matches) root.style.setProperty('--map-top', `${controls.getBoundingClientRect().bottom + 8}px`);

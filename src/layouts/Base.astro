@@ -1,4 +1,7 @@
 ---
+import '@fontsource-variable/bricolage-grotesque/opsz.css';
+import '@fontsource/karla/400.css';
+import '@fontsource/karla/700.css';
 import '../styles/global.css';
 import { href } from '../lib/url';
 
@@ -24,8 +27,8 @@ const ogImage = image ? new URL(image, canonical).toString() : undefined;
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" href={href('favicon.svg')} type="image/svg+xml" />
-    <meta name="theme-color" content="#faf6f0" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#1b1714" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#fffef7" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#141311" media="(prefers-color-scheme: dark)" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta property="og:site_name" content={siteName} />
     <meta property="og:title" content={title} />
