@@ -1,0 +1,28 @@
+{
+  "id": "peders-copenhagen",
+  "slug": "peders",
+  "name": "Peders",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.679073,
+    "longitude": 12.568998
+  },
+  "vibe": "no-frills",
+  "serves": [
+    "beer-wine"
+  ],
+  "tags": [
+    "craft-beer",
+    "basement",
+    "city-center"
+  ],
+  "recommendation": "A locals bar, located in a grungy basement, but with an excellent selection of 20 micro-brew taps. Chill vibe and knowledgeable bartenders.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Peders%2C%20Sankt%20Peders%20Str%C3%A6de%2031%2C%20Copenhagen",
+  "website": "https://untappd.com/v/peders/5696141",
+  "address": "Sankt Peders Stræde 31",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

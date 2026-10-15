@@ -1,0 +1,29 @@
+{
+  "id": "admiralgade-26-copenhagen",
+  "slug": "admiralgade-26",
+  "name": "Admiralgade 26",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.6776224,
+    "longitude": 12.5821143
+  },
+  "vibe": "fancy",
+  "serves": [
+    "dinner"
+  ],
+  "tags": [
+    "prix-fixe",
+    "wine",
+    "vegan-options",
+    "city-center"
+  ],
+  "recommendation": "A small and cosy restaurant with a reasonably priced prix fixe menu, their food is delicious and creative, their wine selection is amazing (figures, since they also own Ved Stranden 10 around the corner). Vegetarian and vegan options available.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Admiralgade%2026%2C%20Admiralgade%2026%2C%20Copenhagen",
+  "website": "https://www.admiralgade26.com/",
+  "address": "Admiralgade 26",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

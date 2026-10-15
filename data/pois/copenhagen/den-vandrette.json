@@ -1,0 +1,30 @@
+{
+  "id": "den-vandrette-copenhagen",
+  "slug": "den-vandrette",
+  "name": "Den Vandrette",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.678675,
+    "longitude": 12.59242
+  },
+  "vibe": "hipster",
+  "serves": [
+    "dinner",
+    "beer-wine"
+  ],
+  "tags": [
+    "wine",
+    "georgian",
+    "reservations",
+    "city-center"
+  ],
+  "recommendation": "Small wine bar with an excellent menu (reservations recommended in the winter). Their food is always delicious and they will serve a version of Georgian Khachapuri (for the purists - “a version” ok?). They also have the biggest selection of Georgian wine in town and you can peruse their wine cellar yourself to select a bottle.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Den%20Vandrette%2C%20Havnegade%2053A%2C%20Copenhagen",
+  "website": "https://www.denvandrette.dk/",
+  "address": "Havnegade 53A",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}

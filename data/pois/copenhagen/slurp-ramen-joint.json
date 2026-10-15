@@ -1,0 +1,28 @@
+{
+  "id": "slurp-ramen-joint-copenhagen",
+  "slug": "slurp-ramen-joint",
+  "name": "Slurp Ramen Joint",
+  "city": "Copenhagen",
+  "country": "Denmark",
+  "location": {
+    "latitude": 55.685122,
+    "longitude": 12.567232
+  },
+  "vibe": "casual",
+  "serves": [
+    "dinner"
+  ],
+  "tags": [
+    "ramen",
+    "no-reservations",
+    "city-center"
+  ],
+  "recommendation": "The ramen game in this town is strong, but for me Slurp is at the top with their veggie ramen that is amazing. A tiny ramen shop that takes no reservations, first come, first served, and there is always a line of people outside waiting. It’s worth the wait.",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Slurp%20Ramen%20Joint%2C%20Nansensgade%2090%2C%20Copenhagen",
+  "website": "https://www.slurpramen.dk/",
+  "address": "Nansensgade 90",
+  "images": [],
+  "status": "active",
+  "createdAt": "2026-10-15",
+  "updatedAt": "2026-10-15"
+}
