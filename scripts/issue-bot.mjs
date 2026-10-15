@@ -103,6 +103,7 @@ const SERVES_WORDS = [
   ['breakfast-brunch', 'breakfast\\s*/\\s*brunch|breakfast|brunch'],
   ['coffee', 'coffee\\s*shop|coffee|café|cafe'],
   ['ice-cream', 'ice[\\s-]*cream|gelato'],
+  ['bakery', 'bakery|bakeries|bageri'],
   ['lunch', 'lunch'],
   ['dinner', 'dinner'],
   ['cocktails', 'cocktails?'],

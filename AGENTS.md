@@ -55,13 +55,13 @@ Irina sends a Google Maps link, her text and maybe photos.
      feels, not what it costs.
    - **When to go** (`serves`), one or more of: `breakfast-brunch`
      (Breakfast / brunch), `coffee` (Coffee shop), `ice-cream` (Ice cream),
-     `lunch`, `dinner`, `cocktails`, `beer-wine` (Beer / Wine).
+     `bakery` (Bakery), `lunch`, `dinner`, `cocktails`, `beer-wine` (Beer / Wine).
 
    Fill them in only from what Irina said or made plain ("our brunch spot",
    "cocktail bar", "super fancy"). Never guess from what you know about the
    place. If either is missing, ask her in one short question before the
    preview, e.g. "Is it no-frills, hipster, casual or fancy? And when should people go:
-   breakfast / brunch, coffee, ice cream, lunch, dinner, cocktails, beer / wine?"
+   breakfast / brunch, coffee, ice cream, bakery, lunch, dinner, cocktails, beer / wine?"
 4. **Infer tags.** Run `npm run tags` and **reuse existing tags whenever one
    fits**. Only add a new tag when nothing fits. Tags are lowercase
    kebab-case, usually 2–5 per place. They describe what Irina said
