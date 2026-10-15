@@ -3,7 +3,7 @@ import taxonomy from '../../data/taxonomy.json';
 import { slugify } from '../../scripts/lib/slugify.mjs';
 
 export type VibeId = 'no-frills' | 'hipster' | 'casual' | 'fancy';
-export type ServesId = 'breakfast-brunch' | 'coffee' | 'ice-cream' | 'lunch' | 'dinner' | 'cocktails' | 'beer-wine';
+export type ServesId = 'breakfast-brunch' | 'coffee' | 'ice-cream' | 'bakery' | 'lunch' | 'dinner' | 'cocktails' | 'beer-wine';
 export type Status = 'active' | 'temporarily-closed' | 'closed' | 'archived';
 
 export interface Poi {
