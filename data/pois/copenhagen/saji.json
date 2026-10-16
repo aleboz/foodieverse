@@ -8,7 +8,7 @@
     "latitude": 55.678823,
     "longitude": 12.569838
   },
-  "vibe": "fancy",
+  "vibe": "casual",
   "serves": [
     "dinner"
   ],
@@ -18,12 +18,12 @@
     "vegan-options",
     "city-center"
   ],
-  "recommendation": "An Indonesian restaurant with amazing food, great vibe and seats at the bar to watch the food prep. They have some walk–in spaces but reservations are recommended. Delicious, surprising, full of flavor and really fun. Vegetarian and vegan options available.",
+  "recommendation": "An Indonesian restaurant with amazing food, great vibe and seats at the bar to watch the food prep. They tend to be quite busy, so reservations are recommended. Delicious, surprising, full of flavor and really fun. Vegetarian and vegan options available.",
   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Saji%2C%20Studiestr%C3%A6de%2014%2C%20Copenhagen",
   "website": "https://www.saji.dk/",
   "address": "Studiestræde 14",
   "images": [],
   "status": "active",
   "createdAt": "2026-10-15",
-  "updatedAt": "2026-10-15"
+  "updatedAt": "2026-10-16"
 }
